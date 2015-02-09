@@ -1,0 +1,25 @@
+{
+  "name":"immutable-http",
+  "version":"0.0.1",
+  "description":"Http client with pretty simple chaining API",
+  "keywords":["javascript", "xhr", "http", "rest"],
+  "homepage":"https://github.com/stremlenye/immutable-http",
+  "bugs":{
+    "url":"https://github.com/stremlenye/immutable-http/issues"
+    },
+  "license":"MIT",
+  "people":{
+    "author":{
+      "name":"Yuriy Ankudinov",
+      "email":"stremlenye@gmail.com",
+      "url":"https://github.com/stremlenye"
+    }
+  },
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/stremlenye/immutable-http.git"
+  },
+  "dependencies":{
+    "promise": "^6.1.0"
+  }
+}
