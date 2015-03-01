@@ -5,37 +5,39 @@
  /*jshint esnext: true */
 
 class Http {
-  constructor(httpRequest){
-    this.url = null;
-    this.method = null;
-    this.headers = null;
-    this.body = null;
-    this.responseType = null;
+  constructor(url = null, method = null, headers = null, body = null, responseType = null){
 
-    if (httpRequest) {
-      return clone(httpRequest, new Http());
-    }
+    const _url = url;
+
+    this.url = () => {
+      return _url;
+    };
+
+    const _method = method;
+
+    this.method = () => {
+      return _method;
+    };
+
+    const _headers = headers;
+
+    this.headers = () => {
+      return _headers;
+    };
+
+    const _body = body;
+
+    this.body = () => {
+      return _body;
+    };
+
+    const _responseType = responseType;
+
+    this.responseType = () => {
+      return _responseType;
+    };
+
     return this;
-  }
-
-  getUrl() {
-    return this.url;
-  }
-
-  getMethod() {
-    return method;
-  }
-
-  getHeaders() {
-    return headers;
-  }
-
-  getBody() {
-    return body;
-  }
-
-  getResponseType() {
-    return responseType;
   }
 
   /**
@@ -43,9 +45,8 @@ class Http {
    * Returns new request model
    */
   withUrl(url) {
-    var request = new Http(this);
-    request.url = url;
-    return request;
+    return new Http(url, this.method(),
+      this.headers(), this.body(), this.responseType());
   }
 
   /**
@@ -53,9 +54,8 @@ class Http {
    * Returns new request model
    */
   withMethod(method) {
-    var request = new Http(this);
-    request.method = method;
-    return request;
+    return new Http(this.url(), method,
+      this.headers(), this.body(), this.responseType());
   }
 
   /**
@@ -63,12 +63,12 @@ class Http {
    * Returns new request model
    */
   withHeader(header, value) {
-    var request = new Http(this);
     var tuple = {};
     tuple[header] = value;
-    request.headers = (request.headers ? request.headers : []);
-    request.headers.push(tuple);
-    return request;
+    var headers = (this.headers() ? this.headers() : []);
+    headers.push(tuple);
+    return new Http(this.url(), this.method(),
+      headers, this.body(), this.responseType());
   }
 
   /**
@@ -76,9 +76,8 @@ class Http {
    * Returns new request model
    */
   withBody(body) {
-    var request = new Http(this);
-    request.body = body;
-    return request;
+    return new Http(this.url(), this.method(),
+      this.headers(), body, this.responseType());
   }
 
   /**
@@ -86,10 +85,9 @@ class Http {
    * Proper values could be obtained form XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    */
-  withResponseType(type) {
-    var request = new Http(this);
-    request.responseType = type;
-    return request;
+  withResponseType(responseType) {
+    return new Http(this.url(), this.method(),
+      this.headers(), this.body(), responseType);
   }
 
   /**
@@ -105,10 +103,10 @@ class Http {
  * Validate HTTP request model
  */
 var validate = http => {
-  validateUrl(http.url);
-  validateMethod(http.method);
-  validateHeaders(http.headers);
-  validateResponseType(http.responseType);
+  validateUrl(http.url());
+  validateMethod(http.method());
+  validateHeaders(http.headers());
+  validateResponseType(http.responseType());
 };
 
 /**
@@ -187,7 +185,7 @@ var validateResponseType = type => {
  * Executes validated http request
  */
 var exec = (http) => {
-  switch (http.method) {
+  switch (http.method()) {
     case 'GET':
       return get(http);
 
@@ -215,9 +213,9 @@ var get = http => {
       onFailed.bind(this, reject, http)
     );
 
-    xmlhttp.open('GET', http.url, true);
-    addHeaders(xmlhttp, http.headers);
-    setResponseType(xmlhttp, http.responseType);
+    xmlhttp.open('GET', http.url(), true);
+    addHeaders(xmlhttp, http.headers());
+    setResponseType(xmlhttp, http.responseType());
 
     xmlhttp.send(null);
   });
@@ -254,11 +252,11 @@ var submit = http => {
       onFailed.bind(this, reject, http)
     );
 
-    xmlhttp.open(http.method, http.url, true);
-    addHeaders(xmlhttp, http.headers);
-    setResponseType(xmlhttp, http.responseType);
+    xmlhttp.open(http.method, http.url(), true);
+    addHeaders(xmlhttp, http.headers());
+    setResponseType(xmlhttp, http.responseType());
 
-    xmlhttp.send(http.body);
+    xmlhttp.send(http.body());
   });
 };
 
@@ -327,46 +325,6 @@ var isStatusOkLike = statusCode => {
   var delta = statusCode - 200;
   var isOk = delta >= 0;
   return isOk && delta < 100;
-};
-
-/**
- * Clones object
- */
-var clone = (obj, target) => {
-  var copy;
-
-  // Handle the 3 simple types, and null or undefined
-  if (null == obj || 'object' != typeof obj) return obj;
-
-  // Handle Date
-  if (obj instanceof Date) {
-    copy = new Date();
-    copy.setTime(obj.getTime());
-    return copy;
-  }
-
-  // Handle Array
-  if (obj instanceof Array) {
-    copy = [];
-    for (var i = 0, len = obj.length; i < len; i++) {
-      copy[i] = clone(obj[i]);
-    }
-    return copy;
-  }
-
-  // Handle Object
-  if (obj instanceof Object) {
-    if (!target)
-      copy = {};
-    else
-      copy = target;
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-    }
-    return copy;
-  }
-
-  throw new Error(`Unable to copy obj! Its type isn't supported.`);
 };
 
 module.exports = Http;
