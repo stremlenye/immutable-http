@@ -1,25 +1,41 @@
 {
-  "name":"immutable-http",
-  "version":"0.0.1",
-  "description":"Http client with pretty simple chaining API",
-  "keywords":["javascript", "xhr", "http", "rest"],
-  "homepage":"https://github.com/stremlenye/immutable-http",
-  "bugs":{
-    "url":"https://github.com/stremlenye/immutable-http/issues"
-    },
-  "license":"MIT",
-  "people":{
-    "author":{
-      "name":"Yuriy Ankudinov",
-      "email":"stremlenye@gmail.com",
-      "url":"https://github.com/stremlenye"
+  "name": "immutable-http",
+  "version": "0.0.1",
+  "description": "Http client with pretty simple chaining API",
+  "keywords": [
+    "javascript",
+    "xhr",
+    "http",
+    "rest"
+  ],
+  "homepage": "https://github.com/stremlenye/immutable-http",
+  "bugs": {
+    "url": "https://github.com/stremlenye/immutable-http/issues"
+  },
+  "license": "MIT",
+  "people": {
+    "author": {
+      "name": "Yuriy Ankudinov",
+      "email": "stremlenye@gmail.com",
+      "url": "https://github.com/stremlenye"
     }
   },
-  "repository":{
-    "type":"git",
-    "url":"https://github.com/stremlenye/immutable-http.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stremlenye/immutable-http.git"
   },
-  "dependencies":{
+  "dependencies": {
     "promise": "^6.1.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.12.0",
+    "express": "^4.12.0",
+    "jest": "^0.1.37",
+    "jest-cli": "^0.4.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
   }
 }

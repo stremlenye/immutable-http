@@ -4,6 +4,8 @@
 
  /*jshint esnext: true */
 
+var Promise = require('promise');
+
 class Http {
   constructor(url = null, method = null, headers = null, body = null, responseType = null){
 
@@ -169,7 +171,9 @@ var validateHeader = header => {
 };
 
 var validateResponseType = type => {
+  //if(!type) return; //support for not defined response content type.
   switch (type) {
+    case null:
     case '':
     case 'arraybuffer':
     case 'blob':
@@ -252,7 +256,7 @@ var submit = http => {
       onFailed.bind(this, reject, http)
     );
 
-    xmlhttp.open(http.method, http.url(), true);
+    xmlhttp.open(http.method(), http.url(), true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
 
@@ -285,7 +289,8 @@ var setResponseType = (xmlhttp, responseType) => {
 var onSucceed = (fulfill, http, xmlhttp) => {
   fulfill({
     status: xmlhttp.status,
-    response: xmlhttp.response,
+    response: http.responseType()? xmlhttp.response: xmlhttp.responseText,
+    text: xmlhttp.responseText,
     headers: xmlhttp.getAllResponseHeaders()
   });
 };
