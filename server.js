@@ -9,6 +9,11 @@ app.get('/', function (req, res) {
   res.send("some_get_info");
 });
 
+app.get('/test', function (req, res) {
+  console.log("some_get_info");
+  res.send("some_get_info");
+});
+
 app.post('/', function (req, res) {
   console.log(req.body);
   res.json(req.body);

@@ -2,12 +2,14 @@
  * Immutable HTTP client object
  */
 
- /*jshint esnext: true */
+/*jshint esnext: true */
 
 var Promise = require('promise');
 
 class Http {
-  constructor(url = null, method = null, headers = null, body = null, responseType = null){
+  constructor(url = null, method = null,
+    headers = null, body = null,
+    responseType = null, dynamicSegments = []){
 
     const _url = url;
 
@@ -37,6 +39,12 @@ class Http {
 
     this.responseType = () => {
       return _responseType;
+    };
+
+    const _dynamicSegments = dynamicSegments;
+
+    this.dynamicSegments = () => {
+      return _dynamicSegments;
     };
 
     return this;
@@ -90,6 +98,14 @@ class Http {
   withResponseType(responseType) {
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), responseType);
+  }
+
+  withDynamicSegment(segment, value) {
+    var tuple = {};
+    tuple[segment] = value;
+    var dynamicSegments = this.dynamicSegments().concat([tuple]);
+    return new Http(this.url(), this.method(),
+      this.headers(), this.body(), this.responseType(), dynamicSegments);
   }
 
   /**
@@ -217,7 +233,8 @@ var get = http => {
       onFailed.bind(this, reject, http)
     );
 
-    xmlhttp.open('GET', http.url(), true);
+    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments());
+    xmlhttp.open('GET', url, true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
 
@@ -262,6 +279,18 @@ var submit = http => {
 
     xmlhttp.send(http.body());
   });
+};
+
+/**
+ * Mixins dynamic segments replacing the `:segment_name` parts with provide values
+ */
+var mixinDynamicSegmentsValues = (url, dynamicSegments) =>{
+  dynamicSegments.forEach(segment => {
+    for (var key in segment) {
+      url = url.replace(`:${key}`, segment[key]);
+    }
+  });
+  return url;
 };
 
 /**
