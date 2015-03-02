@@ -17,6 +17,9 @@ var result = new Http().withUrl('http://any_api.com')
 result = {
   status: int,
   response: [obj|string],
+  text:string /*
+              * String response representation to support https://github.com/driverdan/node-XMLHttpRequest
+              */
   headers: string
 }
 ```
