@@ -8,7 +8,7 @@ var Promise = require('promise');
 
 class Http {
   constructor(url = null, method = null,
-    headers = null, body = null,
+    headers = [], body = null,
     responseType = null, dynamicSegments = []){
 
     const _url = url;
@@ -56,7 +56,7 @@ class Http {
    */
   withUrl(url) {
     return new Http(url, this.method(),
-      this.headers(), this.body(), this.responseType());
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments());
   }
 
   /**
@@ -65,7 +65,7 @@ class Http {
    */
   withMethod(method) {
     return new Http(this.url(), method,
-      this.headers(), this.body(), this.responseType());
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments());
   }
 
   /**
@@ -75,10 +75,9 @@ class Http {
   withHeader(header, value) {
     var tuple = {};
     tuple[header] = value;
-    var headers = (this.headers() ? this.headers() : []);
-    headers.push(tuple);
+    var headers = this.headers().concat([tuple]);
     return new Http(this.url(), this.method(),
-      headers, this.body(), this.responseType());
+      headers, this.body(), this.responseType(), this.dynamicSegments());
   }
 
   /**
@@ -87,7 +86,7 @@ class Http {
    */
   withBody(body) {
     return new Http(this.url(), this.method(),
-      this.headers(), body, this.responseType());
+      this.headers(), body, this.responseType(), this.dynamicSegments());
   }
 
   /**
@@ -97,7 +96,7 @@ class Http {
    */
   withResponseType(responseType) {
     return new Http(this.url(), this.method(),
-      this.headers(), this.body(), responseType);
+      this.headers(), this.body(), responseType, this.dynamicSegments());
   }
 
   withDynamicSegment(segment, value) {
