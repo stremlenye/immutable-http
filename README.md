@@ -1,8 +1,10 @@
-#Immutable Java Script http client
+### Immutable-http
+
+[![npm version](https://badge.fury.io/js/immutable-http.svg)](http://badge.fury.io/js/immutable-http)
 
 Http client with pretty simple chaining API
 
-####Usage
+#### Usage
 
 ```
 var result = new Http().withUrl('http://any_api.com')
@@ -26,13 +28,13 @@ result = {
 
 Response type options could be obtained from XMLHttp [specs](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
 
-####Build
+#### Build
 Using [Babel](https://babeljs.io)
 ```
-sudo babel src/immutable-http.es6 --out-file lib/immutable-http.js
+babel src/immutable-http.es6 --out-file lib/immutable-http.js
 ```
 
-####Tests
+#### Tests
 Built on [Jest](http://facebook.github.io/jest/)
 ```
 npm test
