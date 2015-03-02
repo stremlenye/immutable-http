@@ -8,8 +8,8 @@ import Promise from 'promise';
 
 class Http {
   constructor(url = null, method = null,
-    headers = [], body = null,
-    responseType = null, dynamicSegments = [],
+    headers = new Map(), body = null,
+    responseType = null, dynamicSegments = new Map(),
     queryParams = new Map()){
 
     const _url = url;
@@ -82,9 +82,7 @@ class Http {
    * Returns new request model
    */
   withHeader(header, value) {
-    var tuple = {};
-    tuple[header] = value;
-    var headers = this.headers().concat([tuple]);
+    var headers = new Map(this.headers()).set(header, value);
     return new Http(this.url(), this.method(),
       headers, this.body(), this.responseType(), this.dynamicSegments(),
       this.queryParams());
@@ -112,9 +110,7 @@ class Http {
   }
 
   withDynamicSegment(segment, value) {
-    var tuple = {};
-    tuple[segment] = value;
-    var dynamicSegments = this.dynamicSegments().concat([tuple]);
+    var dynamicSegments = new Map(this.dynamicSegments()).set(segment, value);
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), this.responseType(), dynamicSegments,
       this.queryParams());
@@ -185,21 +181,11 @@ var validateMethod = method => {
  * Validate headers
  */
 var validateHeaders = headers => {
-  if (!headers) {
-    return;
-  }
-  if (Array.isArray(headers) == false) {
-    throw `Accidentally headers array was damaged`;
-  }
-  headers.forEach(validateHeader);
-};
-
-/**
- * Validate header
- */
-var validateHeader = header => {
-  for (var key in header) {
-    if (typeof(header[key]) != 'string') {
+  for(let [key, value] of headers.entries()){
+    if(typeof(key) != 'string'){
+      throw `Header key should be string`;
+    }
+    if(typeof(value) != 'string'){
       throw `Header ${key} value should be string`;
     }
   }
@@ -309,15 +295,15 @@ var submit = http => {
  * Mixins dynamic segments replacing the `:segment_name` parts with provide values
  */
 var mixinDynamicSegmentsValues = (url, dynamicSegments) => {
-  dynamicSegments.forEach(segment => {
-    for (var key in segment) {
-      url = url.replace(`:${key}`, segment[key]);
-    }
-  });
+  for(let [key,value] of dynamicSegments.entries()){
+    url = url.replace(`:${key}`, value);
+  }
   return url;
 };
 
-
+/**
+ * Adds query params string to url
+ */
 var addQueryParams = (url, queryParams) => {
   var chanks = [];
   for(let [key,value] of queryParams.entries()){
@@ -330,12 +316,9 @@ var addQueryParams = (url, queryParams) => {
  * Adds headers to xmlhttp object
  */
 var addHeaders = (xmlhttp, headers) => {
-  if (!headers) return;
-  headers.forEach(header => {
-    for (var key in header) {
-      xmlhttp.setRequestHeader(key, header[key]);
-    }
-  });
+  for(let [key,value] of headers.entries()){
+      xmlhttp.setRequestHeader(key, value);
+  }
   return xmlhttp;
 };
 
