@@ -4,12 +4,13 @@
 
 /*jshint esnext: true */
 
-var Promise = require('promise');
+import Promise from 'promise';
 
 class Http {
   constructor(url = null, method = null,
     headers = [], body = null,
-    responseType = null, dynamicSegments = []){
+    responseType = null, dynamicSegments = [],
+    queryParams = new Map()){
 
     const _url = url;
 
@@ -47,6 +48,12 @@ class Http {
       return _dynamicSegments;
     };
 
+    const _queryParams = queryParams;
+
+    this.queryParams = () => {
+      return _queryParams;
+    };
+
     return this;
   }
 
@@ -56,7 +63,8 @@ class Http {
    */
   withUrl(url) {
     return new Http(url, this.method(),
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments());
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
+      this.queryParams());
   }
 
   /**
@@ -65,7 +73,8 @@ class Http {
    */
   withMethod(method) {
     return new Http(this.url(), method,
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments());
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
+      this.queryParams());
   }
 
   /**
@@ -77,7 +86,8 @@ class Http {
     tuple[header] = value;
     var headers = this.headers().concat([tuple]);
     return new Http(this.url(), this.method(),
-      headers, this.body(), this.responseType(), this.dynamicSegments());
+      headers, this.body(), this.responseType(), this.dynamicSegments(),
+      this.queryParams());
   }
 
   /**
@@ -86,7 +96,8 @@ class Http {
    */
   withBody(body) {
     return new Http(this.url(), this.method(),
-      this.headers(), body, this.responseType(), this.dynamicSegments());
+      this.headers(), body, this.responseType(), this.dynamicSegments(),
+      this.queryParams());
   }
 
   /**
@@ -96,7 +107,8 @@ class Http {
    */
   withResponseType(responseType) {
     return new Http(this.url(), this.method(),
-      this.headers(), this.body(), responseType, this.dynamicSegments());
+      this.headers(), this.body(), responseType, this.dynamicSegments(),
+      this.queryParams());
   }
 
   withDynamicSegment(segment, value) {
@@ -104,7 +116,15 @@ class Http {
     tuple[segment] = value;
     var dynamicSegments = this.dynamicSegments().concat([tuple]);
     return new Http(this.url(), this.method(),
-      this.headers(), this.body(), this.responseType(), dynamicSegments);
+      this.headers(), this.body(), this.responseType(), dynamicSegments,
+      this.queryParams());
+  }
+
+  withParam(name, value) {
+    var queryParams = new Map(this.queryParams()).set(name,value);
+    return new Http(this.url(), this.method(),
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
+      queryParams);
   }
 
   /**
@@ -233,6 +253,8 @@ var get = http => {
     );
 
     let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments());
+    url = addQueryParams(url, http.queryParams());
+
     xmlhttp.open('GET', url, true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
@@ -272,6 +294,9 @@ var submit = http => {
       onFailed.bind(this, reject, http)
     );
 
+    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments());
+    url = addQueryParams(url, http.queryParams());
+
     xmlhttp.open(http.method(), http.url(), true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
@@ -283,13 +308,22 @@ var submit = http => {
 /**
  * Mixins dynamic segments replacing the `:segment_name` parts with provide values
  */
-var mixinDynamicSegmentsValues = (url, dynamicSegments) =>{
+var mixinDynamicSegmentsValues = (url, dynamicSegments) => {
   dynamicSegments.forEach(segment => {
     for (var key in segment) {
       url = url.replace(`:${key}`, segment[key]);
     }
   });
   return url;
+};
+
+
+var addQueryParams = (url, queryParams) => {
+  var chanks = [];
+  for(let [key,value] of queryParams.entries()){
+    chanks.push(`${key}=${value}`);
+  }
+  return url + '?' + chanks.join('&');
 };
 
 /**
@@ -360,4 +394,4 @@ var isStatusOkLike = statusCode => {
   return isOk && delta < 100;
 };
 
-module.exports = Http;
+export default Http;
