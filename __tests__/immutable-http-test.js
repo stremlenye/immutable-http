@@ -1,7 +1,7 @@
 jest.autoMockOff();
 
 describe('Http', function () {
-  pit("Execute simple get request", function () {
+  pit("execute simple get request", function () {
     var Http = require('../lib/immutable-http');
     var client = (new Http()).withMethod('GET').withUrl('http://localhost:3000');
     return client.exec().then(function (data) {
@@ -12,7 +12,7 @@ describe('Http', function () {
     });
   });
 
-  pit("Execute simple post request", function () {
+  pit("execute simple post request", function () {
     var Http = require('../lib/immutable-http');
 
     var obj = {some:'body'};
@@ -27,7 +27,6 @@ describe('Http', function () {
       .withResponseType('json');
 
     return client.exec().then(function (data) {
-      console.log(data);
       expect(data.status).toBe(200);
       expect(data.text).toBe(body);
     },function (reason) {
@@ -35,7 +34,7 @@ describe('Http', function () {
     });
   });
 
-  pit("Execute simple put request", function () {
+  pit("execute simple put request", function () {
     var Http = require('../lib/immutable-http');
 
     var obj = {some:'body'};
@@ -50,7 +49,6 @@ describe('Http', function () {
       .withResponseType('json');
 
     return client.exec().then(function (data) {
-      console.log(data);
       expect(data.status).toBe(200);
       expect(data.text).toBe(body);
     },function (reason) {
@@ -58,7 +56,7 @@ describe('Http', function () {
     });
   });
 
-  pit("Execute simple delete request", function () {
+  pit("execute simple delete request", function () {
     var Http = require('../lib/immutable-http');
 
     var obj = {some:'body'};
@@ -73,7 +71,6 @@ describe('Http', function () {
       .withResponseType('json');
 
     return client.exec().then(function (data) {
-      console.log(data);
       expect(data.status).toBe(200);
       expect(data.text).toBe(body);
     },function (reason) {

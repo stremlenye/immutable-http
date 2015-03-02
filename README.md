@@ -35,7 +35,13 @@ babel src/immutable-http.es6 --out-file lib/immutable-http.js
 ```
 
 #### Tests
-Built on [Jest](http://facebook.github.io/jest/)
+Run
+```
+node server
+```
+
+then
 ```
 npm test
 ```
+Built on [Jest](http://facebook.github.io/jest/)
