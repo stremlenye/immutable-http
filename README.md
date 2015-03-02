@@ -31,7 +31,7 @@ Response type options could be obtained from XMLHttp [specs](https://developer.m
 #### Build
 Using [Babel](https://babeljs.io)
 ```
-babel src/immutable-http.es6 --out-file lib/immutable-http.js
+babel --modules common src/immutable-http.es6 --out-file lib/immutable-http.js
 ```
 
 #### Tests
