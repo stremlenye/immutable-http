@@ -14,17 +14,38 @@ app.get('/test', function (req, res) {
   res.send("some_get_info");
 });
 
+app.get('/query', function (req, res) {
+  console.log(req.query);
+  res.send(req.query);
+});
+
 app.post('/', function (req, res) {
   console.log(req.body);
   res.json(req.body);
 });
+
+app.post('/test', function (req, res) {
+  console.log(req.body);
+  res.json(req.body);
+});
+
 
 app.put('/', function (req, res) {
   console.log(req.body);
   res.json(req.body);
 });
 
+app.put('/test', function (req, res) {
+  console.log(req.body);
+  res.json(req.body);
+});
+
 app.delete('/', function (req, res) {
+  console.log(req.body);
+  res.json(req.body);
+});
+
+app.delete('/test', function (req, res) {
   console.log(req.body);
   res.json(req.body);
 });
