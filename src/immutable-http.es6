@@ -319,7 +319,7 @@ var submit = http => {
     xmlhttp.open(http.method(), http.url(), true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
-    var body = this.bodyProcessor()(this.body());
+    var body = http.bodyProcessor()(http.body());
     xmlhttp.send(body);
   });
 };
@@ -338,7 +338,9 @@ var mixinDynamicSegmentsValues = (url, dynamicSegments) => {
  * Adds query params string to url
  */
 var addQueryParams = (url, queryParams) => {
-  var chanks = [];
+  if(queryParams.lenght == 0)
+    return url;
+  var chanks = [queryParams.lenght];
   for(let [key,value] of queryParams.entries()){
     chanks.push(`${key}=${value}`);
   }
