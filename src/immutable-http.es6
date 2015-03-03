@@ -147,19 +147,18 @@ class Http {
   }
 
   /**
-   * Adds common AJAX request parameters to the request object:
-   * Content-Type attribute, response type
+   * Sets response type to 'json'
    */
   withJsonResponse() {
-    return this.withHeader('Content-Type', 'application/json')
-              .withResponseType('json');
+    return this.withResponseType('json');
   }
 
   /**
-   * Predifine body sringification
+   * Predifine body sringification and Content-Type attribute.
    */
   withJsonBody() {
-    return this.withBodyProccessor(JSON.stringify);
+    return this.withHeader('Content-Type', 'application/json')
+    .withBodyProccessor(JSON.stringify);
   }
 
   /**
@@ -376,7 +375,6 @@ var onSucceed = (fulfill, http, xmlhttp) => {
   fulfill({
     status: xmlhttp.status,
     response: http.responseType()? xmlhttp.response: xmlhttp.responseText,
-    text: xmlhttp.responseText ? xmlhttp.responseText : undefined,
     headers: xmlhttp.getAllResponseHeaders()
   });
 };

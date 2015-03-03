@@ -18,14 +18,15 @@ var result = new Http().withUrl('http://any_api.com/:id')
 ```
 
 ```
-result = {
+result = Promise({
   status: int,
   response: [obj|string],
-  text:string /*
-              * String response representation to support https://github.com/driverdan/node-XMLHttpRequest
-              */
   headers: string
-}
+}, {
+  status: int,
+  response: [obj|string],
+  headers: string
+})
 ```
 
 Response type options could be obtained from XMLHttp [specs](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
