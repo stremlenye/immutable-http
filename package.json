@@ -1,6 +1,6 @@
 {
   "name": "immutable-http",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Http client with pretty simple chaining API",
   "keywords": [
     "javascript",
@@ -37,7 +37,8 @@
     "jest-cli": "^0.4.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublish":"babel --modules common src/immutable-http.es6 --out-file lib/immutable-http.js"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
