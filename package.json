@@ -1,6 +1,6 @@
 {
   "name": "immutable-http",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Http client with pretty simple chaining API",
   "keywords": [
     "javascript",
