@@ -10,7 +10,8 @@ class Http {
   constructor(url = null, method = null,
     headers = new Map(), body = null,
     responseType = null, dynamicSegments = new Map(),
-    queryParams = new Map()){
+    queryParams = new Map(),
+    bodyProcessor = body => {return body;}){
 
     const _url = url;
 
@@ -54,6 +55,12 @@ class Http {
       return _queryParams;
     };
 
+    const _bodyProcessor = bodyProcessor;
+
+   this.bodyProcessor = () => {
+     return _bodyProcessor;
+   };
+
     return this;
   }
 
@@ -64,7 +71,7 @@ class Http {
   withUrl(url) {
     return new Http(url, this.method(),
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
   /**
@@ -74,7 +81,7 @@ class Http {
   withMethod(method) {
     return new Http(this.url(), method,
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
   /**
@@ -85,7 +92,7 @@ class Http {
     var headers = new Map(this.headers()).set(header, value);
     return new Http(this.url(), this.method(),
       headers, this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
   /**
@@ -95,7 +102,7 @@ class Http {
   withBody(body) {
     return new Http(this.url(), this.method(),
       this.headers(), body, this.responseType(), this.dynamicSegments(),
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
   /**
@@ -106,21 +113,47 @@ class Http {
   withResponseType(responseType) {
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), responseType, this.dynamicSegments(),
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
+  /**
+   * Adds dynamic segment value
+   */
   withDynamicSegment(segment, value) {
     var dynamicSegments = new Map(this.dynamicSegments()).set(segment, value);
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), this.responseType(), dynamicSegments,
-      this.queryParams());
+      this.queryParams(), this.bodyProcessor);
   }
 
+  /**
+   * Adds query string param
+   */
   withParam(name, value) {
     var queryParams = new Map(this.queryParams()).set(name,value);
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      queryParams);
+      queryParams, this.bodyProcessor);
+  }
+
+  /**
+   * Sets the function which gets the body object as a parameter
+   * which result would be used as a request body
+   */
+  withBodyProccessor(bodyProcessor) {
+    return new Http(this.url(), this.method(),
+      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
+      this.queryParams(), bodyProcessor);
+  }
+
+  /**
+   * Adds common AJAX request parameters to the request object:
+   * Content-Type attribute, response type and predifine body sringification
+   */
+  withAjax() {
+    return this.withHeader('Content-Type', 'application/json')
+              .withResponseType('json')
+              .withBodyProccessor(JSON.stringify);
   }
 
   /**
@@ -286,8 +319,8 @@ var submit = http => {
     xmlhttp.open(http.method(), http.url(), true);
     addHeaders(xmlhttp, http.headers());
     setResponseType(xmlhttp, http.responseType());
-
-    xmlhttp.send(http.body());
+    var body = this.bodyProcessor()(this.body());
+    xmlhttp.send(body);
   });
 };
 
@@ -335,7 +368,7 @@ var onSucceed = (fulfill, http, xmlhttp) => {
   fulfill({
     status: xmlhttp.status,
     response: http.responseType()? xmlhttp.response: xmlhttp.responseText,
-    text: xmlhttp.responseText,
+    text: xmlhttp.responseText ? xmlhttp.responseText : undefined,
     headers: xmlhttp.getAllResponseHeaders()
   });
 };
