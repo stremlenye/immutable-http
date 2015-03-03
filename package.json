@@ -1,6 +1,6 @@
 {
   "name": "immutable-http",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Http client with pretty simple chaining API",
   "keywords": [
     "javascript",
@@ -8,7 +8,7 @@
     "http",
     "rest"
   ],
-  "main": "lib/immutable-http.jsmp",
+  "main": "lib/immutable-http.js",
   "homepage": "https://github.com/stremlenye/immutable-http",
   "bugs": {
     "url": "https://github.com/stremlenye/immutable-http/issues"
