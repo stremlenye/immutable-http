@@ -343,7 +343,7 @@ var mixinDynamicSegmentsValues = (url, dynamicSegments) => {
  * Adds query params string to url
  */
 var addQueryParams = (url, queryParams) => {
-  if(queryParams.lenght == 0)
+  if(queryParams.size == 0)
     return url;
   var chanks = [queryParams.lenght];
   for(let [key,value] of queryParams.entries()){
