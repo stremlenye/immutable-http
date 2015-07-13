@@ -101,7 +101,7 @@ function mixinDynamicSegmentsValues (url, dynamicSegments) {
   for (let [key, value] of dynamicSegments.entries()) {
     aggregator = aggregator.replace(`:${key}`, value)
   }
-  return url
+  return aggregator
 }
 
 /**
@@ -152,6 +152,9 @@ function setResponseType (xmlhttp, responseType) {
  * @param {Object} xmlhttp – XMLHttpRequest
  */
 function onSucceed (fulfill, http, xmlhttp) {
+  console.log(http.responseType());
+  console.log(xmlhttp.getAllResponseHeaders());
+  console.log(xmlhttp)
   fulfill({
     status: xmlhttp.status,
     response: http.responseType() ? xmlhttp.response : xmlhttp.responseText,
@@ -304,36 +307,40 @@ class Http {
       method = null, headers = new Map(), body = null, responseType = null,
       dynamicSegments = new Map(), queryParams = new Map(),
       bodyProcessor = defaultBodyProcessor) {
+    const internals = {
+      url, method, headers, body, responseType, dynamicSegments, queryParams,
+      bodyProcessor
+    }
     this.url = () => {
-      return url
+      return internals.url
     }
 
     this.method = () => {
-      return method
+      return internals.method
     }
 
     this.headers = () => {
-      return headers
+      return internals.headers
     }
 
     this.body = () => {
-      return body
+      return internals.body
     }
 
     this.responseType = () => {
-      return responseType
+      return internals.responseType
     }
 
     this.dynamicSegments = () => {
-      return dynamicSegments
+      return internals.dynamicSegments
     }
 
     this.queryParams = () => {
-      return queryParams
+      return internals.queryParams
     }
 
     this.bodyProcessor = () => {
-      return bodyProcessor
+      return internals.bodyProcessor
     }
 
     return this

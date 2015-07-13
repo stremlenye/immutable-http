@@ -32,7 +32,7 @@ describe('Http POST', function () {
                                     */
 
     var client = (new Http()).withMethod('POST')
-      .withUrl('http://localhost:3000:some_segment')
+      .withUrl('http://localhost:3000/:some_segment')
       .withDynamicSegment('some_segment', 'test')
       .withHeader('Content-Type','application/json')
       .withBody(body)

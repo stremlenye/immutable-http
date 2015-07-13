@@ -10,7 +10,7 @@ describe('Http PUT', function () {
                                     */
 
     var client = (new Http()).withMethod('PUT')
-      .withUrl('http://localhost:3000:some_segment')
+      .withUrl('http://localhost:3000/:some_segment')
       .withDynamicSegment('some_segment', 'test')
       .withHeader('Content-Type','application/json')
       .withBody(body)

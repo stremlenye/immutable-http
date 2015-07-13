@@ -10,13 +10,14 @@ describe('Http DELETE', function () {
                                     */
 
     var client = (new Http()).withMethod('DELETE')
-      .withUrl('http://localhost:3000:some_segment')
+      .withUrl('http://localhost:3000/:some_segment')
       .withDynamicSegment('some_segment', 'test')
       .withHeader('Content-Type','application/json')
       .withBody(body)
       .withResponseType('json');
 
     return client.exec().then(function (data) {
+      console.log(data);
       expect(data.status).toBe(200);
       expect(data.text).toBe(body);
     },function (reason) {
