@@ -11,7 +11,7 @@
   "scripts": {
     "test": "jest",
     "clean": "rm -rf ./dist",
-    "dist": "npm run clean && mkdir dist && babel --modules common src/immutable-http.js --out-file dist/immutable-http.js",
+    "dist": "npm run clean && mkdir dist && babel src/immutable-http.js --out-file dist/immutable-http.js",
     "prepublish": "npm run dist"
   },
   "main": "dist/immutable-http.js",
