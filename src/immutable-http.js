@@ -1,10 +1,4 @@
 /**
- * Immutable HTTP client object
- */
-
-import Promise from 'promise'
-
-/**
  * Basicly validate url
  * @param {String} url – URL
  */
