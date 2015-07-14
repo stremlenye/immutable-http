@@ -9,12 +9,13 @@
     "rest"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "karma start",
+    "test:babel": "babel test/get_test.js --out-file test/get_test_compiled.js",
     "clean": "rm -rf ./dist",
-    "dist": "npm run clean && mkdir dist && babel src/immutable-http.js --out-file dist/immutable-http.js",
+    "dist": "npm run clean && mkdir dist && webpack --progress --colors --config webpack.config.js",
     "prepublish": "npm run dist"
   },
-  "main": "dist/immutable-http.js",
+  "main": "dist/index.js",
   "homepage": "https://github.com/stremlenye/immutable-http",
   "bugs": {
     "url": "https://github.com/stremlenye/immutable-http/issues"
@@ -33,25 +34,23 @@
   },
   "devDependencies": {
     "babel": "^5.6.14",
+    "babel-core": "^5.6.20",
     "babel-eslint": "^3.1.23",
     "babel-jest": "^5.3.0",
+    "babel-loader": "^5.3.1",
     "body-parser": "^1.13.2",
     "eslint": "^0.24.1",
     "express": "^4.13.1",
-    "jest": "^0.1.40",
-    "jest-cli": "^0.4.15"
-  },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": [
-      "es6",
-      "js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "es6"
-    ]
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.37",
+    "karma-babel-preprocessor": "^5.2.1",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-requirejs": "^0.2.2",
+    "karma-webpack": "^1.5.1",
+    "node-libs-browser": "^0.5.2",
+    "requirejs": "^2.1.19",
+    "webpack": "^1.10.1"
   },
   "dependencies": {
     "babel-runtime": "^5.6.20"

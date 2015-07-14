@@ -146,9 +146,6 @@ function setResponseType (xmlhttp, responseType) {
  * @param {Object} xmlhttp – XMLHttpRequest
  */
 function onSucceed (fulfill, http, xmlhttp) {
-  console.log(http.responseType());
-  console.log(xmlhttp.getAllResponseHeaders());
-  console.log(xmlhttp)
   fulfill({
     status: xmlhttp.status,
     response: http.responseType() ? xmlhttp.response : xmlhttp.responseText,
