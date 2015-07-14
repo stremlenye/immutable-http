@@ -9,7 +9,8 @@
     "rest"
   ],
   "scripts": {
-    "test": "karma start",
+    "test": "karma start --single-run",
+    "test:debug": "karma start",
     "test:babel": "babel test/get_test.js --out-file test/get_test_compiled.js",
     "clean": "rm -rf ./dist",
     "dist": "npm run clean && mkdir dist && webpack --progress --colors --config webpack.config.js",
@@ -44,6 +45,7 @@
     "express": "^4.13.1",
     "karma": "^0.12.37",
     "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
     "karma-mocha": "^0.2.0",
     "karma-webpack": "^1.5.1",
     "mocha": "^2.2.5",
