@@ -1,6 +1,6 @@
 /*global describe:true it:true */
 import { expect } from 'chai'
-import Http from '../src/immutable-http'
+import Http from '../src'
 
 describe('Http POST', () => {
   it('execute simple post request', () => {
@@ -8,7 +8,7 @@ describe('Http POST', () => {
 
     const client = (new Http()).withMethod('POST')
       .withUrl('http://localhost:3000')
-      .withHeader('Content-Type', 'application/json')
+      .withHeader('Content-Type', 'application/json;charset=UTF-8')
       .withHeader('Accept', 'application/json')
       .withResponseType('json')
       .withBodyProccessor(JSON.stringify)
@@ -28,7 +28,7 @@ describe('Http POST', () => {
     const client = (new Http()).withMethod('POST')
       .withUrl('http://localhost:3000/:some_segment')
       .withDynamicSegment('some_segment', 'test')
-      .withHeader('Content-Type', 'application/json')
+      .withHeader('Content-Type', 'application/json;charset=UTF-8')
       .withHeader('Accept', 'application/json')
       .withResponseType('json')
       .withBodyProccessor(JSON.stringify)

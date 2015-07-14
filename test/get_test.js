@@ -1,6 +1,6 @@
 /*global describe:true it:true */
 import { expect } from 'chai'
-import Http from '../src/immutable-http'
+import Http from '../src'
 
 describe('Http GET', () => {
   it('execute simple get request', () => {

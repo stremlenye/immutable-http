@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    'index': './src/immutable-http.js'
+    'index': './src/index.js'
   },
   output: {
     filename: '[name].js',
