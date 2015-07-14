@@ -1,45 +1,39 @@
-/*global describe:true it:true expect:true*/
-
+/*global describe:true it:true */
+import { expect } from 'chai'
 import Http from '../src/immutable-http'
 
 describe('Http GET', () => {
-  it('execute simple get request', done => {
+  it('execute simple get request', () => {
     const client = (new Http()).withMethod('GET')
       .withUrl('http://localhost:3000')
     return client.exec().then(data => {
-      done()
-      expect(data.status).toBe(200)
-      expect(data.response).toBe('some_get_info')
+      expect(data.status).to.equal(200)
+      expect(data.response).to.equal('some_get_info')
     }, reason => {
-      done()
       throw reason
     })
   })
 
-  it('execute get request with dynamic segments in the url', (done) => {
+  it('execute get request with dynamic segments in the url', () => {
     const client = (new Http()).withMethod('GET')
       .withUrl('http://localhost:3000/:some_segment')
       .withDynamicSegment('some_segment', 'test')
     return client.exec().then(data => {
-      done()
-      expect(data.status).toBe(200)
-      expect(data.response).toBe('some_get_info')
+      expect(data.status).to.equal(200)
+      expect(data.response).to.equal('some_get_info')
     }, reason => {
-      done()
-      throw reason.status
+      throw reason
     })
   })
 
-  it('execute get request with query params', (done) => {
+  it('execute get request with query params', () => {
     const client = (new Http()).withMethod('GET')
       .withUrl('http://localhost:3000/query')
       .withParam('ping', 'pong')
     return client.exec().then(data => {
-      done()
-      expect(data.status).toBe(200)
-      expect(data.response).toBe('{"ping":"pong"}')
+      expect(data.status).to.equal(200)
+      expect(data.response).to.equal('{"ping":"pong"}')
     }, reason => {
-      done()
       throw reason
     })
   })

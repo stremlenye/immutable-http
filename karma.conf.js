@@ -9,12 +9,12 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha'],
 
     plugins: [
       require('karma-webpack'),
       require('karma-chrome-launcher'),
-      require('karma-jasmine')
+      require('karma-mocha')
     ],
 
     // list of files / patterns to load in the browser
@@ -36,6 +36,7 @@ module.exports = function(config) {
     },
 
     webpack: {
+      devtool: 'source-map',
       module: {
         loaders: [
           { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
