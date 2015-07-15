@@ -32,9 +32,9 @@ result = Promise({
 Response type options could be obtained from XMLHttp [specs](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
 
 #### Build
-Using [Babel](https://babeljs.io)
+
 ```
-babel --modules common src/immutable-http.es6 --out-file lib/immutable-http.js
+npm run dist
 ```
 
 #### Tests
@@ -47,4 +47,3 @@ then
 ```
 npm test
 ```
-Built on [Jest](http://facebook.github.io/jest/)
