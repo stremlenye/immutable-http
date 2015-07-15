@@ -1,0 +1,2151 @@
+[
+  {
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/exec.js",
+    "memberof": null,
+    "longname": "src/exec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 8,
+    "content": "/**\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nfunction mixinDynamicSegmentsValues (url, dynamicSegments) {\n  let aggregator = url\n  for (let [key, value] of dynamicSegments.entries()) {\n    aggregator = aggregator.replace(`:${key}`, value)\n  }\n  return aggregator\n}\n\n/**\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nfunction addQueryParams (url, queryParams) {\n  if (queryParams.size === 0)\n    return url\n  const chanks = [queryParams.lenght]\n  for (let [key, value] of queryParams.entries()) {\n    chanks.push(`${key}=${value}`)\n  }\n  return url + '?' + chanks.join('&')\n}\n\n/**\n * Adds headers to xmlhttp object\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {Object} headers – HTTP headers key-value collection\n * @returns {Object} – XMLHttpRequest\n */\nfunction addHeaders (xmlhttp, headers) {\n  for (let [key, value] of headers.entries()) {\n    xmlhttp.setRequestHeader(key, value)\n  }\n  return xmlhttp\n}\n\n/**\n * Sets XMLHttpRequest response type\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {String} responseType – response type\n * @returns {Object} – XMLHttpRequest\n */\nfunction setResponseType (xmlhttp, responseType) {\n  if (!responseType) return xmlhttp\n  xmlhttp.responseType = responseType\n  return xmlhttp\n}\n\n/**\n * Executes if xmlhttp request succeed\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onSucceed (fulfill, http, xmlhttp) {\n  fulfill({\n    status: xmlhttp.status,\n    response: http.responseType() ? xmlhttp.response : xmlhttp.responseText,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Executes if xmlhttp request failed\n * @param {rejectCallback} reject - reject\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onFailed (reject, http, xmlhttp) {\n  reject({\n    status: xmlhttp.status,\n    response: xmlhttp.response,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Checks if status code is in range 200…299 to enshure response is in Ok state\n * @param {Number} statusCode - HTTP status code\n * @return {Boolean} true id status OK-like\n */\nfunction isStatusOkLike (statusCode) {\n  const delta = statusCode - 200\n  const isOk = delta >= 0\n  return isOk && delta < 100\n}\n\n/**\n * Cunstructs XmlHttpRequest object\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {rejectCallback} reject – reject callback\n * @returns {Object} XMLHttpRequest – XMLHttpRequest\n */\nfunction getXmlHttp (fulfill, reject) {\n  const xmlhttp = new XMLHttpRequest()\n  xmlhttp.onreadystatechange = () => {\n    if (xmlhttp.readyState !== 4)\n      return\n    if (isStatusOkLike(xmlhttp.status)) {\n      fulfill(xmlhttp)\n    } else {\n      reject(xmlhttp)\n    }\n  }\n  return xmlhttp\n}\n\n/**\n * Executes any submit type request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction submit (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())\n    url = addQueryParams(url, http.queryParams())\n\n    xmlhttp.open(http.method(), url, true)\n    setResponseType(xmlhttp, http.responseType())\n    addHeaders(xmlhttp, http.headers())\n    const body = http.bodyProcessor()(http.body())\n    xmlhttp.send(body)\n  })\n}\n\n/**\n * Executes GET request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction get (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())\n    url = addQueryParams(url, http.queryParams())\n\n    xmlhttp.open('GET', url, true)\n    addHeaders(xmlhttp, http.headers())\n    setResponseType(xmlhttp, http.responseType())\n\n    xmlhttp.send(null)\n  })\n}\n\nconst methodsHandlerMap = {\n  GET: get,\n  POST: submit,\n  PUT: submit,\n  DELETE: submit\n}\n\n/**\n * Executes validated http request\n * @param {Object} http – HTTP object\n * @returns {Object} – Promise\n */\nfunction exec (http) {\n  const handler = methodsHandlerMap[http.method()]\n  if (!handler)\n    throw `Method ${http.method} is not supported`\n  return handler(http)\n}\n\nexport default exec\n"
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "mixinDynamicSegmentsValues",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~mixinDynamicSegmentsValues",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Mixins dynamic segments replacing the `:segment_name` parts with provide\nvalues",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String} – URL"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "– URL"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "dynamicSegments",
+        "description": "– dynamic segments"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "– URL"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "addQueryParams",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~addQueryParams",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Adds query params string to url",
+    "lineNumber": 22,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String} – URL"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "– URL"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "queryParams",
+        "description": "– query params"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "– URL"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "addHeaders",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~addHeaders",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Adds headers to xmlhttp object",
+    "lineNumber": 38,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} – XMLHttpRequest"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xmlhttp",
+        "description": "– XMLHttpRequest"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "headers",
+        "description": "– HTTP headers key-value collection"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "– XMLHttpRequest"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "setResponseType",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~setResponseType",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Sets XMLHttpRequest response type",
+    "lineNumber": 51,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} – XMLHttpRequest"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xmlhttp",
+        "description": "– XMLHttpRequest"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "– response type"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "– XMLHttpRequest"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "onSucceed",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~onSucceed",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Executes if xmlhttp request succeed",
+    "lineNumber": 63,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "fulfillCallback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fulfill",
+        "description": "– fulfill callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– HTTP object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xmlhttp",
+        "description": "– XMLHttpRequest"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "onFailed",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~onFailed",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Executes if xmlhttp request failed",
+    "lineNumber": 77,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "rejectCallback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reject",
+        "description": "reject"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– HTTP object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xmlhttp",
+        "description": "– XMLHttpRequest"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "isStatusOkLike",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~isStatusOkLike",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Checks if status code is in range 200…299 to enshure response is in Ok state",
+    "lineNumber": 90,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "statusCode",
+        "description": "HTTP status code"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "true id status OK-like"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "getXmlHttp",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~getXmlHttp",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Cunstructs XmlHttpRequest object",
+    "lineNumber": 102,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} XMLHttpRequest – XMLHttpRequest"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "fulfillCallback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "fulfill",
+        "description": "– fulfill callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "rejectCallback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reject",
+        "description": "– reject callback"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "XMLHttpRequest – XMLHttpRequest"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "submit",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~submit",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Executes any submit type request",
+    "lineNumber": 121,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} - Promise"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– HTTP object"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Promise"
+    },
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "get",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~get",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Executes GET request",
+    "lineNumber": 144,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} - Promise"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– HTTP object"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Promise"
+    },
+    "generator": false
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "methodsHandlerMap",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~methodsHandlerMap",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 162,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "exec",
+    "memberof": "src/exec.js",
+    "longname": "src/exec.js~exec",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/exec.js",
+    "importStyle": null,
+    "description": "Executes validated http request",
+    "lineNumber": 174,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} – Promise"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– HTTP object"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "– Promise"
+    },
+    "generator": false
+  },
+  {
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/http.js",
+    "memberof": null,
+    "longname": "src/http.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import exec from './exec'\nimport validate from './validate'\n\nconst defaultBodyProcessor = b => b\n\n/**\n * Http request object.\n * Expose chainable API\n */\nclass Http {\n  constructor (url = null,\n      method = null, headers = new Map(), body = null, responseType = null,\n      dynamicSegments = new Map(), queryParams = new Map(),\n      bodyProcessor = defaultBodyProcessor) {\n    const internals = {\n      url, method, headers, body, responseType, dynamicSegments, queryParams,\n      bodyProcessor\n    }\n\n    /**\n     * Url getter\n     * @returns {String} URL\n     */\n    this.url = () => {\n      return internals.url\n    }\n\n    /**\n     * HTTP method getter\n     * @returns {String} HTTP method\n     */\n    this.method = () => {\n      return internals.method\n    }\n\n    /**\n     * HTTP headers getter\n     * @returns {Object} object of key-value pairs representing HTTP headers\n     */\n    this.headers = () => {\n      return internals.headers\n    }\n\n    /**\n     * Body getter\n     * @returns {Object} request body\n     */\n    this.body = () => {\n      return internals.body\n    }\n\n    /**\n     * Response type getter\n     * @returns {String} response type\n     */\n    this.responseType = () => {\n      return internals.responseType\n    }\n\n    /**\n     * Dynamic segments getter\n     * @returns {Object} object of key-value pairs <segment_name>:<value>\n     */\n    this.dynamicSegments = () => {\n      return internals.dynamicSegments\n    }\n\n    /**\n     * Query params getter\n     * @returns {Object} object of key-value pairs <param_name>:<value>\n     */\n    this.queryParams = () => {\n      return internals.queryParams\n    }\n\n    /**\n     * Body processor function\n     * @returns {function} Preprocessor function\n     */\n    this.bodyProcessor = () => {\n      return internals.bodyProcessor\n    }\n\n    return this\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   */\n  withUrl (url) {\n    return new Http(url, this.method(),\n      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   */\n  withMethod (method) {\n    return new Http(this.url(), method,\n      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Adds header to request model\n   * @param {String} header - valid header key\n   * @param {String} value - valid header value\n   * @returns {Object} Http object\n   */\n  withHeader (header, value) {\n    const headers = new Map(this.headers()).set(header, value)\n    return new Http(this.url(), this.method(),\n      headers, this.body(), this.responseType(), this.dynamicSegments(),\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   */\n  withBody (body) {\n    return new Http(this.url(), this.method(),\n      this.headers(), body, this.responseType(), this.dynamicSegments(),\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {String} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   */\n  withResponseType (responseType) {\n    return new Http(this.url(), this.method(),\n      this.headers(), this.body(), responseType, this.dynamicSegments(),\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {String} segment - segment key\n   * @param {String} value - segment value\n   * @returns {Object} Http object\n   */\n  withDynamicSegment (segment, value) {\n    const dynamicSegments = new Map(this.dynamicSegments()).set(segment, value)\n    return new Http(this.url(), this.method(),\n      this.headers(), this.body(), this.responseType(), dynamicSegments,\n      this.queryParams(), this.bodyProcessor())\n  }\n\n  /**\n   * Adds query string param\n   * @param {String} name - param key\n   * @param {String} value - param value\n   * @returns {Object} Http object\n   */\n  withParam (name, value) {\n    const queryParams = new Map(this.queryParams()).set(name, value)\n    return new Http(this.url(), this.method(),\n      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),\n      queryParams, this.bodyProcessor())\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   */\n  withBodyProccessor (bodyProcessor) {\n    return new Http(this.url(), this.method(),\n      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),\n      this.queryParams(), bodyProcessor)\n  }\n\n  /**\n   * Sets response type to 'json'\n   * @returns {Object} Http object\n   */\n  withJsonResponse () {\n    return this.withResponseType('json')\n  }\n\n  /**\n   * Predifine body sringification and Content-Type attribute.\n   * @returns {Object} Http object\n   */\n  withJsonBody () {\n    return this.withHeader('Content-Type', 'application/json')\n    .withBodyProccessor(JSON.stringify)\n  }\n\n  /**\n   * Executes HTTP request\n   * @returns {Object} - Promise\n   */\n  exec () {\n    validate(this)\n    return exec(this)\n  }\n}\n\nexport default Http\n"
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultBodyProcessor",
+    "memberof": "src/http.js",
+    "longname": "src/http.js~defaultBodyProcessor",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/http.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Http",
+    "memberof": "src/http.js",
+    "longname": "src/http.js~Http",
+    "access": null,
+    "export": true,
+    "importPath": "immutable-http/src/http.js",
+    "importStyle": "Http",
+    "description": "Http request object.\nExpose chainable API",
+    "lineNumber": 10,
+    "interface": false
+  },
+  {
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "params": [
+      {
+        "name": "url",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": null,
+        "defaultValue": "null"
+      },
+      {
+        "name": "method",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": null,
+        "defaultValue": "null"
+      },
+      {
+        "name": "headers",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "body",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": null,
+        "defaultValue": "null"
+      },
+      {
+        "name": "responseType",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": null,
+        "defaultValue": "null"
+      },
+      {
+        "name": "dynamicSegments",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "queryParams",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "bodyProcessor",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": "defaultBodyProcessor",
+        "defaultValue": "defaultBodyProcessor"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "url",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#url",
+    "access": null,
+    "description": "Url getter",
+    "lineNumber": 24,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String} URL"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "URL"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "method",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#method",
+    "access": null,
+    "description": "HTTP method getter",
+    "lineNumber": 32,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String} HTTP method"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "HTTP method"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "headers",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#headers",
+    "access": null,
+    "description": "HTTP headers getter",
+    "lineNumber": 40,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} object of key-value pairs representing HTTP headers"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "object of key-value pairs representing HTTP headers"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "body",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#body",
+    "access": null,
+    "description": "Body getter",
+    "lineNumber": 48,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} request body"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "request body"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "responseType",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#responseType",
+    "access": null,
+    "description": "Response type getter",
+    "lineNumber": 56,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String} response type"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "response type"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "dynamicSegments",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#dynamicSegments",
+    "access": null,
+    "description": "Dynamic segments getter",
+    "lineNumber": 64,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} object of key-value pairs <segment_name>:<value>"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "object of key-value pairs <segment_name>:<value>"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "queryParams",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#queryParams",
+    "access": null,
+    "description": "Query params getter",
+    "lineNumber": 72,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} object of key-value pairs <param_name>:<value>"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "object of key-value pairs <param_name>:<value>"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "bodyProcessor",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#bodyProcessor",
+    "access": null,
+    "description": "Body processor function",
+    "lineNumber": 80,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} Preprocessor function"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "Preprocessor function"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withUrl",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withUrl",
+    "access": null,
+    "description": "Adds URL information to HTTP request model",
+    "lineNumber": 92,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "URL"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withMethod",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withMethod",
+    "access": null,
+    "description": "Adds HTTP method information to request model",
+    "lineNumber": 103,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "method",
+        "description": "HTTP method"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withHeader",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withHeader",
+    "access": null,
+    "description": "Adds header to request model",
+    "lineNumber": 115,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "header",
+        "description": "valid header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "valid header value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBody",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withBody",
+    "access": null,
+    "description": "Adds body to request model",
+    "lineNumber": 127,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "body",
+        "description": "request payload"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withResponseType",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withResponseType",
+    "access": null,
+    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "lineNumber": 142,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withDynamicSegment",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withDynamicSegment",
+    "access": null,
+    "description": "Adds dynamic segment value",
+    "lineNumber": 154,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "segment",
+        "description": "segment key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "segment value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withParam",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withParam",
+    "access": null,
+    "description": "Adds query string param",
+    "lineNumber": 167,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "param key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "param value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBodyProccessor",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withBodyProccessor",
+    "access": null,
+    "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
+    "lineNumber": 180,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "func"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "bodyProcessor",
+        "description": "f(x) => valid_http_body"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withJsonResponse",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withJsonResponse",
+    "access": null,
+    "description": "Sets response type to 'json'",
+    "lineNumber": 190,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withJsonBody",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#withJsonBody",
+    "access": null,
+    "description": "Predifine body sringification and Content-Type attribute.",
+    "lineNumber": 198,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "exec",
+    "memberof": "src/http.js~Http",
+    "longname": "src/http.js~Http#exec",
+    "access": null,
+    "description": "Executes HTTP request",
+    "lineNumber": 207,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} - Promise"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Promise"
+    },
+    "generator": false
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "http",
+    "memberof": "src/http.js",
+    "longname": "src/http.js~http",
+    "access": null,
+    "export": true,
+    "importPath": "immutable-http/src/http.js",
+    "importStyle": "http",
+    "description": null,
+    "lineNumber": 213,
+    "undocument": true,
+    "type": {
+      "types": [
+        "src/http.js~Http"
+      ]
+    }
+  },
+  {
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/index.js",
+    "memberof": null,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "export { default as default } from './http'\n"
+  },
+  {
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/validate.js",
+    "memberof": null,
+    "longname": "src/validate.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 5,
+    "content": "/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n */\nfunction validateMethod (method) {\n  if (!method) {\n    throw `HTTP method is not specified`\n  }\n  if (typeof (method) !== 'string') {\n    throw `HTTP method should be type of string`\n  }\n  let supported = false\n  switch (method) {\n    case 'GET':\n    case 'POST':\n    case 'PUT':\n    case 'DELETE':\n      supported = true\n      break\n    default:\n      supported = false\n  }\n  if (supported === false) {\n    throw `Http method  ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n */\nfunction validateUrl (url) {\n  if (!url) {\n    throw `Url is not specified`\n  }\n  if (typeof (url) !== 'string') {\n    throw `Url should be type of string`\n  }\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n */\nfunction validateHeaders (headers) {\n  for (let [key, value] of headers.entries()) {\n    if (typeof (key) !== 'string') {\n      throw `Header key should be string`\n    }\n    if (typeof (value) !== 'string') {\n      throw `Header ${key} value should be string`\n    }\n  }\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n */\nfunction validateResponseType (type) {\n  switch (type) {\n    case null:\n    case '':\n    case 'arraybuffer':\n    case 'blob':\n    case 'document':\n    case 'text':\n    case 'json':\n      return\n    default:\n      throw `Response content type ${type} is not currently supported`\n  }\n}\n\n/**\n * Validate HTTP request model\n * @param {Object} http – Http object\n */\nfunction validate (http) {\n  validateUrl(http.url())\n  validateMethod(http.method())\n  validateHeaders(http.headers())\n  validateResponseType(http.responseType())\n}\n\nexport default validate\n"
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "validateMethod",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validateMethod",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Validate HTTP method",
+    "lineNumber": 5,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "method",
+        "description": "– HTTP method"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "validateUrl",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validateUrl",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Basicly validate url",
+    "lineNumber": 32,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "– URL"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "validateHeaders",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validateHeaders",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Validate headers",
+    "lineNumber": 45,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "headers",
+        "description": "– headers"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "validateResponseType",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validateResponseType",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Validates response type",
+    "lineNumber": 60,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "response type"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "validate",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validate",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Validate HTTP request model",
+    "lineNumber": 79,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "http",
+        "description": "– Http object"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  }
+]
