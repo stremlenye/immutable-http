@@ -16,7 +16,7 @@ describe('Http POST', () => {
 
     return client.exec().then(data => {
       expect(data.status).to.equal(200)
-      expect(data.text).to.equal(obj)
+      expect(data.response).to.deep.equal(obj)
     }, reason => {
       throw reason
     })
@@ -36,7 +36,7 @@ describe('Http POST', () => {
 
     return client.exec().then(data => {
       expect(data.status).to.equal(200)
-      expect(data.text).to.equal(obj)
+      expect(data.response).to.deep.equal(obj)
     }, reason => {
       throw reason
     })

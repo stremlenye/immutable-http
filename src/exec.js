@@ -129,8 +129,8 @@ function submit (http) {
     url = addQueryParams(url, http.queryParams())
 
     xmlhttp.open(http.method(), url, true)
-    addHeaders(xmlhttp, http.headers())
     setResponseType(xmlhttp, http.responseType())
+    addHeaders(xmlhttp, http.headers())
     const body = http.bodyProcessor()(http.body())
     xmlhttp.send(body)
   })
@@ -159,31 +159,11 @@ function get (http) {
   })
 }
 
-/**
- * Executes POST request
- * @param {Object} http – HTTP object
- * @returns {Object} - Promise
- */
-function post (http) {
-  return submit(http)
-}
-
-/**
- * Executes PUT request
- * @param {Object} http – HTTP object
- * @returns {Object} - Promise
- */
-function put (http) {
-  return submit(http)
-}
-
-/**
- * Executes DELETE request
- * @param {Object} http – HTTP object
- * @returns {Object} - Promise
- */
-function del (http) {
-  return submit(http)
+const methodsHandlerMap = {
+  GET: get,
+  POST: submit,
+  PUT: submit,
+  DELETE: submit
 }
 
 /**
@@ -192,18 +172,10 @@ function del (http) {
  * @returns {Object} – Promise
  */
 function exec (http) {
-  switch (http.method()) {
-    case 'GET':
-      return get(http)
-    case 'POST':
-      return post(http)
-    case 'PUT':
-      return put(http)
-    case 'DELETE':
-      return del(http)
-    default:
-      throw `Method ${http.method} is not supported`
-  }
+  const handler = methodsHandlerMap[http.method()]
+  if (!handler)
+    throw `Method ${http.method} is not supported`
+  return handler(http)
 }
 
 export default exec
