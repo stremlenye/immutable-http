@@ -6,12 +6,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "immutable-http/src/http.js~http",
-    "variable/index.html#static-variable-http",
-    "<span>http</span> <span class=\"search-result-import-path\">immutable-http/src/http.js</span>",
-    "variable"
-  ],
-  [
     "builtinexternal/ecmascriptexternal.js~array",
     "external/index.html",
     "BuiltinExternal/ECMAScriptExternal.js~Array",
