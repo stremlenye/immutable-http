@@ -1,6 +1,6 @@
 /*global describe:true it:true */
 import { expect } from 'chai'
-import Http from '../src'
+import Http from '../dist'
 
 describe('Http POST', () => {
   it('execute simple post request', () => {

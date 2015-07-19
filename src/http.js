@@ -7,7 +7,7 @@ const defaultBodyProcessor = b => b
  * Http request object.
  * Expose chainable API
  */
-class Http {
+export default class Http {
   constructor (url = null,
       method = null, headers = new Map(), body = null, responseType = null,
       dynamicSegments = new Map(), queryParams = new Map(),
@@ -209,5 +209,3 @@ class Http {
     return exec(this)
   }
 }
-
-export default Http

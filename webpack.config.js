@@ -9,7 +9,10 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
+    library: 'immutable-http',
+    libraryTarget: 'umd'
   },
+  target: 'web',
   module: {
     loaders: [
       { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
