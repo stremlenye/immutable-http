@@ -39,13 +39,7 @@
 
 
 
-<div data-ice="variableWrap">
-  <h2><a href="variable/">Variable</a></h2>
-  <ul>
-    
-  <li data-ice="variableDoc"><span><a href="variable/index.html#static-variable-http">http</a></span></li>
-</ul>
-</div>
+
 
 
 
@@ -62,7 +56,7 @@ const defaultBodyProcessor = b =&gt; b
  * Http request object.
  * Expose chainable API
  */
-class Http {
+export default class Http {
   constructor (url = null,
       method = null, headers = new Map(), body = null, responseType = null,
       dynamicSegments = new Map(), queryParams = new Map(),
@@ -264,8 +258,6 @@ class Http {
     return exec(this)
   }
 }
-
-export default Http
 </code></pre>
 </div>
 
