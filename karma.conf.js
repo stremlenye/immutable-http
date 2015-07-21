@@ -21,26 +21,29 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // 'test-main.js',
-      'test/*_test.js',
       'test/**/*_test.js'
-    ],
-
-    // list of files to exclude
-    exclude: [
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.js': ['webpack'],
       'test/**/*.js': ['webpack']
     },
 
     webpack: {
       devtool: 'source-map',
+      target: 'web',
       module: {
         loaders: [
-          { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
+          {
+            test: /\.js$/,
+            loader: 'babel',
+            exclude: /node_modules/,
+            query: {
+              optional: ['runtime'],
+              stage: 0
+            }
+          }
         ]
       }
     },
@@ -65,6 +68,9 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox']
+    browsers: [
+      'Chrome',
+      // 'Firefox'
+    ]
   })
 }

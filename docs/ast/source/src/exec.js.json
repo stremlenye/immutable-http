@@ -8645,7 +8645,7 @@
       }
     },
     {
-      "type": "FunctionDeclaration",
+      "type": "Identifier",
       "id": {
         "type": "Identifier",
         "name": "exec",
@@ -9167,7 +9167,7 @@
       ]
     },
     {
-      "type": "ExportDefaultDeclaration",
+      "type": "Identifier",
       "declaration": {
         "type": "Identifier",
         "name": "exec",
@@ -9184,8 +9184,546 @@
             "line": 181,
             "column": 19
           }
+        }
+      },
+      "range": [
+        4630,
+        4650
+      ],
+      "loc": {
+        "start": {
+          "line": 181,
+          "column": 0
         },
-        "leadingComments": [],
+        "end": {
+          "line": 182,
+          "column": 0
+        }
+      }
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "FunctionDeclaration",
+        "id": {
+          "type": "Identifier",
+          "name": "exec",
+          "range": [
+            4472,
+            4476
+          ],
+          "loc": {
+            "start": {
+              "line": 174,
+              "column": 9
+            },
+            "end": {
+              "line": 174,
+              "column": 13
+            }
+          }
+        },
+        "params": [
+          {
+            "type": "Identifier",
+            "name": "http",
+            "range": [
+              4478,
+              4482
+            ],
+            "loc": {
+              "start": {
+                "line": 174,
+                "column": 15
+              },
+              "end": {
+                "line": 174,
+                "column": 19
+              }
+            }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "Identifier",
+                    "name": "handler",
+                    "range": [
+                      4494,
+                      4501
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 175,
+                        "column": 8
+                      },
+                      "end": {
+                        "line": 175,
+                        "column": 15
+                      }
+                    }
+                  },
+                  "init": {
+                    "type": "MemberExpression",
+                    "computed": true,
+                    "object": {
+                      "type": "Identifier",
+                      "name": "methodsHandlerMap",
+                      "range": [
+                        4504,
+                        4521
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 175,
+                          "column": 18
+                        },
+                        "end": {
+                          "line": 175,
+                          "column": 35
+                        }
+                      }
+                    },
+                    "property": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "Identifier",
+                          "name": "http",
+                          "range": [
+                            4522,
+                            4526
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 175,
+                              "column": 36
+                            },
+                            "end": {
+                              "line": 175,
+                              "column": 40
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "method",
+                          "range": [
+                            4527,
+                            4533
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 175,
+                              "column": 41
+                            },
+                            "end": {
+                              "line": 175,
+                              "column": 47
+                            }
+                          }
+                        },
+                        "range": [
+                          4522,
+                          4533
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 175,
+                            "column": 36
+                          },
+                          "end": {
+                            "line": 175,
+                            "column": 47
+                          }
+                        }
+                      },
+                      "arguments": [],
+                      "range": [
+                        4522,
+                        4535
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 175,
+                          "column": 36
+                        },
+                        "end": {
+                          "line": 175,
+                          "column": 49
+                        }
+                      }
+                    },
+                    "range": [
+                      4504,
+                      4536
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 175,
+                        "column": 18
+                      },
+                      "end": {
+                        "line": 175,
+                        "column": 50
+                      }
+                    }
+                  },
+                  "range": [
+                    4494,
+                    4536
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 175,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 175,
+                      "column": 50
+                    }
+                  }
+                }
+              ],
+              "kind": "const",
+              "range": [
+                4488,
+                4539
+              ],
+              "loc": {
+                "start": {
+                  "line": 175,
+                  "column": 2
+                },
+                "end": {
+                  "line": 176,
+                  "column": 2
+                }
+              }
+            },
+            {
+              "type": "IfStatement",
+              "test": {
+                "type": "UnaryExpression",
+                "operator": "!",
+                "argument": {
+                  "type": "Identifier",
+                  "name": "handler",
+                  "range": [
+                    4544,
+                    4551
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 176,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 176,
+                      "column": 14
+                    }
+                  }
+                },
+                "prefix": true,
+                "range": [
+                  4543,
+                  4551
+                ],
+                "loc": {
+                  "start": {
+                    "line": 176,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 176,
+                    "column": 14
+                  }
+                }
+              },
+              "consequent": {
+                "type": "ThrowStatement",
+                "argument": {
+                  "type": "TemplateLiteral",
+                  "quasis": [
+                    {
+                      "type": "TemplateElement",
+                      "value": {
+                        "raw": "Method ",
+                        "cooked": "Method "
+                      },
+                      "tail": false,
+                      "range": [
+                        4563,
+                        4573
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 177,
+                          "column": 10
+                        },
+                        "end": {
+                          "line": 177,
+                          "column": 20
+                        }
+                      }
+                    },
+                    {
+                      "type": "TemplateElement",
+                      "value": {
+                        "raw": " is not supported",
+                        "cooked": " is not supported"
+                      },
+                      "tail": true,
+                      "range": [
+                        4584,
+                        4603
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 177,
+                          "column": 31
+                        },
+                        "end": {
+                          "line": 177,
+                          "column": 50
+                        }
+                      }
+                    }
+                  ],
+                  "expressions": [
+                    {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "http",
+                        "range": [
+                          4573,
+                          4577
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 177,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 177,
+                            "column": 24
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "method",
+                        "range": [
+                          4578,
+                          4584
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 177,
+                            "column": 25
+                          },
+                          "end": {
+                            "line": 177,
+                            "column": 31
+                          }
+                        }
+                      },
+                      "range": [
+                        4573,
+                        4584
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 177,
+                          "column": 20
+                        },
+                        "end": {
+                          "line": 177,
+                          "column": 31
+                        }
+                      }
+                    }
+                  ],
+                  "range": [
+                    4563,
+                    4603
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 177,
+                      "column": 10
+                    },
+                    "end": {
+                      "line": 177,
+                      "column": 50
+                    }
+                  }
+                },
+                "range": [
+                  4557,
+                  4606
+                ],
+                "loc": {
+                  "start": {
+                    "line": 177,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 178,
+                    "column": 2
+                  }
+                }
+              },
+              "alternate": null,
+              "range": [
+                4539,
+                4606
+              ],
+              "loc": {
+                "start": {
+                  "line": 176,
+                  "column": 2
+                },
+                "end": {
+                  "line": 178,
+                  "column": 2
+                }
+              }
+            },
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "Identifier",
+                  "name": "handler",
+                  "range": [
+                    4613,
+                    4620
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 178,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 178,
+                      "column": 16
+                    }
+                  }
+                },
+                "arguments": [
+                  {
+                    "type": "Identifier",
+                    "name": "http",
+                    "range": [
+                      4621,
+                      4625
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 178,
+                        "column": 17
+                      },
+                      "end": {
+                        "line": 178,
+                        "column": 21
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  4613,
+                  4626
+                ],
+                "loc": {
+                  "start": {
+                    "line": 178,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 178,
+                    "column": 22
+                  }
+                }
+              },
+              "range": [
+                4606,
+                4627
+              ],
+              "loc": {
+                "start": {
+                  "line": 178,
+                  "column": 2
+                },
+                "end": {
+                  "line": 179,
+                  "column": 0
+                }
+              }
+            }
+          ],
+          "range": [
+            4484,
+            4628
+          ],
+          "loc": {
+            "start": {
+              "line": 174,
+              "column": 21
+            },
+            "end": {
+              "line": 179,
+              "column": 1
+            }
+          }
+        },
+        "generator": false,
+        "expression": false,
+        "range": [
+          4463,
+          4628
+        ],
+        "loc": {
+          "start": {
+            "line": 174,
+            "column": 0
+          },
+          "end": {
+            "line": 179,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * Executes validated http request\n * @param {Object} http – HTTP object\n * @returns {Object} – Promise\n ",
+            "range": [
+              4351,
+              4462
+            ],
+            "loc": {
+              "start": {
+                "line": 169,
+                "column": 0
+              },
+              "end": {
+                "line": 173,
+                "column": 3
+              }
+            }
+          }
+        ],
         "trailingComments": []
       },
       "range": [
