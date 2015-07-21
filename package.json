@@ -13,7 +13,7 @@
     "doc:publish": "gh-pages -d docs",
     "test": "karma start --single-run",
     "test:debug": "karma start",
-    "test:babel": "babel test/get_test.js --out-file test/get_test_compiled.js",
+    "test:babel": "npm run dist && babel test/get_test.js --out-file test/get_test_compiled.js",
     "clean": "rm -rf ./dist",
     "dist": "npm run clean && mkdir dist && webpack --progress --colors --config webpack.config.js",
     "prepublish": "npm run dist && npm run doc && npm run doc:publish"
