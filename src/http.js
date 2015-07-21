@@ -1,3 +1,4 @@
+import { deprecate } from 'core-decorators'
 import exec from './exec'
 import validate from './validate'
 
@@ -80,8 +81,6 @@ export default class Http {
     this.bodyProcessor = () => {
       return internals.bodyProcessor
     }
-
-    return this
   }
 
   /**
@@ -89,6 +88,7 @@ export default class Http {
    * @param {string} url - URL
    * @returns {Object} Http object
    */
+  @deprecate
   withUrl (url) {
     return new Http(url, this.method(),
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
@@ -100,6 +100,7 @@ export default class Http {
    * @param {string} method - HTTP method
    * @returns {Object} Http object
    */
+  @deprecate
   withMethod (method) {
     return new Http(this.url(), method,
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
@@ -112,6 +113,7 @@ export default class Http {
    * @param {String} value - valid header value
    * @returns {Object} Http object
    */
+  @deprecate
   withHeader (header, value) {
     const headers = new Map(this.headers()).set(header, value)
     return new Http(this.url(), this.method(),
@@ -124,6 +126,7 @@ export default class Http {
    * @param {Object} body - request payload
    * @returns {Object} Http object
    */
+  @deprecate
   withBody (body) {
     return new Http(this.url(), this.method(),
       this.headers(), body, this.responseType(), this.dynamicSegments(),
@@ -139,6 +142,7 @@ export default class Http {
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
    */
+  @deprecate
   withResponseType (responseType) {
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), responseType, this.dynamicSegments(),
@@ -151,6 +155,7 @@ export default class Http {
    * @param {String} value - segment value
    * @returns {Object} Http object
    */
+  @deprecate
   withDynamicSegment (segment, value) {
     const dynamicSegments = new Map(this.dynamicSegments()).set(segment, value)
     return new Http(this.url(), this.method(),
@@ -164,6 +169,7 @@ export default class Http {
    * @param {String} value - param value
    * @returns {Object} Http object
    */
+  @deprecate
   withParam (name, value) {
     const queryParams = new Map(this.queryParams()).set(name, value)
     return new Http(this.url(), this.method(),
@@ -177,6 +183,7 @@ export default class Http {
    * @param {func} bodyProcessor - f(x) => valid_http_body
    * @returns {Object} Http object
    */
+  @deprecate
   withBodyProccessor (bodyProcessor) {
     return new Http(this.url(), this.method(),
       this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
@@ -187,6 +194,7 @@ export default class Http {
    * Sets response type to 'json'
    * @returns {Object} Http object
    */
+  @deprecate
   withJsonResponse () {
     return this.withResponseType('json')
   }
@@ -195,6 +203,7 @@ export default class Http {
    * Predifine body sringification and Content-Type attribute.
    * @returns {Object} Http object
    */
+  @deprecate
   withJsonBody () {
     return this.withHeader('Content-Type', 'application/json')
     .withBodyProccessor(JSON.stringify)
