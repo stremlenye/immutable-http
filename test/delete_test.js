@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import Http from '../dist'
 
 describe('Http DELETE', () => {
-  it('execute simple delete request', () => {
+  it.skip('execute simple delete request', () => {
     const client = (new Http()).withMethod('DELETE')
       .withUrl('http://localhost:3000/')
 

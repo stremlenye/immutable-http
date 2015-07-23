@@ -17,8 +17,13 @@ const defaultParams = {
 
 class Internals {
   constructor (params) {
-    Object.keys(params)
-      .map(key => Object.defineProperty(this, key, { get: () => params[key]}))
+    Object.entries(params)
+      .map(([key, value]) =>
+        Object.defineProperty(this, key, {
+          get: () => value,
+          enumerable: true,
+          configurable: true
+        }))
   }
 }
 
@@ -228,7 +233,7 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    validate(this.internals)
-    return exec(this.internals)
+    validate(this.internals())
+    return exec(this.internals())
   }
 }

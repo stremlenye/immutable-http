@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import Http from '../dist'
 
 describe('Http POST', () => {
-  it('execute simple post request', () => {
+  it.skip('execute simple post request', () => {
     const obj = {some: 'body'}
 
     const client = (new Http()).withMethod('POST')
@@ -22,7 +22,7 @@ describe('Http POST', () => {
     })
   })
 
-  it('execute post request with dinamic segment', () => {
+  it.skip('execute post request with dinamic segment', () => {
     const obj = {some: 'body'}
 
     const client = (new Http()).withMethod('POST')

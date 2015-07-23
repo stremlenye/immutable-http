@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import Http from '../dist'
 
 describe('Http PUT', () => {
-  it('execute simple put request', () => {
+  it.skip('execute simple put request', () => {
     const obj = { some: 'body' }
     const client = (new Http()).withMethod('PUT')
       .withUrl('http://localhost:3000/:some_segment')
