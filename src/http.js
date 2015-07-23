@@ -88,7 +88,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   header (header, value) {
-    const headers = new Map(this.internals.headers()).set(header, value)
+    const headers = new Map(this.internals.headers).set(header, value)
     return new Http(Object.assign({}, this.internals(), { headers }))
   }
 
@@ -157,7 +157,7 @@ export default class Http {
    */
   segment (segment, value) {
     const dynamicSegments
-      = new Map(this.internals.dynamicSegments()).set(segment, value)
+      = new Map(this.internals.dynamicSegments).set(segment, value)
     return new Http(Object.assign({}, this.internals(), { dynamicSegments }))
   }
 
@@ -179,7 +179,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   query (name, value) {
-    const queryParams = new Map(this.internals.queryParams()).set(name, value)
+    const queryParams = new Map(this.internals.queryParams).set(name, value)
     return new Http(Object.assign({}, this.internals(), { queryParams }))
   }
 
@@ -228,7 +228,7 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    validate(this)
-    return exec(this)
+    validate(this.internals)
+    return exec(this.internals)
   }
 }

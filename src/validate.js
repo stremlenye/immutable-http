@@ -30,6 +30,7 @@ function validateMethod (method) {
  * @param {String} url – URL
  */
 function validateUrl (url) {
+  console.log(url)
   if (!url) {
     throw `Url is not specified`
   }
@@ -77,10 +78,10 @@ function validateResponseType (type) {
  * @param {Object} http – Http object
  */
 function validate (http) {
-  validateUrl(http.url())
-  validateMethod(http.method())
-  validateHeaders(http.headers())
-  validateResponseType(http.responseType())
+  validateUrl(http.url)
+  validateMethod(http.method)
+  validateHeaders(http.headers)
+  validateResponseType(http.responseType)
 }
 
 export default validate
