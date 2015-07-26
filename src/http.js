@@ -196,7 +196,7 @@ export default class Http {
    */
   @deprecate
   withBodyProccessor (bodyProcessor) {
-    return this.bodyProccessor(bodyProcessor)
+    return this.bodyProcessor(bodyProcessor)
   }
 
   /**
