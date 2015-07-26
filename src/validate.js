@@ -11,7 +11,7 @@ function validateMethod (method) {
   if (typeof (method) !== 'string') {
     throw `HTTP method should be type of string`
   }
-  let supported = supportedMethods.includes(method)
+  let supported = supportedMethods.indexOf(method) >= 0
   if (supported === false) {
     throw `Http method  ${method} is not supported`
   }
@@ -48,7 +48,7 @@ const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
  * @param {string} type - response type
  */
 function validateResponseType (type) {
-  if (type === null || validTypes.includes(type))
+  if (type === null || validTypes.indexOf(type) >= 0)
     return
   throw `Response content type ${type} is not currently supported`
 }
