@@ -11,8 +11,8 @@
   "scripts": {
     "doc": "rm -rf docs && esdoc -c ./esdoc.json",
     "doc:publish": "gh-pages -d docs",
-    "test": "npm run dist && karma start --single-run",
-    "test:debug": "npm run dist && karma start",
+    "test": "karma start --single-run",
+    "test:debug": "karma start",
     "clean": "rm -rf ./dist",
     "dist": "npm run clean && mkdir dist && webpack --progress --colors --config webpack.config.js",
     "prepublish:supressed": "npm run dist && npm run doc && npm run doc:publish"

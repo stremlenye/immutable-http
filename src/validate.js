@@ -11,8 +11,7 @@ function validateMethod (method) {
   if (typeof (method) !== 'string') {
     throw `HTTP method should be type of string`
   }
-  let supported = supportedMethods.indexOf(method) >= 0
-  if (supported === false) {
+  if (supportedMethods.indexOf(method) < 0) {
     throw `Http method  ${method} is not supported`
   }
 }
@@ -31,14 +30,22 @@ function validateUrl (url) {
 }
 
 /**
+ * Validate header to all parts be strings
+ * @param {Object} headers – headers
+ */
+function validateHeader ({ key, value }) {
+  if (typeof (key) !== 'string' || typeof (value) !== 'string')
+    throw new Error('Headers must be strings')
+}
+
+/**
  * Validate headers
  * @param {Object} headers – headers
  */
 function validateHeaders (headers) {
-  const valid = headers.entries().some(([ key, value ]) =>
-    typeof (key) !== 'string' && typeof (value) !== 'string')
-  if (!valid)
-    throw new Error('Headers must be strings')
+  for (let header of headers.entries()) {
+    validateHeader(header)
+  }
 }
 
 const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']

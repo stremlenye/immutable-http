@@ -1,3 +1,4 @@
+var path = require('path')
 // Karma configuration
 // Generated on Tue Jul 14 2015 17:11:09 GMT+0200 (CEST)
 
@@ -20,19 +21,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // 'test-main.js',
-      'test/**/*_test.js'
+      'test/get_test.js'
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['webpack']
+      '**/*.js': ['webpack'],
     },
 
     webpack: {
       devtool: 'source-map',
-      target: 'web',
       module: {
         loaders: [
           {
@@ -40,7 +39,6 @@ module.exports = function(config) {
             loader: 'babel',
             exclude: /node_modules/,
             query: {
-              optional: ['runtime'],
               stage: 0
             }
           }

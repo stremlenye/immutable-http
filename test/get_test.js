@@ -1,6 +1,6 @@
 /*global describe:true it:true */
 import { expect } from 'chai'
-import Http from '../dist'
+import Http from '../src'
 
 describe('Http GET', () => {
   describe('Deprecated API', () => {
