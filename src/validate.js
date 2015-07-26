@@ -34,6 +34,8 @@ function validateUrl (url) {
  * @param {Object} headers – headers
  */
 function validateHeader ({ key, value }) {
+  console.log(kye);
+  console.log(value);
   if (typeof (key) !== 'string' || typeof (value) !== 'string')
     throw new Error('Headers must be strings')
 }
@@ -44,6 +46,7 @@ function validateHeader ({ key, value }) {
  */
 function validateHeaders (headers) {
   for (let header of headers.entries()) {
+    console.log(header);
     validateHeader(header)
   }
 }
