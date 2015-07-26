@@ -1,6 +1,5 @@
 var path = require('path')
-// Karma configuration
-// Generated on Tue Jul 14 2015 17:11:09 GMT+0200 (CEST)
+var webpack = require('webpack');
 
 module.exports = function(config) {
   config.set({
@@ -21,17 +20,21 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/get_test.js'
+      'test/**/*.js'
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.js': ['webpack'],
+      'src/**/*.js': ['webpack'],
+      'test/**/*.js': ['webpack']
     },
 
     webpack: {
       devtool: 'source-map',
+      // plugins: [
+      //   new webpack.PrefetchPlugin('babel/polyfill')
+      // ],
       module: {
         loaders: [
           {

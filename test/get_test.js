@@ -15,7 +15,7 @@ describe('Http GET', () => {
       })
     })
 
-    it.skip('execute get request with dynamic segments in the url', () => {
+    it('execute get request with dynamic segments in the url', () => {
       const client = (new Http()).withMethod('GET')
         .withUrl('http://localhost:3000/:some_segment')
         .withDynamicSegment('some_segment', 'test')
@@ -27,7 +27,7 @@ describe('Http GET', () => {
       })
     })
 
-    it.skip('execute get request with query params', () => {
+    it('execute get request with query params', () => {
       const client = (new Http()).withMethod('GET')
         .withUrl('http://localhost:3000/query')
         .withParam('ping', 'pong')
@@ -41,7 +41,7 @@ describe('Http GET', () => {
   })
 
   describe('Current API', () => {
-    it.skip('execute simple get request', () => {
+    it('execute simple get request', () => {
       const client = (new Http()).method('GET')
         .url('http://localhost:3000')
       return client.exec().then(data => {
@@ -52,7 +52,7 @@ describe('Http GET', () => {
       })
     })
 
-    it.skip('execute get request with dynamic segments in the url', () => {
+    it('execute get request with dynamic segments in the url', () => {
       const client = (new Http()).method('GET')
         .url('http://localhost:3000/:some_segment')
         .segment('some_segment', 'test')
@@ -64,10 +64,10 @@ describe('Http GET', () => {
       })
     })
 
-    it.skip('execute get request with query params', () => {
+    it('execute get request with query params', () => {
       const client = (new Http()).withMethod('GET')
         .url('http://localhost:3000/query')
-        .param('ping', 'pong')
+        .query('ping', 'pong')
       return client.exec().then(data => {
         expect(data.status).to.equal(200)
         expect(data.response).to.equal('{"ping":"pong"}')
