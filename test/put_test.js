@@ -23,4 +23,25 @@ describe('Http PUT', () => {
       })
     })
   })
+
+  describe('Current API', () => {
+    it('execute simple put request', () => {
+      const obj = { some: 'body' }
+      const client = (new Http()).method('PUT')
+        .url('http://localhost:3000/:some_segment')
+        .segment('some_segment', 'test')
+        .header('Content-Type', 'application/json;charset=UTF-8')
+        .header('Accept', 'application/json')
+        .bodyProcessor(JSON.stringify)
+        .body(obj)
+        .responseType('json')
+
+      return client.exec().then(data => {
+        expect(data.status).to.equal(200)
+        expect(data.response).to.deep.equal(obj)
+      }, reason => {
+        throw reason
+      })
+    })
+  })
 })

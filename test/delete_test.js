@@ -15,4 +15,17 @@ describe('Http DELETE', () => {
       })
     })
   })
+
+  describe('Current API', () => {
+    it('execute simple delete request', () => {
+      const client = (new Http()).method('DELETE')
+        .url('http://localhost:3000/')
+
+      return client.exec().then(data => {
+        expect(data.status).to.equal(200)
+      }, reason => {
+        throw reason
+      })
+    })
+  })
 })
