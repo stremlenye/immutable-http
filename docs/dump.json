@@ -9,7 +9,7 @@
     "access": null,
     "description": null,
     "lineNumber": 8,
-    "content": "/**\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nfunction mixinDynamicSegmentsValues (url, dynamicSegments) {\n  let aggregator = url\n  for (let [key, value] of dynamicSegments.entries()) {\n    aggregator = aggregator.replace(`:${key}`, value)\n  }\n  return aggregator\n}\n\n/**\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nfunction addQueryParams (url, queryParams) {\n  if (queryParams.size === 0)\n    return url\n  const chanks = [queryParams.lenght]\n  for (let [key, value] of queryParams.entries()) {\n    chanks.push(`${key}=${value}`)\n  }\n  return url + '?' + chanks.join('&')\n}\n\n/**\n * Adds headers to xmlhttp object\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {Object} headers – HTTP headers key-value collection\n * @returns {Object} – XMLHttpRequest\n */\nfunction addHeaders (xmlhttp, headers) {\n  for (let [key, value] of headers.entries()) {\n    xmlhttp.setRequestHeader(key, value)\n  }\n  return xmlhttp\n}\n\n/**\n * Sets XMLHttpRequest response type\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {String} responseType – response type\n * @returns {Object} – XMLHttpRequest\n */\nfunction setResponseType (xmlhttp, responseType) {\n  if (!responseType) return xmlhttp\n  xmlhttp.responseType = responseType\n  return xmlhttp\n}\n\n/**\n * Executes if xmlhttp request succeed\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onSucceed (fulfill, http, xmlhttp) {\n  fulfill({\n    status: xmlhttp.status,\n    response: http.responseType() ? xmlhttp.response : xmlhttp.responseText,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Executes if xmlhttp request failed\n * @param {rejectCallback} reject - reject\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onFailed (reject, http, xmlhttp) {\n  reject({\n    status: xmlhttp.status,\n    response: xmlhttp.response,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Checks if status code is in range 200…299 to enshure response is in Ok state\n * @param {Number} statusCode - HTTP status code\n * @return {Boolean} true id status OK-like\n */\nfunction isStatusOkLike (statusCode) {\n  const delta = statusCode - 200\n  const isOk = delta >= 0\n  return isOk && delta < 100\n}\n\n/**\n * Cunstructs XmlHttpRequest object\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {rejectCallback} reject – reject callback\n * @returns {Object} XMLHttpRequest – XMLHttpRequest\n */\nfunction getXmlHttp (fulfill, reject) {\n  const xmlhttp = new XMLHttpRequest()\n  xmlhttp.onreadystatechange = () => {\n    if (xmlhttp.readyState !== 4)\n      return\n    if (isStatusOkLike(xmlhttp.status)) {\n      fulfill(xmlhttp)\n    } else {\n      reject(xmlhttp)\n    }\n  }\n  return xmlhttp\n}\n\n/**\n * Executes any submit type request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction submit (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())\n    url = addQueryParams(url, http.queryParams())\n\n    xmlhttp.open(http.method(), url, true)\n    setResponseType(xmlhttp, http.responseType())\n    addHeaders(xmlhttp, http.headers())\n    const body = http.bodyProcessor()(http.body())\n    xmlhttp.send(body)\n  })\n}\n\n/**\n * Executes GET request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction get (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())\n    url = addQueryParams(url, http.queryParams())\n\n    xmlhttp.open('GET', url, true)\n    addHeaders(xmlhttp, http.headers())\n    setResponseType(xmlhttp, http.responseType())\n\n    xmlhttp.send(null)\n  })\n}\n\nconst methodsHandlerMap = {\n  GET: get,\n  POST: submit,\n  PUT: submit,\n  DELETE: submit\n}\n\n/**\n * Executes validated http request\n * @param {Object} http – HTTP object\n * @returns {Object} – Promise\n */\nfunction exec (http) {\n  const handler = methodsHandlerMap[http.method()]\n  if (!handler)\n    throw `Method ${http.method} is not supported`\n  return handler(http)\n}\n\nexport default exec\n"
+    "content": "/**\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nfunction mixinDynamicSegmentsValues (url, dynamicSegments) {\n  let aggregator = url\n  for (let [key, value] of dynamicSegments.entries()) {\n    aggregator = aggregator.replace(`:${key}`, value)\n  }\n  return aggregator\n}\n\n/**\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nfunction addQueryParams (url, queryParams) {\n  if (queryParams.size === 0)\n    return url\n  const chanks = [queryParams.lenght]\n  for (let [key, value] of queryParams.entries()) {\n    chanks.push(`${key}=${value}`)\n  }\n  return url + '?' + chanks.join('&')\n}\n\n/**\n * Adds headers to xmlhttp object\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {Object} headers – HTTP headers key-value collection\n * @returns {Object} – XMLHttpRequest\n */\nfunction addHeaders (xmlhttp, headers) {\n  for (let [key, value] of headers.entries()) {\n    xmlhttp.setRequestHeader(key, value)\n  }\n  return xmlhttp\n}\n\n/**\n * Sets XMLHttpRequest response type\n * @param {Object} xmlhttp – XMLHttpRequest\n * @param {String} responseType – response type\n * @returns {Object} – XMLHttpRequest\n */\nfunction setResponseType (xmlhttp, responseType) {\n  if (!responseType) return xmlhttp\n  xmlhttp.responseType = responseType\n  return xmlhttp\n}\n\n/**\n * Executes if xmlhttp request succeed\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onSucceed (fulfill, http, xmlhttp) {\n  fulfill({\n    status: xmlhttp.status,\n    response: http.responseType ? xmlhttp.response : xmlhttp.responseText,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Executes if xmlhttp request failed\n * @param {rejectCallback} reject - reject\n * @param {Object} http – HTTP object\n * @param {Object} xmlhttp – XMLHttpRequest\n */\nfunction onFailed (reject, http, xmlhttp) {\n  reject({\n    status: xmlhttp.status,\n    response: xmlhttp.response,\n    headers: xmlhttp.getAllResponseHeaders()\n  })\n}\n\n/**\n * Checks if status code is in range 200…299 to enshure response is in Ok state\n * @param {Number} statusCode - HTTP status code\n * @return {Boolean} true id status OK-like\n */\nfunction isStatusOkLike (statusCode) {\n  const delta = statusCode - 200\n  const isOk = delta >= 0\n  return isOk && delta < 100\n}\n\n/**\n * Cunstructs XmlHttpRequest object\n * @param {fulfillCallback} fulfill – fulfill callback\n * @param {rejectCallback} reject – reject callback\n * @returns {Object} XMLHttpRequest – XMLHttpRequest\n */\nfunction getXmlHttp (fulfill, reject) {\n  const xmlhttp = new XMLHttpRequest()\n  xmlhttp.onreadystatechange = () => {\n    if (xmlhttp.readyState !== 4)\n      return\n    if (isStatusOkLike(xmlhttp.status)) {\n      fulfill(xmlhttp)\n    } else {\n      reject(xmlhttp)\n    }\n  }\n  return xmlhttp\n}\n\n/**\n * Executes any submit type request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction submit (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)\n    url = addQueryParams(url, http.queryParams)\n\n    xmlhttp.open(http.method, url, true)\n    setResponseType(xmlhttp, http.responseType)\n    addHeaders(xmlhttp, http.headers)\n    const body = http.bodyProcessor(http.body)\n    xmlhttp.send(body)\n  })\n}\n\n/**\n * Executes GET request\n * @param {Object} http – HTTP object\n * @returns {Object} - Promise\n */\nfunction get (http) {\n  return new Promise((fulfill, reject) => {\n    const xmlhttp = getXmlHttp(\n      onSucceed.bind(this, fulfill, http),\n      onFailed.bind(this, reject, http)\n    )\n\n    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)\n    url = addQueryParams(url, http.queryParams)\n\n    xmlhttp.open('GET', url, true)\n    addHeaders(xmlhttp, http.headers)\n    setResponseType(xmlhttp, http.responseType)\n\n    xmlhttp.send(null)\n  })\n}\n\nconst methodsHandlerMap = {\n  GET: get,\n  POST: submit,\n  PUT: submit,\n  DELETE: submit\n}\n\n/**\n * Executes validated http request\n * @param {Object} http – HTTP object\n * @returns {Object} – Promise\n */\nfunction exec (http) {\n  const handler = methodsHandlerMap[http.method]\n  if (!handler)\n    throw `Method ${http.method} is not supported`\n  return handler(http)\n}\n\nexport default exec\n"
   },
   {
     "kind": "function",
@@ -559,8 +559,28 @@
     "longname": "src/validate.js",
     "access": null,
     "description": null,
-    "lineNumber": 5,
-    "content": "/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n */\nfunction validateMethod (method) {\n  if (!method) {\n    throw `HTTP method is not specified`\n  }\n  if (typeof (method) !== 'string') {\n    throw `HTTP method should be type of string`\n  }\n  let supported = false\n  switch (method) {\n    case 'GET':\n    case 'POST':\n    case 'PUT':\n    case 'DELETE':\n      supported = true\n      break\n    default:\n      supported = false\n  }\n  if (supported === false) {\n    throw `Http method  ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n */\nfunction validateUrl (url) {\n  if (!url) {\n    throw `Url is not specified`\n  }\n  if (typeof (url) !== 'string') {\n    throw `Url should be type of string`\n  }\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n */\nfunction validateHeaders (headers) {\n  for (let [key, value] of headers.entries()) {\n    if (typeof (key) !== 'string') {\n      throw `Header key should be string`\n    }\n    if (typeof (value) !== 'string') {\n      throw `Header ${key} value should be string`\n    }\n  }\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n */\nfunction validateResponseType (type) {\n  switch (type) {\n    case null:\n    case '':\n    case 'arraybuffer':\n    case 'blob':\n    case 'document':\n    case 'text':\n    case 'json':\n      return\n    default:\n      throw `Response content type ${type} is not currently supported`\n  }\n}\n\n/**\n * Validate HTTP request model\n * @param {Object} http – Http object\n */\nfunction validate (http) {\n  validateUrl(http.url())\n  validateMethod(http.method())\n  validateHeaders(http.headers())\n  validateResponseType(http.responseType())\n}\n\nexport default validate\n"
+    "lineNumber": 1,
+    "content": "const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']\n\n/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n */\nfunction validateMethod (method) {\n  if (!method) {\n    throw `HTTP method is not specified`\n  }\n  if (typeof (method) !== 'string') {\n    throw `HTTP method should be type of string`\n  }\n  if (supportedMethods.indexOf(method) < 0) {\n    throw `Http method  ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n */\nfunction validateUrl (url) {\n  if (!url) {\n    throw `Url is not specified`\n  }\n  if (typeof (url) !== 'string') {\n    throw `Url should be type of string`\n  }\n}\n\n/**\n * Validate header to all parts be strings\n * @param {String} key – Header key\n * @param {String} value – Header value\n */\nfunction validateHeader (key, value) {\n  if (typeof (key) !== 'string' || typeof (value) !== 'string')\n    throw new Error('Headers must be strings')\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n */\nfunction validateHeaders (headers) {\n  for (let [key, value] of headers.entries()) {\n    validateHeader(key, value)\n  }\n}\n\nconst validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']\n\n/**\n * Validates response type\n * @param {string} type - response type\n */\nfunction validateResponseType (type) {\n  if (type === null || validTypes.indexOf(type) >= 0)\n    return\n  throw `Response content type ${type} is not currently supported`\n}\n\n/**\n * Validate HTTP request model\n * @param {Object} http – Http object\n */\nfunction validate (http) {\n  validateUrl(http.url)\n  validateMethod(http.method)\n  validateHeaders(http.headers)\n  validateResponseType(http.responseType)\n}\n\nexport default validate\n"
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "supportedMethods",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~supportedMethods",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
   },
   {
     "kind": "function",
@@ -574,7 +594,7 @@
     "importPath": "immutable-http/src/validate.js",
     "importStyle": null,
     "description": "Validate HTTP method",
-    "lineNumber": 5,
+    "lineNumber": 7,
     "params": [
       {
         "nullable": null,
@@ -601,7 +621,7 @@
     "importPath": "immutable-http/src/validate.js",
     "importStyle": null,
     "description": "Basicly validate url",
-    "lineNumber": 32,
+    "lineNumber": 23,
     "params": [
       {
         "nullable": null,
@@ -620,6 +640,43 @@
     "kind": "function",
     "static": true,
     "variation": null,
+    "name": "validateHeader",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validateHeader",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": "Validate header to all parts be strings",
+    "lineNumber": 37,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "– Header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "– Header value"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "function",
+    "static": true,
+    "variation": null,
     "name": "validateHeaders",
     "memberof": "src/validate.js",
     "longname": "src/validate.js~validateHeaders",
@@ -628,7 +685,7 @@
     "importPath": "immutable-http/src/validate.js",
     "importStyle": null,
     "description": "Validate headers",
-    "lineNumber": 45,
+    "lineNumber": 46,
     "params": [
       {
         "nullable": null,
@@ -644,6 +701,26 @@
     "generator": false
   },
   {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "validTypes",
+    "memberof": "src/validate.js",
+    "longname": "src/validate.js~validTypes",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/validate.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 52,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
     "kind": "function",
     "static": true,
     "variation": null,
@@ -655,7 +732,7 @@
     "importPath": "immutable-http/src/validate.js",
     "importStyle": null,
     "description": "Validates response type",
-    "lineNumber": 60,
+    "lineNumber": 58,
     "params": [
       {
         "nullable": null,
@@ -682,7 +759,7 @@
     "importPath": "immutable-http/src/validate.js",
     "importStyle": "validate",
     "description": "Validate HTTP request model",
-    "lineNumber": 79,
+    "lineNumber": 68,
     "params": [
       {
         "nullable": null,

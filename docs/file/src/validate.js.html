@@ -48,7 +48,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/validate.js</h1>
-<pre class="source-code line-number"><code class="prettyprint linenums" data-ice="content">/**
+<pre class="source-code line-number"><code class="prettyprint linenums" data-ice="content">const supportedMethods = [&apos;GET&apos;, &apos;POST&apos;, &apos;PUT&apos;, &apos;DELETE&apos;]
+
+/**
  * Validate HTTP method
  * @param {String} method &#x2013; HTTP method
  */
@@ -59,18 +61,7 @@ function validateMethod (method) {
   if (typeof (method) !== &apos;string&apos;) {
     throw `HTTP method should be type of string`
   }
-  let supported = false
-  switch (method) {
-    case &apos;GET&apos;:
-    case &apos;POST&apos;:
-    case &apos;PUT&apos;:
-    case &apos;DELETE&apos;:
-      supported = true
-      break
-    default:
-      supported = false
-  }
-  if (supported === false) {
+  if (supportedMethods.indexOf(method) &lt; 0) {
     throw `Http method  ${method} is not supported`
   }
 }
@@ -89,37 +80,35 @@ function validateUrl (url) {
 }
 
 /**
+ * Validate header to all parts be strings
+ * @param {String} key &#x2013; Header key
+ * @param {String} value &#x2013; Header value
+ */
+function validateHeader (key, value) {
+  if (typeof (key) !== &apos;string&apos; || typeof (value) !== &apos;string&apos;)
+    throw new Error(&apos;Headers must be strings&apos;)
+}
+
+/**
  * Validate headers
  * @param {Object} headers &#x2013; headers
  */
 function validateHeaders (headers) {
   for (let [key, value] of headers.entries()) {
-    if (typeof (key) !== &apos;string&apos;) {
-      throw `Header key should be string`
-    }
-    if (typeof (value) !== &apos;string&apos;) {
-      throw `Header ${key} value should be string`
-    }
+    validateHeader(key, value)
   }
 }
+
+const validTypes = [&apos;&apos;, &apos;arraybuffer&apos;, &apos;blob&apos;, &apos;document&apos;, &apos;text&apos;, &apos;json&apos;]
 
 /**
  * Validates response type
  * @param {string} type - response type
  */
 function validateResponseType (type) {
-  switch (type) {
-    case null:
-    case &apos;&apos;:
-    case &apos;arraybuffer&apos;:
-    case &apos;blob&apos;:
-    case &apos;document&apos;:
-    case &apos;text&apos;:
-    case &apos;json&apos;:
-      return
-    default:
-      throw `Response content type ${type} is not currently supported`
-  }
+  if (type === null || validTypes.indexOf(type) &gt;= 0)
+    return
+  throw `Response content type ${type} is not currently supported`
 }
 
 /**
@@ -127,10 +116,10 @@ function validateResponseType (type) {
  * @param {Object} http &#x2013; Http object
  */
 function validate (http) {
-  validateUrl(http.url())
-  validateMethod(http.method())
-  validateHeaders(http.headers())
-  validateResponseType(http.responseType())
+  validateUrl(http.url)
+  validateMethod(http.method)
+  validateHeaders(http.headers)
+  validateResponseType(http.responseType)
 }
 
 export default validate
