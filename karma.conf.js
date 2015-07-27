@@ -1,5 +1,5 @@
-// Karma configuration
-// Generated on Tue Jul 14 2015 17:11:09 GMT+0200 (CEST)
+var path = require('path')
+var webpack = require('webpack');
 
 module.exports = function(config) {
   config.set({
@@ -20,13 +20,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // 'test-main.js',
-      'test/*_test.js',
-      'test/**/*_test.js'
-    ],
-
-    // list of files to exclude
-    exclude: [
+      'test/**/*.js'
     ],
 
     // preprocess matching files before serving them to the browser
@@ -38,9 +32,19 @@ module.exports = function(config) {
 
     webpack: {
       devtool: 'source-map',
+      // plugins: [
+      //   new webpack.PrefetchPlugin('babel/polyfill')
+      // ],
       module: {
         loaders: [
-          { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
+          {
+            test: /\.js$/,
+            loader: 'babel',
+            exclude: /node_modules/,
+            query: {
+              stage: 0
+            }
+          }
         ]
       }
     },
@@ -65,6 +69,9 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox']
+    browsers: [
+      'Chrome',
+      // 'Firefox'
+    ]
   })
 }

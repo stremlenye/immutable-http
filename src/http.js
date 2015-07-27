@@ -1,87 +1,40 @@
+import { deprecate } from 'core-decorators'
 import exec from './exec'
 import validate from './validate'
 
 const defaultBodyProcessor = b => b
+
+const defaultParams = {
+  url: null,
+  method: null,
+  headers: new Map(),
+  body: null,
+  responseType: null,
+  dynamicSegments: new Map(),
+  queryParams: new Map(),
+  bodyProcessor: defaultBodyProcessor
+}
+
+class Internals {
+  constructor (params) {
+    Object.entries(params)
+      .map(([key, value]) =>
+        Object.defineProperty(this, key, {
+          get: () => value,
+          enumerable: true,
+          configurable: true
+        }))
+  }
+}
 
 /**
  * Http request object.
  * Expose chainable API
  */
 export default class Http {
-  constructor (url = null,
-      method = null, headers = new Map(), body = null, responseType = null,
-      dynamicSegments = new Map(), queryParams = new Map(),
-      bodyProcessor = defaultBodyProcessor) {
-    const internals = {
-      url, method, headers, body, responseType, dynamicSegments, queryParams,
-      bodyProcessor
-    }
-
-    /**
-     * Url getter
-     * @returns {String} URL
-     */
-    this.url = () => {
-      return internals.url
-    }
-
-    /**
-     * HTTP method getter
-     * @returns {String} HTTP method
-     */
-    this.method = () => {
-      return internals.method
-    }
-
-    /**
-     * HTTP headers getter
-     * @returns {Object} object of key-value pairs representing HTTP headers
-     */
-    this.headers = () => {
-      return internals.headers
-    }
-
-    /**
-     * Body getter
-     * @returns {Object} request body
-     */
-    this.body = () => {
-      return internals.body
-    }
-
-    /**
-     * Response type getter
-     * @returns {String} response type
-     */
-    this.responseType = () => {
-      return internals.responseType
-    }
-
-    /**
-     * Dynamic segments getter
-     * @returns {Object} object of key-value pairs <segment_name>:<value>
-     */
-    this.dynamicSegments = () => {
-      return internals.dynamicSegments
-    }
-
-    /**
-     * Query params getter
-     * @returns {Object} object of key-value pairs <param_name>:<value>
-     */
-    this.queryParams = () => {
-      return internals.queryParams
-    }
-
-    /**
-     * Body processor function
-     * @returns {function} Preprocessor function
-     */
-    this.bodyProcessor = () => {
-      return internals.bodyProcessor
-    }
-
-    return this
+  constructor (params = defaultParams) {
+    const internals = new Internals(params)
+    this.internals = () => internals
   }
 
   /**
@@ -89,10 +42,18 @@ export default class Http {
    * @param {string} url - URL
    * @returns {Object} Http object
    */
+  @deprecate
   withUrl (url) {
-    return new Http(url, this.method(),
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams(), this.bodyProcessor())
+    return this.url(url)
+  }
+
+  /**
+   * Adds URL information to HTTP request model
+   * @param {string} url - URL
+   * @returns {Object} Http object
+   */
+  url (url) {
+    return new Http(Object.assign({}, this.internals(), { url }))
   }
 
   /**
@@ -100,10 +61,18 @@ export default class Http {
    * @param {string} method - HTTP method
    * @returns {Object} Http object
    */
+  @deprecate
   withMethod (method) {
-    return new Http(this.url(), method,
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams(), this.bodyProcessor())
+    return this.method(method)
+  }
+
+  /**
+   * Adds HTTP method information to request model
+   * @param {string} method - HTTP method
+   * @returns {Object} Http object
+   */
+  method (method) {
+    return new Http(Object.assign({}, this.internals(), { method }))
   }
 
   /**
@@ -112,11 +81,20 @@ export default class Http {
    * @param {String} value - valid header value
    * @returns {Object} Http object
    */
+  @deprecate
   withHeader (header, value) {
-    const headers = new Map(this.headers()).set(header, value)
-    return new Http(this.url(), this.method(),
-      headers, this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams(), this.bodyProcessor())
+    return this.header(header, value)
+  }
+
+  /**
+   * Adds header to request model
+   * @param {String} header - valid header key
+   * @param {String} value - valid header value
+   * @returns {Object} Http object
+   */
+  header (header, value) {
+    const headers = new Map(this.internals().headers).set(header, value)
+    return new Http(Object.assign({}, this.internals(), { headers }))
   }
 
   /**
@@ -124,10 +102,18 @@ export default class Http {
    * @param {Object} body - request payload
    * @returns {Object} Http object
    */
+  @deprecate
   withBody (body) {
-    return new Http(this.url(), this.method(),
-      this.headers(), body, this.responseType(), this.dynamicSegments(),
-      this.queryParams(), this.bodyProcessor())
+    return this.body(body)
+  }
+
+  /**
+   * Adds body to request model
+   * @param {Object} body - request payload
+   * @returns {Object} Http object
+   */
+  body (body) {
+    return new Http(Object.assign({}, this.internals(), { body }))
   }
 
   /**
@@ -139,10 +125,22 @@ export default class Http {
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
    */
+  @deprecate
   withResponseType (responseType) {
-    return new Http(this.url(), this.method(),
-      this.headers(), this.body(), responseType, this.dynamicSegments(),
-      this.queryParams(), this.bodyProcessor())
+    return this.responseType(responseType)
+  }
+
+  /**
+   * Sets response content type
+   * Proper values could be obtained form XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @param {String} responseType - Proper values could be obtained form
+   * XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @returns {Object} Http object
+   */
+  responseType (responseType) {
+    return new Http(Object.assign({}, this.internals(), { responseType }))
   }
 
   /**
@@ -151,11 +149,21 @@ export default class Http {
    * @param {String} value - segment value
    * @returns {Object} Http object
    */
+  @deprecate
   withDynamicSegment (segment, value) {
-    const dynamicSegments = new Map(this.dynamicSegments()).set(segment, value)
-    return new Http(this.url(), this.method(),
-      this.headers(), this.body(), this.responseType(), dynamicSegments,
-      this.queryParams(), this.bodyProcessor())
+    return this.segment(segment, value)
+  }
+
+  /**
+   * Adds dynamic segment value
+   * @param {String} segment - segment key
+   * @param {String} value - segment value
+   * @returns {Object} Http object
+   */
+  segment (segment, value) {
+    const dynamicSegments
+      = new Map(this.internals().dynamicSegments).set(segment, value)
+    return new Http(Object.assign({}, this.internals(), { dynamicSegments }))
   }
 
   /**
@@ -164,11 +172,20 @@ export default class Http {
    * @param {String} value - param value
    * @returns {Object} Http object
    */
+  @deprecate
   withParam (name, value) {
-    const queryParams = new Map(this.queryParams()).set(name, value)
-    return new Http(this.url(), this.method(),
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      queryParams, this.bodyProcessor())
+    return this.query(name, value)
+  }
+
+  /**
+   * Adds query string param
+   * @param {String} name - param key
+   * @param {String} value - param value
+   * @returns {Object} Http object
+   */
+  query (name, value) {
+    const queryParams = new Map(this.internals().queryParams).set(name, value)
+    return new Http(Object.assign({}, this.internals(), { queryParams }))
   }
 
   /**
@@ -177,16 +194,26 @@ export default class Http {
    * @param {func} bodyProcessor - f(x) => valid_http_body
    * @returns {Object} Http object
    */
+  @deprecate
   withBodyProccessor (bodyProcessor) {
-    return new Http(this.url(), this.method(),
-      this.headers(), this.body(), this.responseType(), this.dynamicSegments(),
-      this.queryParams(), bodyProcessor)
+    return this.bodyProcessor(bodyProcessor)
+  }
+
+  /**
+   * Sets the function which gets the body object as a parameter
+   * which result would be used as a request body
+   * @param {func} bodyProcessor - f(x) => valid_http_body
+   * @returns {Object} Http object
+   */
+  bodyProcessor (bodyProcessor) {
+    return new Http(Object.assign({}, this.internals(), { bodyProcessor }))
   }
 
   /**
    * Sets response type to 'json'
    * @returns {Object} Http object
    */
+  @deprecate
   withJsonResponse () {
     return this.withResponseType('json')
   }
@@ -195,6 +222,7 @@ export default class Http {
    * Predifine body sringification and Content-Type attribute.
    * @returns {Object} Http object
    */
+  @deprecate
   withJsonBody () {
     return this.withHeader('Content-Type', 'application/json')
     .withBodyProccessor(JSON.stringify)
@@ -205,7 +233,7 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    validate(this)
-    return exec(this)
+    validate(this.internals())
+    return exec(this.internals())
   }
 }

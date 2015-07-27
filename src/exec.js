@@ -63,7 +63,7 @@ function setResponseType (xmlhttp, responseType) {
 function onSucceed (fulfill, http, xmlhttp) {
   fulfill({
     status: xmlhttp.status,
-    response: http.responseType() ? xmlhttp.response : xmlhttp.responseText,
+    response: http.responseType ? xmlhttp.response : xmlhttp.responseText,
     headers: xmlhttp.getAllResponseHeaders()
   })
 }
@@ -125,13 +125,13 @@ function submit (http) {
       onFailed.bind(this, reject, http)
     )
 
-    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())
-    url = addQueryParams(url, http.queryParams())
+    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)
+    url = addQueryParams(url, http.queryParams)
 
-    xmlhttp.open(http.method(), url, true)
-    setResponseType(xmlhttp, http.responseType())
-    addHeaders(xmlhttp, http.headers())
-    const body = http.bodyProcessor()(http.body())
+    xmlhttp.open(http.method, url, true)
+    setResponseType(xmlhttp, http.responseType)
+    addHeaders(xmlhttp, http.headers)
+    const body = http.bodyProcessor(http.body)
     xmlhttp.send(body)
   })
 }
@@ -148,12 +148,12 @@ function get (http) {
       onFailed.bind(this, reject, http)
     )
 
-    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments())
-    url = addQueryParams(url, http.queryParams())
+    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)
+    url = addQueryParams(url, http.queryParams)
 
     xmlhttp.open('GET', url, true)
-    addHeaders(xmlhttp, http.headers())
-    setResponseType(xmlhttp, http.responseType())
+    addHeaders(xmlhttp, http.headers)
+    setResponseType(xmlhttp, http.responseType)
 
     xmlhttp.send(null)
   })
@@ -172,7 +172,7 @@ const methodsHandlerMap = {
  * @returns {Object} – Promise
  */
 function exec (http) {
-  const handler = methodsHandlerMap[http.method()]
+  const handler = methodsHandlerMap[http.method]
   if (!handler)
     throw `Method ${http.method} is not supported`
   return handler(http)
