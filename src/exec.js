@@ -125,10 +125,10 @@ function submit (http) {
       onFailed.bind(this, reject, http)
     )
 
-    let url = mixinDynamicSegmentsValues(http.url(), http.dynamicSegments)
+    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)
     url = addQueryParams(url, http.queryParams)
 
-    xmlhttp.open(http.method(), url, true)
+    xmlhttp.open(http.method, url, true)
     setResponseType(xmlhttp, http.responseType)
     addHeaders(xmlhttp, http.headers)
     const body = http.bodyProcessor(http.body)
