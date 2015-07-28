@@ -46,13 +46,7 @@
 </ul>
 </div>
 
-<div data-ice="variableWrap">
-  <h2><a href="variable/">Variable</a></h2>
-  <ul>
-    
-  <li data-ice="variableDoc"><span><a href="variable/index.html#static-variable-http">http</a></span></li>
-</ul>
-</div>
+
 
 
 
@@ -63,13 +57,13 @@
 <p><a href="http://badge.fury.io/js/immutable-http"><img src="https://badge.fury.io/js/immutable-http.svg" alt="npm version"></a></p>
 <p>Http client with pretty simple chaining API</p>
 <h4 id="usage">Usage</h4>
-<pre><code><pre class="source-code"><code class="prettyprint">var result = new Http().withUrl(&apos;http://any_api.com/:id&apos;)
-                        .withMethod(&apos;GET&apos;)
-                        .withHeader(&apos;Content-Type&apos;,&apos;application/json&apos;)
-                        .withBody({some:data})
-                        .withResponseType(&apos;json&apos;)
-                        .withDynamicSegment(&apos;id&apos;,123)
-                        .withParam(&apos;filter&apos;,&apos;some_filter&apos;) // Adds query section to the url like &apos;?filter=some_filter&apos;
+<pre><code><pre class="source-code"><code class="prettyprint">var result = new Http().url(&apos;http://any_api.com/:id&apos;)
+                        .method(&apos;GET&apos;)
+                        .header(&apos;Content-Type&apos;,&apos;application/json&apos;)
+                        .body({some:data})
+                        .responseType(&apos;json&apos;)
+                        .segment(&apos;id&apos;,123)
+                        .query(&apos;filter&apos;,&apos;some_filter&apos;) // Adds query section for the url like &apos;?filter=some_filter&apos;
                         .exec();</code></pre>
 </code></pre><pre><code><pre class="source-code"><code class="prettyprint">result = Promise({
   status: int,

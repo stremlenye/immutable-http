@@ -12,12 +12,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "immutable-http/src/index.js~http",
-    "variable/index.html#static-variable-http",
-    "<span>http</span> <span class=\"search-result-import-path\">immutable-http/src/index.js</span>",
-    "variable"
-  ],
-  [
     "immutable-http/src/validate.js~validate",
     "function/index.html#static-function-validate",
     "<span>validate</span> <span class=\"search-result-import-path\">immutable-http/src/validate.js</span>",
