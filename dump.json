@@ -542,18 +542,6 @@
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/index.js",
-    "memberof": null,
-    "longname": "src/index.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "export { default as default } from './http'\n"
-  },
-  {
-    "kind": "file",
-    "static": true,
-    "variation": null,
     "name": "src/validate.js",
     "memberof": null,
     "longname": "src/validate.js",

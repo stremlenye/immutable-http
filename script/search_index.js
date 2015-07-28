@@ -342,12 +342,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.js",
-    "file/src/index.js.html",
-    "src/index.js",
-    "file"
-  ],
-  [
     "src/validate.js",
     "file/src/validate.js.html",
     "src/validate.js",
