@@ -27,7 +27,13 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav">
+<nav class="navigation" data-ice="nav"><div data-ice="classWrap">
+  <h2>Class</h2>
+  <ul>
+    
+  <li data-ice="classDoc"><span><a href="class/src/index.js~Http.html">Http</a></span></li>
+</ul>
+</div>
 
 
 
@@ -40,7 +46,13 @@
 </ul>
 </div>
 
-
+<div data-ice="variableWrap">
+  <h2><a href="variable/">Variable</a></h2>
+  <ul>
+    
+  <li data-ice="variableDoc"><span><a href="variable/index.html#static-variable-http">http</a></span></li>
+</ul>
+</div>
 
 
 
@@ -48,7 +60,247 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
-<pre class="source-code line-number"><code class="prettyprint linenums" data-ice="content">export { default as default } from &apos;./http&apos;
+<pre class="source-code line-number"><code class="prettyprint linenums" data-ice="content">import { deprecate } from &apos;core-decorators&apos;
+import exec from &apos;./exec&apos;
+import validate from &apos;./validate&apos;
+
+const defaultBodyProcessor = b =&gt; b
+
+const defaultParams = {
+  url: null,
+  method: null,
+  headers: new Map(),
+  body: null,
+  responseType: null,
+  dynamicSegments: new Map(),
+  queryParams: new Map(),
+  bodyProcessor: defaultBodyProcessor
+}
+
+class Internals {
+  constructor (params) {
+    Object.entries(params)
+      .map(([key, value]) =&gt;
+        Object.defineProperty(this, key, {
+          get: () =&gt; value,
+          enumerable: true,
+          configurable: true
+        }))
+  }
+}
+
+/**
+ * Http request object.
+ * Expose chainable API
+ */
+class Http {
+  constructor (params = defaultParams) {
+    const internals = new Internals(params)
+    this.internals = () =&gt; internals
+  }
+
+  /**
+   * Adds URL information to HTTP request model
+   * @param {string} url - URL
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withUrl (url) {
+    return this.url(url)
+  }
+
+  /**
+   * Adds URL information to HTTP request model
+   * @param {string} url - URL
+   * @returns {Object} Http object
+   */
+  url (url) {
+    return new Http(Object.assign({}, this.internals(), { url }))
+  }
+
+  /**
+   * Adds HTTP method information to request model
+   * @param {string} method - HTTP method
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withMethod (method) {
+    return this.method(method)
+  }
+
+  /**
+   * Adds HTTP method information to request model
+   * @param {string} method - HTTP method
+   * @returns {Object} Http object
+   */
+  method (method) {
+    return new Http(Object.assign({}, this.internals(), { method }))
+  }
+
+  /**
+   * Adds header to request model
+   * @param {String} header - valid header key
+   * @param {String} value - valid header value
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withHeader (header, value) {
+    return this.header(header, value)
+  }
+
+  /**
+   * Adds header to request model
+   * @param {String} header - valid header key
+   * @param {String} value - valid header value
+   * @returns {Object} Http object
+   */
+  header (header, value) {
+    const headers = new Map(this.internals().headers).set(header, value)
+    return new Http(Object.assign({}, this.internals(), { headers }))
+  }
+
+  /**
+   * Adds body to request model
+   * @param {Object} body - request payload
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withBody (body) {
+    return this.body(body)
+  }
+
+  /**
+   * Adds body to request model
+   * @param {Object} body - request payload
+   * @returns {Object} Http object
+   */
+  body (body) {
+    return new Http(Object.assign({}, this.internals(), { body }))
+  }
+
+  /**
+   * Sets response content type
+   * Proper values could be obtained form XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @param {String} responseType - Proper values could be obtained form
+   * XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withResponseType (responseType) {
+    return this.responseType(responseType)
+  }
+
+  /**
+   * Sets response content type
+   * Proper values could be obtained form XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @param {String} responseType - Proper values could be obtained form
+   * XmlHttpRequest specification
+   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+   * @returns {Object} Http object
+   */
+  responseType (responseType) {
+    return new Http(Object.assign({}, this.internals(), { responseType }))
+  }
+
+  /**
+   * Adds dynamic segment value
+   * @param {String} segment - segment key
+   * @param {String} value - segment value
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withDynamicSegment (segment, value) {
+    return this.segment(segment, value)
+  }
+
+  /**
+   * Adds dynamic segment value
+   * @param {String} segment - segment key
+   * @param {String} value - segment value
+   * @returns {Object} Http object
+   */
+  segment (segment, value) {
+    const dynamicSegments
+      = new Map(this.internals().dynamicSegments).set(segment, value)
+    return new Http(Object.assign({}, this.internals(), { dynamicSegments }))
+  }
+
+  /**
+   * Adds query string param
+   * @param {String} name - param key
+   * @param {String} value - param value
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withParam (name, value) {
+    return this.query(name, value)
+  }
+
+  /**
+   * Adds query string param
+   * @param {String} name - param key
+   * @param {String} value - param value
+   * @returns {Object} Http object
+   */
+  query (name, value) {
+    const queryParams = new Map(this.internals().queryParams).set(name, value)
+    return new Http(Object.assign({}, this.internals(), { queryParams }))
+  }
+
+  /**
+   * Sets the function which gets the body object as a parameter
+   * which result would be used as a request body
+   * @param {func} bodyProcessor - f(x) =&gt; valid_http_body
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withBodyProccessor (bodyProcessor) {
+    return this.bodyProcessor(bodyProcessor)
+  }
+
+  /**
+   * Sets the function which gets the body object as a parameter
+   * which result would be used as a request body
+   * @param {func} bodyProcessor - f(x) =&gt; valid_http_body
+   * @returns {Object} Http object
+   */
+  bodyProcessor (bodyProcessor) {
+    return new Http(Object.assign({}, this.internals(), { bodyProcessor }))
+  }
+
+  /**
+   * Sets response type to &apos;json&apos;
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withJsonResponse () {
+    return this.withResponseType(&apos;json&apos;)
+  }
+
+  /**
+   * Predifine body sringification and Content-Type attribute.
+   * @returns {Object} Http object
+   * @deprecated since version 2.0
+   */
+  withJsonBody () {
+    return this.withHeader(&apos;Content-Type&apos;, &apos;application/json&apos;)
+    .withBodyProccessor(JSON.stringify)
+  }
+
+  /**
+   * Executes HTTP request
+   * @returns {Object} - Promise
+   */
+  exec () {
+    validate(this.internals())
+    return exec(this.internals())
+  }
+}
+
+export default Http
 </code></pre>
 </div>
 
