@@ -542,6 +542,930 @@
     "kind": "file",
     "static": true,
     "variation": null,
+    "name": "src/index.js",
+    "memberof": null,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { deprecate } from 'core-decorators'\nimport exec from './exec'\nimport validate from './validate'\n\nconst defaultBodyProcessor = b => b\n\nconst defaultParams = {\n  url: null,\n  method: null,\n  headers: new Map(),\n  body: null,\n  responseType: null,\n  dynamicSegments: new Map(),\n  queryParams: new Map(),\n  bodyProcessor: defaultBodyProcessor\n}\n\nclass Internals {\n  constructor (params) {\n    Object.entries(params)\n      .map(([key, value]) =>\n        Object.defineProperty(this, key, {\n          get: () => value,\n          enumerable: true,\n          configurable: true\n        }))\n  }\n}\n\n/**\n * Http request object.\n * Expose chainable API\n */\nclass Http {\n  constructor (params = defaultParams) {\n    const internals = new Internals(params)\n    this.internals = () => internals\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withUrl (url) {\n    return this.url(url)\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   */\n  url (url) {\n    return new Http(Object.assign({}, this.internals(), { url }))\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withMethod (method) {\n    return this.method(method)\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   */\n  method (method) {\n    return new Http(Object.assign({}, this.internals(), { method }))\n  }\n\n  /**\n   * Adds header to request model\n   * @param {String} header - valid header key\n   * @param {String} value - valid header value\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withHeader (header, value) {\n    return this.header(header, value)\n  }\n\n  /**\n   * Adds header to request model\n   * @param {String} header - valid header key\n   * @param {String} value - valid header value\n   * @returns {Object} Http object\n   */\n  header (header, value) {\n    const headers = new Map(this.internals().headers).set(header, value)\n    return new Http(Object.assign({}, this.internals(), { headers }))\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withBody (body) {\n    return this.body(body)\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   */\n  body (body) {\n    return new Http(Object.assign({}, this.internals(), { body }))\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {String} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withResponseType (responseType) {\n    return this.responseType(responseType)\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {String} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   */\n  responseType (responseType) {\n    return new Http(Object.assign({}, this.internals(), { responseType }))\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {String} segment - segment key\n   * @param {String} value - segment value\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withDynamicSegment (segment, value) {\n    return this.segment(segment, value)\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {String} segment - segment key\n   * @param {String} value - segment value\n   * @returns {Object} Http object\n   */\n  segment (segment, value) {\n    const dynamicSegments\n      = new Map(this.internals().dynamicSegments).set(segment, value)\n    return new Http(Object.assign({}, this.internals(), { dynamicSegments }))\n  }\n\n  /**\n   * Adds query string param\n   * @param {String} name - param key\n   * @param {String} value - param value\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withParam (name, value) {\n    return this.query(name, value)\n  }\n\n  /**\n   * Adds query string param\n   * @param {String} name - param key\n   * @param {String} value - param value\n   * @returns {Object} Http object\n   */\n  query (name, value) {\n    const queryParams = new Map(this.internals().queryParams).set(name, value)\n    return new Http(Object.assign({}, this.internals(), { queryParams }))\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withBodyProccessor (bodyProcessor) {\n    return this.bodyProcessor(bodyProcessor)\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   */\n  bodyProcessor (bodyProcessor) {\n    return new Http(Object.assign({}, this.internals(), { bodyProcessor }))\n  }\n\n  /**\n   * Sets response type to 'json'\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withJsonResponse () {\n    return this.withResponseType('json')\n  }\n\n  /**\n   * Predifine body sringification and Content-Type attribute.\n   * @returns {Object} Http object\n   * @deprecated since version 2.0\n   */\n  withJsonBody () {\n    return this.withHeader('Content-Type', 'application/json')\n    .withBodyProccessor(JSON.stringify)\n  }\n\n  /**\n   * Executes HTTP request\n   * @returns {Object} - Promise\n   */\n  exec () {\n    validate(this.internals())\n    return exec(this.internals())\n  }\n}\n\nexport default Http\n"
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultBodyProcessor",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~defaultBodyProcessor",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultParams",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~defaultParams",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Internals",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~Internals",
+    "access": null,
+    "export": false,
+    "importPath": "immutable-http/src/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "interface": false
+  },
+  {
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/index.js~Internals",
+    "longname": "src/index.js~Internals#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "params": [
+      {
+        "name": "params",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Http",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~Http",
+    "access": null,
+    "export": true,
+    "importPath": "immutable-http/src/index.js",
+    "importStyle": "Http",
+    "description": "Http request object.\nExpose chainable API",
+    "lineNumber": 34,
+    "interface": false
+  },
+  {
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "params": [
+      {
+        "name": "params",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": "defaultParams",
+        "defaultValue": "defaultParams"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "internals",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#internals",
+    "access": null,
+    "description": null,
+    "lineNumber": 37,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withUrl",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withUrl",
+    "access": null,
+    "description": "Adds URL information to HTTP request model",
+    "lineNumber": 46,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "URL"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "url",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#url",
+    "access": null,
+    "description": "Adds URL information to HTTP request model",
+    "lineNumber": 55,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "URL"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withMethod",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withMethod",
+    "access": null,
+    "description": "Adds HTTP method information to request model",
+    "lineNumber": 65,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "method",
+        "description": "HTTP method"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "method",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#method",
+    "access": null,
+    "description": "Adds HTTP method information to request model",
+    "lineNumber": 74,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "method",
+        "description": "HTTP method"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withHeader",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withHeader",
+    "access": null,
+    "description": "Adds header to request model",
+    "lineNumber": 85,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "header",
+        "description": "valid header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "valid header value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "header",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#header",
+    "access": null,
+    "description": "Adds header to request model",
+    "lineNumber": 95,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "header",
+        "description": "valid header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "valid header value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBody",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withBody",
+    "access": null,
+    "description": "Adds body to request model",
+    "lineNumber": 106,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "body",
+        "description": "request payload"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "body",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#body",
+    "access": null,
+    "description": "Adds body to request model",
+    "lineNumber": 115,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "body",
+        "description": "request payload"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withResponseType",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withResponseType",
+    "access": null,
+    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "lineNumber": 129,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "responseType",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#responseType",
+    "access": null,
+    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "lineNumber": 142,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withDynamicSegment",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withDynamicSegment",
+    "access": null,
+    "description": "Adds dynamic segment value",
+    "lineNumber": 153,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "segment",
+        "description": "segment key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "segment value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "segment",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#segment",
+    "access": null,
+    "description": "Adds dynamic segment value",
+    "lineNumber": 163,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "segment",
+        "description": "segment key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "segment value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withParam",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withParam",
+    "access": null,
+    "description": "Adds query string param",
+    "lineNumber": 176,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "param key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "param value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "query",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#query",
+    "access": null,
+    "description": "Adds query string param",
+    "lineNumber": 186,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "param key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "param value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBodyProccessor",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withBodyProccessor",
+    "access": null,
+    "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
+    "lineNumber": 198,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "func"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "bodyProcessor",
+        "description": "f(x) => valid_http_body"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "bodyProcessor",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#bodyProcessor",
+    "access": null,
+    "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
+    "lineNumber": 208,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "func"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "bodyProcessor",
+        "description": "f(x) => valid_http_body"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withJsonResponse",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withJsonResponse",
+    "access": null,
+    "description": "Sets response type to 'json'",
+    "lineNumber": 217,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withJsonBody",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withJsonBody",
+    "access": null,
+    "description": "Predifine body sringification and Content-Type attribute.",
+    "lineNumber": 226,
+    "deprecated": "since version 2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "exec",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#exec",
+    "access": null,
+    "description": "Executes HTTP request",
+    "lineNumber": 235,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} - Promise"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Promise"
+    },
+    "generator": false
+  },
+  {
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "http",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~http",
+    "access": null,
+    "export": true,
+    "importPath": "immutable-http/src/index.js",
+    "importStyle": "http",
+    "description": null,
+    "lineNumber": 241,
+    "undocument": true,
+    "type": {
+      "types": [
+        "src/index.js~Http"
+      ]
+    }
+  },
+  {
+    "kind": "file",
+    "static": true,
+    "variation": null,
     "name": "src/validate.js",
     "memberof": null,
     "longname": "src/validate.js",

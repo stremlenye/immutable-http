@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">API Document</title>
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Variable | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -59,36 +59,82 @@
 
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index"><h3 id="immutable-http">Immutable-http</h3>
-<p><a href="http://badge.fury.io/js/immutable-http"><img src="https://badge.fury.io/js/immutable-http.svg" alt="npm version"></a></p>
-<p>Http client with pretty simple chaining API</p>
-<h4 id="usage">Usage</h4>
-<pre><code><pre class="source-code"><code class="prettyprint">var result = new Http().withUrl(&apos;http://any_api.com/:id&apos;)
-                        .withMethod(&apos;GET&apos;)
-                        .withHeader(&apos;Content-Type&apos;,&apos;application/json&apos;)
-                        .withBody({some:data})
-                        .withResponseType(&apos;json&apos;)
-                        .withDynamicSegment(&apos;id&apos;,123)
-                        .withParam(&apos;filter&apos;,&apos;some_filter&apos;) // Adds query section to the url like &apos;?filter=some_filter&apos;
-                        .exec();</code></pre>
-</code></pre><pre><code><pre class="source-code"><code class="prettyprint">result = Promise({
-  status: int,
-  response: [obj|string],
-  headers: string
-}, {
-  status: int,
-  response: [obj|string],
-  headers: string
-})</code></pre>
-</code></pre><p>Response type options could be obtained from XMLHttp <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">specs</a></p>
-<h4 id="build">Build</h4>
-<pre><code><pre class="source-code"><code class="prettyprint">npm run dist</code></pre>
-</code></pre><h4 id="tests">Tests</h4>
-<p>Run</p>
-<pre><code><pre class="source-code"><code class="prettyprint">node server</code></pre>
-</code></pre><p>then</p>
-<pre><code><pre class="source-code"><code class="prettyprint">npm test</code></pre>
-</code></pre></div>
+<div class="content" data-ice="content"><h1 data-ice="title">Variable</h1>
+<div data-ice="summaries"><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Public Summary</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-http">http</a></span></span><span data-ice="signature">: <span><a href="class/src/index.js~Http.html">Http</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="details"><h2 data-ice="title">Static Public </h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-http">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">http</span><span data-ice="signature">: <span><a href="class/src/index.js~Http.html">Http</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber241">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import http from &apos;<span><a href="file/src/index.js.html#lineNumber241">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
 </div>
 
 <footer class="footer">

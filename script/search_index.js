@@ -1,9 +1,21 @@
 window.esdocSearchIndex = [
   [
+    "immutable-http/src/index.js~http",
+    "class/src/index.js~Http.html",
+    "<span>Http</span> <span class=\"search-result-import-path\">immutable-http/src/index.js</span>",
+    "class"
+  ],
+  [
     "immutable-http/src/exec.js~exec",
     "function/index.html#static-function-exec",
     "<span>exec</span> <span class=\"search-result-import-path\">immutable-http/src/exec.js</span>",
     "function"
+  ],
+  [
+    "immutable-http/src/index.js~http",
+    "variable/index.html#static-variable-http",
+    "<span>http</span> <span class=\"search-result-import-path\">immutable-http/src/index.js</span>",
+    "variable"
   ],
   [
     "immutable-http/src/validate.js~validate",
@@ -340,6 +352,138 @@ window.esdocSearchIndex = [
     "file/src/exec.js.html",
     "src/exec.js",
     "file"
+  ],
+  [
+    "src/index.js",
+    "file/src/index.js.html",
+    "src/index.js",
+    "file"
+  ],
+  [
+    "src/index.js~http#body",
+    "class/src/index.js~Http.html#instance-method-body",
+    "src/index.js~Http#body",
+    "method"
+  ],
+  [
+    "src/index.js~http#bodyprocessor",
+    "class/src/index.js~Http.html#instance-method-bodyProcessor",
+    "src/index.js~Http#bodyProcessor",
+    "method"
+  ],
+  [
+    "src/index.js~http#constructor",
+    "class/src/index.js~Http.html#instance-constructor-constructor",
+    "src/index.js~Http#constructor",
+    "method"
+  ],
+  [
+    "src/index.js~http#exec",
+    "class/src/index.js~Http.html#instance-method-exec",
+    "src/index.js~Http#exec",
+    "method"
+  ],
+  [
+    "src/index.js~http#header",
+    "class/src/index.js~Http.html#instance-method-header",
+    "src/index.js~Http#header",
+    "method"
+  ],
+  [
+    "src/index.js~http#internals",
+    "class/src/index.js~Http.html#instance-member-internals",
+    "src/index.js~Http#internals",
+    "member"
+  ],
+  [
+    "src/index.js~http#method",
+    "class/src/index.js~Http.html#instance-method-method",
+    "src/index.js~Http#method",
+    "method"
+  ],
+  [
+    "src/index.js~http#query",
+    "class/src/index.js~Http.html#instance-method-query",
+    "src/index.js~Http#query",
+    "method"
+  ],
+  [
+    "src/index.js~http#responsetype",
+    "class/src/index.js~Http.html#instance-method-responseType",
+    "src/index.js~Http#responseType",
+    "method"
+  ],
+  [
+    "src/index.js~http#segment",
+    "class/src/index.js~Http.html#instance-method-segment",
+    "src/index.js~Http#segment",
+    "method"
+  ],
+  [
+    "src/index.js~http#url",
+    "class/src/index.js~Http.html#instance-method-url",
+    "src/index.js~Http#url",
+    "method"
+  ],
+  [
+    "src/index.js~http#withbody",
+    "class/src/index.js~Http.html#instance-method-withBody",
+    "src/index.js~Http#withBody",
+    "method"
+  ],
+  [
+    "src/index.js~http#withbodyproccessor",
+    "class/src/index.js~Http.html#instance-method-withBodyProccessor",
+    "src/index.js~Http#withBodyProccessor",
+    "method"
+  ],
+  [
+    "src/index.js~http#withdynamicsegment",
+    "class/src/index.js~Http.html#instance-method-withDynamicSegment",
+    "src/index.js~Http#withDynamicSegment",
+    "method"
+  ],
+  [
+    "src/index.js~http#withheader",
+    "class/src/index.js~Http.html#instance-method-withHeader",
+    "src/index.js~Http#withHeader",
+    "method"
+  ],
+  [
+    "src/index.js~http#withjsonbody",
+    "class/src/index.js~Http.html#instance-method-withJsonBody",
+    "src/index.js~Http#withJsonBody",
+    "method"
+  ],
+  [
+    "src/index.js~http#withjsonresponse",
+    "class/src/index.js~Http.html#instance-method-withJsonResponse",
+    "src/index.js~Http#withJsonResponse",
+    "method"
+  ],
+  [
+    "src/index.js~http#withmethod",
+    "class/src/index.js~Http.html#instance-method-withMethod",
+    "src/index.js~Http#withMethod",
+    "method"
+  ],
+  [
+    "src/index.js~http#withparam",
+    "class/src/index.js~Http.html#instance-method-withParam",
+    "src/index.js~Http#withParam",
+    "method"
+  ],
+  [
+    "src/index.js~http#withresponsetype",
+    "class/src/index.js~Http.html#instance-method-withResponseType",
+    "src/index.js~Http#withResponseType",
+    "method"
+  ],
+  [
+    "src/index.js~http#withurl",
+    "class/src/index.js~Http.html#instance-method-withUrl",
+    "src/index.js~Http#withUrl",
+    "method"
   ],
   [
     "src/validate.js",
