@@ -41,6 +41,7 @@ export default class Http {
    * Adds URL information to HTTP request model
    * @param {string} url - URL
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withUrl (url) {
@@ -60,6 +61,7 @@ export default class Http {
    * Adds HTTP method information to request model
    * @param {string} method - HTTP method
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withMethod (method) {
@@ -80,6 +82,7 @@ export default class Http {
    * @param {String} header - valid header key
    * @param {String} value - valid header value
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withHeader (header, value) {
@@ -101,6 +104,7 @@ export default class Http {
    * Adds body to request model
    * @param {Object} body - request payload
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withBody (body) {
@@ -124,6 +128,7 @@ export default class Http {
    * XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withResponseType (responseType) {
@@ -148,6 +153,7 @@ export default class Http {
    * @param {String} segment - segment key
    * @param {String} value - segment value
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withDynamicSegment (segment, value) {
@@ -171,6 +177,7 @@ export default class Http {
    * @param {String} name - param key
    * @param {String} value - param value
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withParam (name, value) {
@@ -193,6 +200,7 @@ export default class Http {
    * which result would be used as a request body
    * @param {func} bodyProcessor - f(x) => valid_http_body
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withBodyProccessor (bodyProcessor) {
@@ -212,6 +220,7 @@ export default class Http {
   /**
    * Sets response type to 'json'
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withJsonResponse () {
@@ -221,6 +230,7 @@ export default class Http {
   /**
    * Predifine body sringification and Content-Type attribute.
    * @returns {Object} Http object
+   * @deprecated since version 0.2.0
    */
   @deprecate
   withJsonBody () {
