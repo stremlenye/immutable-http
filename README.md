@@ -7,13 +7,13 @@ Http client with pretty simple chaining API
 #### Usage
 
 ```
-var result = new Http().withUrl('http://any_api.com/:id')
-                        .withMethod('GET')
-                        .withHeader('Content-Type','application/json')
-                        .withBody({some:data})
-                        .withResponseType('json')
-                        .withDynamicSegment('id',123)
-                        .withParam('filter','some_filter') // Adds query section to the url like '?filter=some_filter'
+var result = new Http().url('http://any_api.com/:id')
+                        .method('GET')
+                        .header('Content-Type','application/json')
+                        .body({some:data})
+                        .responseType('json')
+                        .segment('id',123)
+                        .query('filter','some_filter') // Adds query section for the url like '?filter=some_filter'
                         .exec();
 ```
 
