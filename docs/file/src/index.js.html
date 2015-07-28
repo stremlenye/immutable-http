@@ -46,13 +46,7 @@
 </ul>
 </div>
 
-<div data-ice="variableWrap">
-  <h2><a href="variable/">Variable</a></h2>
-  <ul>
-    
-  <li data-ice="variableDoc"><span><a href="variable/index.html#static-variable-http">http</a></span></li>
-</ul>
-</div>
+
 
 
 
@@ -93,7 +87,7 @@ class Internals {
  * Http request object.
  * Expose chainable API
  */
-class Http {
+export default class Http {
   constructor (params = defaultParams) {
     const internals = new Internals(params)
     this.internals = () =&gt; internals
@@ -103,7 +97,7 @@ class Http {
    * Adds URL information to HTTP request model
    * @param {string} url - URL
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
   withUrl (url) {
     return this.url(url)
@@ -122,8 +116,9 @@ class Http {
    * Adds HTTP method information to request model
    * @param {string} method - HTTP method
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withMethod (method) {
     return this.method(method)
   }
@@ -142,8 +137,9 @@ class Http {
    * @param {String} header - valid header key
    * @param {String} value - valid header value
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withHeader (header, value) {
     return this.header(header, value)
   }
@@ -163,8 +159,9 @@ class Http {
    * Adds body to request model
    * @param {Object} body - request payload
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withBody (body) {
     return this.body(body)
   }
@@ -186,8 +183,9 @@ class Http {
    * XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withResponseType (responseType) {
     return this.responseType(responseType)
   }
@@ -210,8 +208,9 @@ class Http {
    * @param {String} segment - segment key
    * @param {String} value - segment value
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withDynamicSegment (segment, value) {
     return this.segment(segment, value)
   }
@@ -233,8 +232,9 @@ class Http {
    * @param {String} name - param key
    * @param {String} value - param value
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withParam (name, value) {
     return this.query(name, value)
   }
@@ -255,8 +255,9 @@ class Http {
    * which result would be used as a request body
    * @param {func} bodyProcessor - f(x) =&gt; valid_http_body
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withBodyProccessor (bodyProcessor) {
     return this.bodyProcessor(bodyProcessor)
   }
@@ -274,8 +275,9 @@ class Http {
   /**
    * Sets response type to &apos;json&apos;
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withJsonResponse () {
     return this.withResponseType(&apos;json&apos;)
   }
@@ -283,8 +285,9 @@ class Http {
   /**
    * Predifine body sringification and Content-Type attribute.
    * @returns {Object} Http object
-   * @deprecated since version 2.0
+   * @deprecated since version 0.2.0
    */
+
   withJsonBody () {
     return this.withHeader(&apos;Content-Type&apos;, &apos;application/json&apos;)
     .withBodyProccessor(JSON.stringify)
@@ -299,8 +302,6 @@ class Http {
     return exec(this.internals())
   }
 }
-
-export default Http
 </code></pre>
 </div>
 
