@@ -1,5 +1,8 @@
 {
   "source": "./src",
   "destination": "./docs",
-  "package": "./package.json"
+  "package": "./package.json",
+  "plugins": [
+    {"name": "esdoc-es7-plugin"}
+  ]
 }
