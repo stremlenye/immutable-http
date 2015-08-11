@@ -94,7 +94,7 @@
     "comma-spacing": [2, {"before": false, "after": true}],
     "eol-last": 2,
     "func-names": 2,
-    "indent": [2, 2, {"indentSwitchCase": true}],
+    "indent": [2, 2, { "SwitchCase": 1 }],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
     "linebreak-style": 2,
     "max-nested-callbacks": [2, 3],
