@@ -11,7 +11,7 @@ function validateMethod (method) {
   if (typeof method !== 'string') {
     throw Error(`HTTP method should be type of string`)
   }
-  if (supportedMethods.indexOf(method) < 0) {
+  if (method in supportedMethods < 0) {
     throw Error(`Http method  ${method} is not supported`)
   }
 }
