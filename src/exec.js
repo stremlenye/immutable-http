@@ -174,7 +174,7 @@ const methodsHandlerMap = {
 function exec (http) {
   const handler = methodsHandlerMap[http.method]
   if (!handler)
-    throw `Method ${http.method} is not supported`
+    throw Error(`Method ${http.method} is not supported`)
   return handler(http)
 }
 

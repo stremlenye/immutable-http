@@ -1,5 +1,5 @@
-/*global describe:true it:true */
-/*eslint-disable no-unused-expressions  */
+/* global describe:true it:true */
+/* eslint-disable no-unused-expressions  */
 
 import 'babel/polyfill'
 import { expect } from 'chai'

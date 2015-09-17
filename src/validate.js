@@ -6,13 +6,13 @@ const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']
  */
 function validateMethod (method) {
   if (!method) {
-    throw `HTTP method is not specified`
+    throw Error(`HTTP method is not specified`)
   }
-  if (typeof (method) !== 'string') {
-    throw `HTTP method should be type of string`
+  if (typeof method !== 'string') {
+    throw Error(`HTTP method should be type of string`)
   }
   if (supportedMethods.indexOf(method) < 0) {
-    throw `Http method  ${method} is not supported`
+    throw Error(`Http method  ${method} is not supported`)
   }
 }
 
@@ -22,10 +22,10 @@ function validateMethod (method) {
  */
 function validateUrl (url) {
   if (!url) {
-    throw `Url is not specified`
+    throw Error(`Url is not specified`)
   }
-  if (typeof (url) !== 'string') {
-    throw `Url should be type of string`
+  if (typeof url !== 'string') {
+    throw Error(`Url should be type of string`)
   }
 }
 
@@ -35,7 +35,7 @@ function validateUrl (url) {
  * @param {String} value – Header value
  */
 function validateHeader (key, value) {
-  if (typeof (key) !== 'string' || typeof (value) !== 'string')
+  if (typeof key !== 'string' || typeof value !== 'string')
     throw new Error('Headers must be strings')
 }
 
@@ -58,7 +58,7 @@ const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
 function validateResponseType (type) {
   if (type === null || validTypes.indexOf(type) >= 0)
     return
-  throw `Response content type ${type} is not currently supported`
+  throw Error(`Response content type ${type} is not currently supported`)
 }
 
 /**
