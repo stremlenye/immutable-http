@@ -1,4 +1,5 @@
 const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']
+const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
 
 /**
  * Validate HTTP method
@@ -49,16 +50,13 @@ function validateHeaders (headers) {
   }
 }
 
-const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
-
 /**
  * Validates response type
  * @param {string} type - response type
  */
 function validateResponseType (type) {
-  if (type === null || type in validTypes)
-    return
-  throw Error(`Response content type ${type} is not currently supported`)
+  if (type !== null || !(type in validTypes))
+    throw Error(`Response content type ${type} is not currently supported`)
 }
 
 /**
