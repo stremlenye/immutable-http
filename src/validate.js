@@ -56,7 +56,7 @@ const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
  * @param {string} type - response type
  */
 function validateResponseType (type) {
-  if (type === null || validTypes.indexOf(type) >= 0)
+  if (type === null || type in validTypes)
     return
   throw Error(`Response content type ${type} is not currently supported`)
 }
