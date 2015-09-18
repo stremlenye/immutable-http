@@ -1,0 +1,63 @@
+{
+  "name": "immutable-http",
+  "version": "3.0.0",
+  "description": "Http client with pretty simple chaining API",
+  "keywords": [
+    "javascript",
+    "xhr",
+    "http",
+    "rest"
+  ],
+  "scripts": {
+    "doc": "rm -rf docs && esdoc -c ./esdoc.json",
+    "doc:publish": "gh-pages -d docs",
+    "lint": "eslint src test",
+    "test": "karma start --single-run",
+    "test:debug": "karma start",
+    "clean": "rm -rf ./dist",
+    "dist": "npm run clean && mkdir dist && webpack --progress --colors --config webpack.config.js",
+    "prepublish:supressed": "npm run dist && npm run doc && npm run doc:publish"
+  },
+  "main": "dist/index.js",
+  "homepage": "http://stremlenye.github.io/immutable-http/",
+  "bugs": {
+    "url": "https://github.com/stremlenye/immutable-http/issues"
+  },
+  "license": "MIT",
+  "people": {
+    "author": {
+      "name": "Yuriy Ankudinov",
+      "email": "stremlenye@gmail.com",
+      "url": "https://github.com/stremlenye"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stremlenye/immutable-http.git"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.24",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
+    "body-parser": "^1.14.0",
+    "chai": "^3.2.0",
+    "cors": "^2.7.1",
+    "esdoc": "^0.2.6",
+    "esdoc-es7-plugin": "0.0.2",
+    "eslint": "^1.4.3",
+    "express": "^4.13.3",
+    "gh-pages": "^0.4.0",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.3.2",
+    "webpack": "^1.12.2"
+  },
+  "dependencies": {
+    "babel-runtime": "^5.8.24",
+    "core-decorators": "0.3.0"
+  }
+}
