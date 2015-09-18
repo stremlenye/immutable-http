@@ -41,7 +41,8 @@
   <h2><a href="function/">Function</a></h2>
   <ul>
     
-  <li data-ice="functionDoc"><span><a href="function/index.html#static-function-exec">exec</a></span></li>
+  <li data-ice="functionDoc"><span><a href="function/index.html#static-function-addQueryParams">addQueryParams</a></span></li>
+<li data-ice="functionDoc"><span><a href="function/index.html#static-function-mixinDynamicSegmentsValues">mixinDynamicSegmentsValues</a></span></li>
 <li data-ice="functionDoc"><span><a href="function/index.html#static-function-validate">validate</a></span></li>
 </ul>
 </div>
@@ -54,13 +55,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber34">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber35">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber34">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber35">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -252,6 +253,32 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-executor">executor</a></span></span><span data-ice="signature">(executor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Set the middleware that will perform the request</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
            <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-header">header</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
@@ -408,13 +435,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBody">withBody</a></span></span><span data-ice="signature">(body: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBody">withBody</a></span></span><span data-ice="signature">(body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds body to request model</p>
+</div>
       </div>
     </td>
     <td>
@@ -433,13 +461,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBodyProccessor">withBodyProccessor</a></span></span><span data-ice="signature">(bodyProcessor: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBodyProccessor">withBodyProccessor</a></span></span><span data-ice="signature">(bodyProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Sets the function which gets the body object as a parameter
+</p></div>
       </div>
     </td>
     <td>
@@ -458,13 +487,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withDynamicSegment">withDynamicSegment</a></span></span><span data-ice="signature">(segment: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withDynamicSegment">withDynamicSegment</a></span></span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds dynamic segment value</p>
+</div>
       </div>
     </td>
     <td>
@@ -483,13 +513,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withHeader">withHeader</a></span></span><span data-ice="signature">(header: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withHeader">withHeader</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds header to request model</p>
+</div>
       </div>
     </td>
     <td>
@@ -508,13 +539,13 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withJsonBody">withJsonBody</a></span></span><span data-ice="signature">(): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withJsonBody">withJsonBody</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Predifine body sringification and Content-Type attribute.</p></div>
       </div>
     </td>
     <td>
@@ -533,13 +564,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withJsonResponse">withJsonResponse</a></span></span><span data-ice="signature">(): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withJsonResponse">withJsonResponse</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Sets response type to &apos;json&apos;</p>
+</div>
       </div>
     </td>
     <td>
@@ -558,13 +590,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withMethod">withMethod</a></span></span><span data-ice="signature">(method: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withMethod">withMethod</a></span></span><span data-ice="signature">(method: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds HTTP method information to request model</p>
+</div>
       </div>
     </td>
     <td>
@@ -583,13 +616,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withParam">withParam</a></span></span><span data-ice="signature">(name: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withParam">withParam</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds query string param</p>
+</div>
       </div>
     </td>
     <td>
@@ -608,13 +642,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withResponseType">withResponseType</a></span></span><span data-ice="signature">(responseType: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withResponseType">withResponseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Sets response content type
+</p></div>
       </div>
     </td>
     <td>
@@ -633,13 +668,14 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withUrl">withUrl</a></span></span><span data-ice="signature">(url: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withUrl">withUrl</a></span></span><span data-ice="signature">(url: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
+        <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        
-        
+        <div data-ice="description"><p>Adds URL information to HTTP request model</p>
+</div>
       </div>
     </td>
     <td>
@@ -668,7 +704,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
@@ -728,7 +764,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber38">source</a></span></span>
     </span>
   </h3>
 
@@ -771,7 +807,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber130">source</a></span></span>
     </span>
   </h3>
 
@@ -840,7 +876,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber216">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber227">source</a></span></span>
     </span>
   </h3>
 
@@ -910,7 +946,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber245">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber256">source</a></span></span>
     </span>
   </h3>
 
@@ -952,6 +988,75 @@ which result would be used as a request body</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-executor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">executor</span><span data-ice="signature">(executor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber47">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Set the middleware that will perform the request</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">executor</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>f(url, method, headers, responseType, body):Promise</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-header">
     <span class="access" data-ice="access">public</span>
     
@@ -962,7 +1067,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber98">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber109">source</a></span></span>
     </span>
   </h3>
 
@@ -1038,7 +1143,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber87">source</a></span></span>
     </span>
   </h3>
 
@@ -1107,7 +1212,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber193">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber204">source</a></span></span>
     </span>
   </h3>
 
@@ -1183,7 +1288,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber147">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber158">source</a></span></span>
     </span>
   </h3>
 
@@ -1256,7 +1361,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber169">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber180">source</a></span></span>
     </span>
   </h3>
 
@@ -1332,7 +1437,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber56">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber67">source</a></span></span>
     </span>
   </h3>
 
@@ -1397,18 +1502,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withBody</span><span data-ice="signature">(body: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withBody</span><span data-ice="signature">(body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber110">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber121">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds body to request model</p>
+</div>
 
   
 
@@ -1422,9 +1528,10 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">body</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>request payload</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1435,8 +1542,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1463,18 +1571,20 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withBodyProccessor</span><span data-ice="signature">(bodyProcessor: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withBodyProccessor</span><span data-ice="signature">(bodyProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber206">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber217">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Sets the function which gets the body object as a parameter
+which result would be used as a request body</p>
+</div>
 
   
 
@@ -1488,9 +1598,10 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">bodyProcessor</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>func</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>f(x) =&gt; valid_http_body</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1501,8 +1612,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1529,18 +1641,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withDynamicSegment</span><span data-ice="signature">(segment: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withDynamicSegment</span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber170">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds dynamic segment value</p>
+</div>
 
   
 
@@ -1554,15 +1667,17 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">segment</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>segment key</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>segment value</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1573,8 +1688,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1601,18 +1717,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withHeader</span><span data-ice="signature">(header: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withHeader</span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber99">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds header to request model</p>
+</div>
 
   
 
@@ -1626,15 +1743,17 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">header</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>valid header key</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>valid header value</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1645,8 +1764,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1673,18 +1793,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withJsonBody</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">withJsonBody</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber236">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber247">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Predifine body sringification and Content-Type attribute.</p>
+</div>
 
   
 
@@ -1695,8 +1816,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1723,18 +1845,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withJsonResponse</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">withJsonResponse</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber226">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber237">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Sets response type to &apos;json&apos;</p>
+</div>
 
   
 
@@ -1745,8 +1868,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1773,18 +1897,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withMethod</span><span data-ice="signature">(method: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withMethod</span><span data-ice="signature">(method: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber67">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds HTTP method information to request model</p>
+</div>
 
   
 
@@ -1798,9 +1923,10 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">method</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>HTTP method</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1811,8 +1937,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1839,18 +1966,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withParam</span><span data-ice="signature">(name: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withParam</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber183">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber194">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds query string param</p>
+</div>
 
   
 
@@ -1864,15 +1992,17 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">name</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>param key</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>param value</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1883,8 +2013,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1911,18 +2042,21 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withResponseType</span><span data-ice="signature">(responseType: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withResponseType</span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber134">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber145">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Sets response content type
+Proper values could be obtained form XmlHttpRequest specification
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties</a></p>
+</div>
 
   
 
@@ -1936,9 +2070,12 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">responseType</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Proper values could be obtained form
+XmlHttpRequest specification
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties</a></p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1949,8 +2086,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1977,18 +2115,19 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withUrl</span><span data-ice="signature">(url: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">withUrl</span><span data-ice="signature">(url: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber58">source</a></span></span>
     </span>
   </h3>
 
   
+  <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
   
-  
-  
+  <div data-ice="description"><p>Adds URL information to HTTP request model</p>
+</div>
 
   
 
@@ -2002,9 +2141,10 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">url</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>URL</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2015,8 +2155,9 @@ XmlHttpRequest specification
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span>*</span></td>
-        
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -2040,7 +2181,7 @@ XmlHttpRequest specification
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.2.1)</span></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.2.6)</span></a>
 </footer>
 
 <script src="script/search_index.js"></script>

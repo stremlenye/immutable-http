@@ -39,7 +39,7 @@ export default class Http {
   }
 
   /**
-   * Set the middleware that will actually run the request
+   * Set the middleware that will perform the request
    * @param {Function} executor -
    * f(url, method, headers, responseType, body):Promise
    * @returns {Object} Http object

@@ -6,9 +6,15 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "immutable-http/src/exec.js~exec",
-    "function/index.html#static-function-exec",
-    "<span>exec</span> <span class=\"search-result-import-path\">immutable-http/src/exec.js</span>",
+    "immutable-http/src/utils/url.js~addqueryparams",
+    "function/index.html#static-function-addQueryParams",
+    "<span>addQueryParams</span> <span class=\"search-result-import-path\">immutable-http/src/utils/url.js</span>",
+    "function"
+  ],
+  [
+    "immutable-http/src/utils/url.js~mixindynamicsegmentsvalues",
+    "function/index.html#static-function-mixinDynamicSegmentsValues",
+    "<span>mixinDynamicSegmentsValues</span> <span class=\"search-result-import-path\">immutable-http/src/utils/url.js</span>",
     "function"
   ],
   [
@@ -342,12 +348,6 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "src/exec.js",
-    "file/src/exec.js.html",
-    "src/exec.js",
-    "file"
-  ],
-  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
@@ -375,6 +375,12 @@ window.esdocSearchIndex = [
     "src/index.js~http#exec",
     "class/src/index.js~Http.html#instance-method-exec",
     "src/index.js~Http#exec",
+    "method"
+  ],
+  [
+    "src/index.js~http#executor",
+    "class/src/index.js~Http.html#instance-method-executor",
+    "src/index.js~Http#executor",
     "method"
   ],
   [
@@ -478,6 +484,12 @@ window.esdocSearchIndex = [
     "class/src/index.js~Http.html#instance-method-withUrl",
     "src/index.js~Http#withUrl",
     "method"
+  ],
+  [
+    "src/utils/url.js",
+    "file/src/utils/url.js.html",
+    "src/utils/url.js",
+    "file"
   ],
   [
     "src/validate.js",
