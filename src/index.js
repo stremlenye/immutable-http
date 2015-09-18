@@ -4,6 +4,37 @@ import validate from './validate'
 
 const defaultBodyProcessor = b => b
 
+/**
+ * Mixins dynamic segments replacing the `:segment_name` parts with provide
+ * values
+ * @param {String} url – URL
+ * @param {Object} dynamicSegments – dynamic segments
+ * @returns {String} – URL
+ */
+function mixinDynamicSegmentsValues (url, dynamicSegments) {
+  let aggregator = url
+  for (let [key, value] of dynamicSegments.entries()) {
+    aggregator = aggregator.replace(`:${key}`, value)
+  }
+  return aggregator
+}
+
+/**
+ * Adds query params string to url
+ * @param {string} url – URL
+ * @param {Array} queryParams – query params
+ * @returns {String} – URL
+ */
+function addQueryParams (url, queryParams) {
+  if (queryParams.size === 0)
+    return url
+  const chanks = [queryParams.lenght]
+  for (let [key, value] of queryParams.entries()) {
+    chanks.push(`${key}=${value}`)
+  }
+  return url + '?' + chanks.join('&')
+}
+
 const defaultParams = {
   url: null,
   method: null,
@@ -243,10 +274,20 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    const { url, method, headers, responseType } = this.internals()
+    const {
+      url, method, headers, responseType, dynamicSegments, queryParams, body,
+      bodyProcessor
+    } = this.internals()
     const errors = validate(url, method, headers, responseType)
     if (errors.length !== 0)
       throw new Error(errors.join('\n'))
-    return exec(this.internals())
+    const urlWithDynamicSegments
+      = mixinDynamicSegmentsValues(url, dynamicSegments)
+    const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)
+    const h = []
+    for (let tuple of headers) {
+      h.push(tuple)
+    }
+    return exec(fullUrl, method, h, responseType, bodyProcessor(body))
   }
 }

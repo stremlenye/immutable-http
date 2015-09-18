@@ -1,42 +1,11 @@
 /**
- * Mixins dynamic segments replacing the `:segment_name` parts with provide
- * values
- * @param {String} url – URL
- * @param {Object} dynamicSegments – dynamic segments
- * @returns {String} – URL
- */
-function mixinDynamicSegmentsValues (url, dynamicSegments) {
-  let aggregator = url
-  for (let [key, value] of dynamicSegments.entries()) {
-    aggregator = aggregator.replace(`:${key}`, value)
-  }
-  return aggregator
-}
-
-/**
- * Adds query params string to url
- * @param {string} url – URL
- * @param {Array} queryParams – query params
- * @returns {String} – URL
- */
-function addQueryParams (url, queryParams) {
-  if (queryParams.size === 0)
-    return url
-  const chanks = [queryParams.lenght]
-  for (let [key, value] of queryParams.entries()) {
-    chanks.push(`${key}=${value}`)
-  }
-  return url + '?' + chanks.join('&')
-}
-
-/**
  * Adds headers to xmlhttp object
  * @param {Object} xmlhttp – XMLHttpRequest
  * @param {Object} headers – HTTP headers key-value collection
  * @returns {Object} – XMLHttpRequest
  */
 function addHeaders (xmlhttp, headers) {
-  for (let [key, value] of headers.entries()) {
+  for (let [key, value] of headers) {
     xmlhttp.setRequestHeader(key, value)
   }
   return xmlhttp
@@ -55,29 +24,15 @@ function setResponseType (xmlhttp, responseType) {
 }
 
 /**
- * Executes if xmlhttp request succeed
- * @param {fulfillCallback} fulfill – fulfill callback
- * @param {Object} http – HTTP object
- * @param {Object} xmlhttp – XMLHttpRequest
+ * Process response
+ * @param {callback} callback - callback
+ * @param {String} responseType – XMLHttpRequest
+ * @returns {function} f(xmlhttp)
  */
-function onSucceed (fulfill, http, xmlhttp) {
-  fulfill({
+function onResponse (callback, responseType) {
+  return xmlhttp => callback({
     status: xmlhttp.status,
-    response: http.responseType ? xmlhttp.response : xmlhttp.responseText,
-    headers: xmlhttp.getAllResponseHeaders()
-  })
-}
-
-/**
- * Executes if xmlhttp request failed
- * @param {rejectCallback} reject - reject
- * @param {Object} http – HTTP object
- * @param {Object} xmlhttp – XMLHttpRequest
- */
-function onFailed (reject, http, xmlhttp) {
-  reject({
-    status: xmlhttp.status,
-    response: xmlhttp.response,
+    response: responseType ? xmlhttp.response : xmlhttp.responseText,
     headers: xmlhttp.getAllResponseHeaders()
   })
 }
@@ -115,45 +70,46 @@ function getXmlHttp (fulfill, reject) {
 
 /**
  * Executes any submit type request
- * @param {Object} http – HTTP object
+ * @param {String} url – URL
+ * @param {String} method – HTTP method
+ * @param {Array} headers – Array of tuples of headers
+ * @param {String} responseType – response content type
+ * @param {String} body – stringified request body
  * @returns {Object} - Promise
  */
-function submit (http) {
+function submit (url, method, headers, responseType, body) {
   return new Promise((fulfill, reject) => {
     const xmlhttp = getXmlHttp(
-      onSucceed.bind(this, fulfill, http),
-      onFailed.bind(this, reject, http)
+      onResponse(fulfill, responseType),
+      onResponse(reject, responseType)
     )
 
-    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)
-    url = addQueryParams(url, http.queryParams)
-
-    xmlhttp.open(http.method, url, true)
-    setResponseType(xmlhttp, http.responseType)
-    addHeaders(xmlhttp, http.headers)
-    const body = http.bodyProcessor(http.body)
+    xmlhttp.open(method, url, true)
+    setResponseType(xmlhttp, responseType)
+    addHeaders(xmlhttp, headers)
     xmlhttp.send(body)
   })
 }
 
 /**
  * Executes GET request
- * @param {Object} http – HTTP object
+ * @param {String} url – URL
+ * @param {String} method – HTTP method
+ * @param {Array} headers – Array of tuples of headers
+ * @param {String} responseType – response content type
+ * @param {String} body – stringified request body
  * @returns {Object} - Promise
  */
-function get (http) {
+function get (url, method, headers, responseType) {
   return new Promise((fulfill, reject) => {
     const xmlhttp = getXmlHttp(
-      onSucceed.bind(this, fulfill, http),
-      onFailed.bind(this, reject, http)
+      onResponse(fulfill, responseType),
+      onResponse(reject, responseType)
     )
 
-    let url = mixinDynamicSegmentsValues(http.url, http.dynamicSegments)
-    url = addQueryParams(url, http.queryParams)
-
     xmlhttp.open('GET', url, true)
-    addHeaders(xmlhttp, http.headers)
-    setResponseType(xmlhttp, http.responseType)
+    addHeaders(xmlhttp, headers)
+    setResponseType(xmlhttp, responseType)
 
     xmlhttp.send(null)
   })
@@ -168,14 +124,18 @@ const methodsHandlerMap = {
 
 /**
  * Executes validated http request
- * @param {Object} http – HTTP object
+ * @param {String} url – URL
+ * @param {String} method – HTTP method
+ * @param {Array} headers – Array of tuples of headers
+ * @param {String} responseType – response content type
+ * @param {String} body – stringified request body
  * @returns {Object} – Promise
  */
-function exec (http) {
-  const handler = methodsHandlerMap[http.method]
+function exec (url, method, headers, responseType, body) {
+  const handler = methodsHandlerMap[method]
   if (!handler)
-    throw Error(`Method ${http.method} is not supported`)
-  return handler(http)
+    throw Error(`Method ${method} is not supported`)
+  return handler(url, method, headers, responseType, body)
 }
 
 export default exec
