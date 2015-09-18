@@ -12,11 +12,8 @@ const defaultBodyProcessor = b => b
  * @returns {String} – URL
  */
 function mixinDynamicSegmentsValues (url, dynamicSegments) {
-  let aggregator = url
-  for (let [key, value] of dynamicSegments.entries()) {
-    aggregator = aggregator.replace(`:${key}`, value)
-  }
-  return aggregator
+  return dynamicSegments.reduce((aggr, [key, value]) =>
+    aggr.replace(`:${key}`, value), url)
 }
 
 /**
@@ -26,23 +23,18 @@ function mixinDynamicSegmentsValues (url, dynamicSegments) {
  * @returns {String} – URL
  */
 function addQueryParams (url, queryParams) {
-  if (queryParams.size === 0)
-    return url
-  const chanks = [queryParams.lenght]
-  for (let [key, value] of queryParams.entries()) {
-    chanks.push(`${key}=${value}`)
-  }
+  const chanks = queryParams.map(([key, value]) => `${key}=${value}`)
   return url + '?' + chanks.join('&')
 }
 
 const defaultParams = {
   url: null,
   method: null,
-  headers: new Map(),
+  headers: [],
   body: null,
   responseType: null,
-  dynamicSegments: new Map(),
-  queryParams: new Map(),
+  dynamicSegments: [],
+  queryParams: [],
   bodyProcessor: defaultBodyProcessor
 }
 
@@ -127,7 +119,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   header (header, value) {
-    const headers = new Map(this.internals().headers).set(header, value)
+    const headers = this.internals().headers.concat([[header, value]])
     return new Http(Object.assign({}, this.internals(), { headers }))
   }
 
@@ -199,7 +191,7 @@ export default class Http {
    */
   segment (segment, value) {
     const dynamicSegments
-      = new Map(this.internals().dynamicSegments).set(segment, value)
+      = this.internals().dynamicSegments.concat([[segment, value]])
     return new Http(Object.assign({}, this.internals(), { dynamicSegments }))
   }
 
@@ -222,7 +214,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   query (name, value) {
-    const queryParams = new Map(this.internals().queryParams).set(name, value)
+    const queryParams = this.internals().queryParams.concat([[name, value]])
     return new Http(Object.assign({}, this.internals(), { queryParams }))
   }
 
@@ -284,10 +276,6 @@ export default class Http {
     const urlWithDynamicSegments
       = mixinDynamicSegmentsValues(url, dynamicSegments)
     const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)
-    const h = []
-    for (let tuple of headers) {
-      h.push(tuple)
-    }
-    return exec(fullUrl, method, h, responseType, bodyProcessor(body))
+    return exec(fullUrl, method, headers, responseType, bodyProcessor(body))
   }
 }
