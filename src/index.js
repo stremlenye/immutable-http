@@ -1,17 +1,18 @@
 import { deprecate } from 'core-decorators'
-import exec from './exec'
 import validate from './validate'
+import { addQueryParams, mixinDynamicSegmentsValues } from './utils/url'
 
 const defaultBodyProcessor = b => b
 
 const defaultParams = {
+  executor: null,
   url: null,
   method: null,
-  headers: new Map(),
+  headers: [],
   body: null,
   responseType: null,
-  dynamicSegments: new Map(),
-  queryParams: new Map(),
+  dynamicSegments: [],
+  queryParams: [],
   bodyProcessor: defaultBodyProcessor
 }
 
@@ -35,6 +36,16 @@ export default class Http {
   constructor (params = defaultParams) {
     const internals = new Internals(params)
     this.internals = () => internals
+  }
+
+  /**
+   * Set the middleware that will actually run the request
+   * @param {Function} executor -
+   * f(url, method, headers, responseType, body):Promise
+   * @returns {Object} Http object
+   */
+  executor (executor) {
+    return new Http(Object.assign({}, this.internals(), { executor }))
   }
 
   /**
@@ -96,7 +107,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   header (header, value) {
-    const headers = new Map(this.internals().headers).set(header, value)
+    const headers = this.internals().headers.concat([[header, value]])
     return new Http(Object.assign({}, this.internals(), { headers }))
   }
 
@@ -168,7 +179,7 @@ export default class Http {
    */
   segment (segment, value) {
     const dynamicSegments
-      = new Map(this.internals().dynamicSegments).set(segment, value)
+      = this.internals().dynamicSegments.concat([[segment, value]])
     return new Http(Object.assign({}, this.internals(), { dynamicSegments }))
   }
 
@@ -191,7 +202,7 @@ export default class Http {
    * @returns {Object} Http object
    */
   query (name, value) {
-    const queryParams = new Map(this.internals().queryParams).set(name, value)
+    const queryParams = this.internals().queryParams.concat([[name, value]])
     return new Http(Object.assign({}, this.internals(), { queryParams }))
   }
 
@@ -243,7 +254,19 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    validate(this.internals())
-    return exec(this.internals())
+    const {
+      url, method, headers, responseType, dynamicSegments, queryParams, body,
+      bodyProcessor, executor
+    } = this.internals()
+    if (!executor) {
+      throw new Error('executor was not set')
+    }
+    const errors = validate(url, method, headers, responseType)
+    if (errors.length !== 0)
+      throw new Error(errors.join('\n'))
+    const urlWithDynamicSegments
+      = mixinDynamicSegmentsValues(url, dynamicSegments)
+    const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)
+    return executor(fullUrl, method, headers, responseType, bodyProcessor(body))
   }
 }
