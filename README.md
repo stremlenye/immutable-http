@@ -26,6 +26,8 @@ var result = new Http().url('http://any_api.com/:id')
 f(url: String, method: String, headers:Array[Tuple[String, String]], responseType: String, body: Any): Promise
 ```
 It allows you to have your own favorite HTTP library under the hood and be able to test your code with mocked `executor` without any hacks.
+[Executor implementation example](https://github.com/stremlenye/simple-immutablehttp-executor)
+
 #### Build
 
 ```
