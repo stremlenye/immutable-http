@@ -244,7 +244,9 @@ export default class Http {
    */
   exec () {
     const { url, method, headers, responseType } = this.internals()
-    validate(url, method, headers, responseType)
+    const errors = validate(url, method, headers, responseType)
+    if (errors.length !== 0)
+      throw new Error(errors.join('\n'))
     return exec(this.internals())
   }
 }

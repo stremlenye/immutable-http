@@ -4,29 +4,31 @@ const validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']
 /**
  * Validate HTTP method
  * @param {String} method – HTTP method
+ * @return {String} error
  */
 function validateMethod (method) {
   if (!method) {
-    throw Error(`HTTP method is not specified`)
+    return `HTTP method is not specified`
   }
   if (typeof method !== 'string') {
-    throw Error(`HTTP method should be type of string`)
+    return `HTTP method should be type of string`
   }
   if (!supportedMethods.includes(method.toUpperCase())) {
-    throw Error(`Http method ${method} is not supported`)
+    return `Http method ${method} is not supported`
   }
 }
 
 /**
  * Basicly validate url
  * @param {String} url – URL
+ * @return {String} error
  */
 function validateUrl (url) {
   if (!url) {
-    throw Error(`Url is not specified`)
+    return `Url is not specified`
   }
   if (typeof url !== 'string') {
-    throw Error(`Url should be type of string`)
+    return `Url should be type of string`
   }
 }
 
@@ -34,29 +36,33 @@ function validateUrl (url) {
  * Validate header to all parts be strings
  * @param {String} key – Header key
  * @param {String} value – Header value
+ * @return {String} error
  */
 function validateHeader (key, value) {
   if (typeof key !== 'string' || typeof value !== 'string')
-    throw new Error('Headers must be strings')
+    return `Parts of header ${key}:${value} must be strings`
 }
 
 /**
  * Validate headers
  * @param {Object} headers – headers
+ * @return {Array} error
  */
 function validateHeaders (headers) {
-  for (let [key, value] of headers.entries()) {
-    validateHeader(key, value)
-  }
+  const aggr = []
+  for (let [key, value] of headers)
+    aggr.push(validateHeader(key, value))
+  return aggr
 }
 
 /**
  * Validates response type
  * @param {string} type - response type
+ * @return {String} error
  */
 function validateResponseType (type) {
   if (!validTypes.includes(type))
-    throw Error(`Response content type ${type} is not currently supported`)
+    return `Response content type ${type} is not supported`
 }
 
 /**
@@ -65,12 +71,13 @@ function validateResponseType (type) {
  * @param {String} method – HTTP method
  * @param {Map} headers – HTTP headers
  * @param {String} responseType – response type
+ * @return {Array} array of errors
  */
 function validate (url, method, headers, responseType) {
-  validateUrl(url)
-  validateMethod(method)
-  validateHeaders(headers)
-  validateResponseType(responseType)
+  return [validateUrl(url),
+    validateMethod(method),
+    validateResponseType(responseType)]
+    .concat(validateHeaders(headers)).filter(_ => !!_)
 }
 
 export default validate
