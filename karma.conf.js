@@ -32,9 +32,6 @@ module.exports = function(config) {
 
     webpack: {
       devtool: 'source-map',
-      // plugins: [
-      //   new webpack.PrefetchPlugin('babel/polyfill')
-      // ],
       module: {
         loaders: [
           {

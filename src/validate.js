@@ -1,5 +1,5 @@
 const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']
-const validTypes = ['', 'arraybuffer', 'blob', 'document', 'text', 'json']
+const validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']
 
 /**
  * Validate HTTP method
@@ -12,8 +12,8 @@ function validateMethod (method) {
   if (typeof method !== 'string') {
     throw Error(`HTTP method should be type of string`)
   }
-  if (method in supportedMethods) {
-    throw Error(`Http method  ${method} is not supported`)
+  if (!supportedMethods.includes(method.toUpperCase())) {
+    throw Error(`Http method ${method} is not supported`)
   }
 }
 
@@ -55,19 +55,22 @@ function validateHeaders (headers) {
  * @param {string} type - response type
  */
 function validateResponseType (type) {
-  if (type !== null || !(type in validTypes))
+  if (!validTypes.includes(type))
     throw Error(`Response content type ${type} is not currently supported`)
 }
 
 /**
  * Validate HTTP request model
- * @param {Object} http – Http object
+ * @param {String} url – url
+ * @param {String} method – HTTP method
+ * @param {Map} headers – HTTP headers
+ * @param {String} responseType – response type
  */
-function validate (http) {
-  validateUrl(http.url)
-  validateMethod(http.method)
-  validateHeaders(http.headers)
-  validateResponseType(http.responseType)
+function validate (url, method, headers, responseType) {
+  validateUrl(url)
+  validateMethod(method)
+  validateHeaders(headers)
+  validateResponseType(responseType)
 }
 
 export default validate

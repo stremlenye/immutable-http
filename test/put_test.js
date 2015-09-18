@@ -11,9 +11,9 @@ describe('Http PUT', () => {
         .withDynamicSegment('some_segment', 'test')
         .withHeader('Content-Type', 'application/json;charset=UTF-8')
         .withHeader('Accept', 'application/json')
+        .withResponseType('json')
         .withBodyProccessor(JSON.stringify)
         .withBody(obj)
-        .withResponseType('json')
 
       return client.exec().then(data => {
         expect(data.status).to.equal(200)
@@ -32,9 +32,9 @@ describe('Http PUT', () => {
         .segment('some_segment', 'test')
         .header('Content-Type', 'application/json;charset=UTF-8')
         .header('Accept', 'application/json')
+        .responseType('json')
         .bodyProcessor(JSON.stringify)
         .body(obj)
-        .responseType('json')
 
       return client.exec().then(data => {
         expect(data.status).to.equal(200)

@@ -243,7 +243,8 @@ export default class Http {
    * @returns {Object} - Promise
    */
   exec () {
-    validate(this.internals())
+    const { url, method, headers, responseType } = this.internals()
+    validate(url, method, headers, responseType)
     return exec(this.internals())
   }
 }
