@@ -1,6 +1,7 @@
 ### Immutable-http
 
 [![npm version](https://badge.fury.io/js/immutable-http.svg)](http://badge.fury.io/js/immutable-http)
+[![Build Status](https://travis-ci.org/stremlenye/immutable-http.svg?branch=master)](https://travis-ci.org/stremlenye/immutable-http)
 
 __Http client with pretty simple chaining API__
 
