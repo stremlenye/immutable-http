@@ -28,8 +28,6 @@
           "column": 1
         }
       },
-      "specifiers": [],
-      "source": null,
       "declaration": {
         "type": "FunctionDeclaration",
         "start": 211,
@@ -499,6 +497,8 @@
           }
         ]
       },
+      "specifiers": [],
+      "source": null,
       "leadingComments": [
         {
           "type": "Block",
@@ -542,8 +542,7 @@
             515
           ]
         }
-      ],
-      "exportKind": "value"
+      ]
     },
     {
       "type": "ExportNamedDeclaration",
@@ -559,8 +558,6 @@
           "column": 1
         }
       },
-      "specifiers": [],
-      "source": null,
       "declaration": {
         "type": "FunctionDeclaration",
         "start": 523,
@@ -1129,6 +1126,8 @@
         ],
         "trailingComments": []
       },
+      "specifiers": [],
+      "source": null,
       "leadingComments": [
         {
           "type": "Block",
@@ -1150,8 +1149,7 @@
             515
           ]
         }
-      ],
-      "exportKind": "value"
+      ]
     }
   ]
 }
