@@ -45,4 +45,9 @@ describe('API', () => {
     const http = new Http()
     expect(http.bodyProcessor).to.not.be.undefined
   })
+
+  it('has method `responseProcessor`', () => {
+    const http = new Http()
+    expect(http.responseProcessor).to.not.be.undefined
+  })
 })

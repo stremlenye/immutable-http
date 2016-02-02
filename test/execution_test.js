@@ -4,11 +4,11 @@ import Http from '../src'
 
 describe('Http GET', () => {
   describe('Deprecated API', () => {
-    it('execute simple get request', () => {
+    it('execute simple get request', (done) => {
       const url = 'http://localhost:3000/:some_segment'
       const method = 'POST'
       const obj = {some: 'body'}
-      const executor = (u, m, headers, responseType, body) => {
+      const executor = (u, m, headers, responseType, body) => new Promise(_ => {
         expect(u).to.equal('http://localhost:3000/test?ping=pong')
         expect(m).to.equal(method)
         expect(headers).to.eql([
@@ -17,7 +17,8 @@ describe('Http GET', () => {
         ])
         expect(responseType).to.be.equal('json')
         expect(body).to.be.equal(JSON.stringify(obj))
-      }
+        done()
+      })
       const client = (new Http()).withMethod(method)
         .executor(executor)
         .withUrl(url)
@@ -33,11 +34,11 @@ describe('Http GET', () => {
   })
 
   describe('Current API', () => {
-    it('execute simple get request', () => {
+    it('execute simple get request', (done) => {
       const url = 'http://localhost:3000/:some_segment'
       const method = 'POST'
       const obj = {some: 'body'}
-      const executor = (u, m, headers, responseType, body) => {
+      const executor = (u, m, headers, responseType, body) => new Promise(_ =>{
         expect(u).to.equal('http://localhost:3000/test?ping=pong')
         expect(m).to.equal(method)
         expect(headers).to.eql([
@@ -46,7 +47,8 @@ describe('Http GET', () => {
         ])
         expect(responseType).to.be.equal('json')
         expect(body).to.be.equal(JSON.stringify(obj))
-      }
+        done()
+      })
       const client = (new Http()).withMethod(method)
         .executor(executor)
         .url(url)
@@ -56,6 +58,14 @@ describe('Http GET', () => {
         .header('Accept', 'application/json')
         .responseType('json')
         .bodyProcessor(JSON.stringify)
+        .responseProcessor(response => {
+          switch (response.code) {
+            case "404":
+              return { message: 'Resource not found' }
+            default:
+              return response
+          }
+        })
         .body(obj)
       return client.exec()
     })
