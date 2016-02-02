@@ -2,7 +2,7 @@ import { deprecate } from 'core-decorators'
 import validate from './validate'
 import { addQueryParams, mixinDynamicSegmentsValues } from './utils/url'
 
-const defaultBodyProcessor = b => b
+const identity = x => x
 
 const defaultParams = {
   executor: null,
@@ -13,7 +13,8 @@ const defaultParams = {
   responseType: null,
   dynamicSegments: [],
   queryParams: [],
-  bodyProcessor: defaultBodyProcessor
+  bodyProcessor: identity,
+  responseProcessor: identity
 }
 
 class Internals {
@@ -229,6 +230,25 @@ export default class Http {
   }
 
   /**
+   * Sets the function which gets the response and produces another value
+   * Useful for default HTTP error handling
+   *
+   * @example
+   * response => {
+   *  switch(response.code) {
+   *    case "404":
+   *      return { message: 'Resource not found' }
+   *  }
+   *}
+   *
+   * @param {func} responseProcessor - f(x) => y
+   * @returns {Object} Http object
+   */
+  responseProcessor (responseProcessor) {
+    return new Http(Object.assign({}, this.internals(), { responseProcessor }))
+  }
+
+  /**
    * Sets response type to 'json'
    * @returns {Object} Http object
    * @deprecated since version 0.2.0
@@ -256,7 +276,7 @@ export default class Http {
   exec () {
     const {
       url, method, headers, responseType, dynamicSegments, queryParams, body,
-      bodyProcessor, executor
+      bodyProcessor, responseProcessor, executor
     } = this.internals()
     if (!executor) {
       throw new Error('executor was not set')
@@ -267,6 +287,8 @@ export default class Http {
     const urlWithDynamicSegments
       = mixinDynamicSegmentsValues(url, dynamicSegments)
     const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)
-    return executor(fullUrl, method, headers, responseType, bodyProcessor(body))
+    return executor(
+      fullUrl, method, headers, responseType, bodyProcessor(body)
+    ).then(responseProcessor)
   }
 }
