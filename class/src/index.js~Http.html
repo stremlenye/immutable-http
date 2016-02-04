@@ -9,12 +9,14 @@
   <script src="script/prettify/prettify.js"></script>
   
   
+  <script src="script/manual.js"></script>
 </head>
-<body class="layout-container">
+<body class="layout-container" data-ice="rootContainer">
 
 <header>
   <a href="./">Home</a>
-  <a href="identifiers.html">Identifier</a>
+  
+  <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
   <a data-ice="repoURL" href="https://github.com/stremlenye/immutable-http.git" class="repo-url-github">Repository</a>
@@ -27,41 +29,25 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><div data-ice="classWrap">
-  <h2>Class</h2>
+<nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="classDoc"><span><a href="class/src/index.js~Http.html">Http</a></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Http.html">Http</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addQueryParams">addQueryParams</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixinDynamicSegmentsValues">mixinDynamicSegmentsValues</a></span></span></li>
 </ul>
 </div>
-
-
-
-<div data-ice="functionWrap">
-  <h2><a href="function/">Function</a></h2>
-  <ul>
-    
-  <li data-ice="functionDoc"><span><a href="function/index.html#static-function-addQueryParams">addQueryParams</a></span></li>
-<li data-ice="functionDoc"><span><a href="function/index.html#static-function-mixinDynamicSegmentsValues">mixinDynamicSegmentsValues</a></span></li>
-<li data-ice="functionDoc"><span><a href="function/index.html#static-function-validate">validate</a></span></li>
-</ul>
-</div>
-
-
-
-
-
-
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber35">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber36">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber35">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber36">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -208,7 +194,8 @@ Expose chainable API</p>
         
         
         <div data-ice="description"><p>Sets the function which gets the body object as a parameter
-</p></div>
+which result would be used as a request body</p>
+</div>
       </div>
     </td>
     <td>
@@ -357,6 +344,33 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-responseProcessor">responseProcessor</a></span></span><span data-ice="signature">(responseProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets the function which gets the response and produces another value
+Useful for default HTTP error handling</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
            <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-responseType">responseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
@@ -364,7 +378,9 @@ Expose chainable API</p>
         
         
         <div data-ice="description"><p>Sets response content type
-</p></div>
+Proper values could be obtained form XmlHttpRequest specification
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties</a></p>
+</div>
       </div>
     </td>
     <td>
@@ -468,7 +484,8 @@ Expose chainable API</p>
         <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
         <div data-ice="description"><p>Sets the function which gets the body object as a parameter
-</p></div>
+which result would be used as a request body</p>
+</div>
       </div>
     </td>
     <td>
@@ -545,7 +562,8 @@ Expose chainable API</p>
       <div>
         <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
-        <div data-ice="description"><p>Predifine body sringification and Content-Type attribute.</p></div>
+        <div data-ice="description"><p>Predifine body sringification and Content-Type attribute.</p>
+</div>
       </div>
     </td>
     <td>
@@ -649,7 +667,9 @@ Expose chainable API</p>
         <div class="deprecated" data-ice="deprecated">this method was deprecated. since version 0.2.0</div>
         
         <div data-ice="description"><p>Sets response content type
-</p></div>
+Proper values could be obtained form XmlHttpRequest specification
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties</a></p>
+</div>
       </div>
     </td>
     <td>
@@ -704,7 +724,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -764,7 +784,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber39">source</a></span></span>
     </span>
   </h3>
 
@@ -807,7 +827,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber130">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber131">source</a></span></span>
     </span>
   </h3>
 
@@ -876,7 +896,7 @@ Expose chainable API</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber227">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber228">source</a></span></span>
     </span>
   </h3>
 
@@ -946,7 +966,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber256">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber276">source</a></span></span>
     </span>
   </h3>
 
@@ -998,7 +1018,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -1067,7 +1087,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber110">source</a></span></span>
     </span>
   </h3>
 
@@ -1143,7 +1163,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber87">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
@@ -1212,7 +1232,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber204">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber205">source</a></span></span>
     </span>
   </h3>
 
@@ -1278,6 +1298,88 @@ which result would be used as a request body</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-responseProcessor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">responseProcessor</span><span data-ice="signature">(responseProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber247">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Sets the function which gets the response and produces another value
+Useful for default HTTP error handling</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">responseProcessor</td>
+      <td data-ice="type"><span>func</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>f(x) =&gt; y</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p>Http object</p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">response =&gt; {
+ switch(response.code) {
+   case &quot;404&quot;:
+     return { message: &apos;Resource not found&apos; }
+ }
+}</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-responseType">
     <span class="access" data-ice="access">public</span>
     
@@ -1288,7 +1390,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber158">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
@@ -1361,7 +1463,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber180">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber181">source</a></span></span>
     </span>
   </h3>
 
@@ -1437,7 +1539,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber67">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 
@@ -1506,7 +1608,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber121">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber122">source</a></span></span>
     </span>
   </h3>
 
@@ -1575,7 +1677,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber217">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber218">source</a></span></span>
     </span>
   </h3>
 
@@ -1645,7 +1747,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber171">source</a></span></span>
     </span>
   </h3>
 
@@ -1721,7 +1823,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber99">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
@@ -1797,7 +1899,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber247">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber267">source</a></span></span>
     </span>
   </h3>
 
@@ -1849,7 +1951,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber237">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber257">source</a></span></span>
     </span>
   </h3>
 
@@ -1901,7 +2003,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber79">source</a></span></span>
     </span>
   </h3>
 
@@ -1970,7 +2072,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber195">source</a></span></span>
     </span>
   </h3>
 
@@ -2046,7 +2148,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber145">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber146">source</a></span></span>
     </span>
   </h3>
 
@@ -2119,7 +2221,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber59">source</a></span></span>
     </span>
   </h3>
 
@@ -2181,7 +2283,7 @@ XmlHttpRequest specification
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.2.6)</span></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
 </footer>
 
 <script src="script/search_index.js"></script>

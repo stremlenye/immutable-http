@@ -306,6 +306,12 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "builtinexternal/webapiexternal.js~audiocontext",
+    "external/index.html",
+    "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "external"
+  ],
+  [
     "builtinexternal/webapiexternal.js~canvasrenderingcontext2d",
     "external/index.html",
     "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
@@ -405,6 +411,12 @@ window.esdocSearchIndex = [
     "src/index.js~http#query",
     "class/src/index.js~Http.html#instance-method-query",
     "src/index.js~Http#query",
+    "method"
+  ],
+  [
+    "src/index.js~http#responseprocessor",
+    "class/src/index.js~Http.html#instance-method-responseProcessor",
+    "src/index.js~Http#responseProcessor",
     "method"
   ],
   [
