@@ -6,24 +6,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "immutable-http/src/utils/url.js~addqueryparams",
-    "function/index.html#static-function-addQueryParams",
-    "<span>addQueryParams</span> <span class=\"search-result-import-path\">immutable-http/src/utils/url.js</span>",
-    "function"
-  ],
-  [
-    "immutable-http/src/utils/url.js~mixindynamicsegmentsvalues",
-    "function/index.html#static-function-mixinDynamicSegmentsValues",
-    "<span>mixinDynamicSegmentsValues</span> <span class=\"search-result-import-path\">immutable-http/src/utils/url.js</span>",
-    "function"
-  ],
-  [
-    "immutable-http/src/validate.js~validate",
-    "function/index.html#static-function-validate",
-    "<span>validate</span> <span class=\"search-result-import-path\">immutable-http/src/validate.js</span>",
-    "function"
-  ],
-  [
     "builtinexternal/ecmascriptexternal.js~array",
     "external/index.html",
     "BuiltinExternal/ECMAScriptExternal.js~Array",
@@ -396,12 +378,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/index.js~http#internals",
-    "class/src/index.js~Http.html#instance-member-internals",
-    "src/index.js~Http#internals",
-    "member"
-  ],
-  [
     "src/index.js~http#method",
     "class/src/index.js~Http.html#instance-method-method",
     "src/index.js~Http#method",
@@ -496,6 +472,18 @@ window.esdocSearchIndex = [
     "class/src/index.js~Http.html#instance-method-withUrl",
     "src/index.js~Http#withUrl",
     "method"
+  ],
+  [
+    "src/index.js~httprequestparams",
+    "typedef/index.html#static-typedef-HttpRequestParams",
+    "src/index.js~HttpRequestParams",
+    "typedef"
+  ],
+  [
+    "src/index.js~tuple",
+    "typedef/index.html#static-typedef-Tuple",
+    "src/index.js~Tuple",
+    "typedef"
   ],
   [
     "src/utils/url.js",

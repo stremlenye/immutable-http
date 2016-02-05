@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Mixins dynamic segments replacing the `:segment_name` parts with provide
  * values
  * @param {String} url – URL
@@ -11,6 +12,7 @@ export function mixinDynamicSegmentsValues (url, dynamicSegments) {
 }
 
 /**
+ * @ignore
  * Adds query params string to url
  * @param {string} url – URL
  * @param {Array} queryParams – query params

@@ -10,7 +10,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import { deprecate } from 'core-decorators'\nimport validate from './validate'\nimport { addQueryParams, mixinDynamicSegmentsValues } from './utils/url'\n\nconst identity = x => x\n\nconst defaultParams = {\n  executor: null,\n  url: null,\n  method: null,\n  headers: [],\n  body: null,\n  responseType: null,\n  dynamicSegments: [],\n  queryParams: [],\n  bodyProcessor: identity,\n  responseProcessor: identity\n}\n\nclass Internals {\n  constructor (params) {\n    Object.entries(params)\n      .map(([key, value]) =>\n        Object.defineProperty(this, key, {\n          get: () => value,\n          enumerable: true,\n          configurable: true\n        }))\n  }\n}\n\n/**\n * Http request object.\n * Expose chainable API\n */\nexport default class Http {\n  constructor (params = defaultParams) {\n    const internals = new Internals(params)\n    this.internals = () => internals\n  }\n\n  /**\n   * Set the middleware that will perform the request\n   * @param {Function} executor -\n   * f(url, method, headers, responseType, body):Promise\n   * @returns {Object} Http object\n   */\n  executor (executor) {\n    return new Http(Object.assign({}, this.internals(), { executor }))\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withUrl (url) {\n    return this.url(url)\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   */\n  url (url) {\n    return new Http(Object.assign({}, this.internals(), { url }))\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withMethod (method) {\n    return this.method(method)\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   */\n  method (method) {\n    return new Http(Object.assign({}, this.internals(), { method }))\n  }\n\n  /**\n   * Adds header to request model\n   * @param {String} header - valid header key\n   * @param {String} value - valid header value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withHeader (header, value) {\n    return this.header(header, value)\n  }\n\n  /**\n   * Adds header to request model\n   * @param {String} header - valid header key\n   * @param {String} value - valid header value\n   * @returns {Object} Http object\n   */\n  header (header, value) {\n    const headers = this.internals().headers.concat([[header, value]])\n    return new Http(Object.assign({}, this.internals(), { headers }))\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withBody (body) {\n    return this.body(body)\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   */\n  body (body) {\n    return new Http(Object.assign({}, this.internals(), { body }))\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {String} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withResponseType (responseType) {\n    return this.responseType(responseType)\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {String} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   */\n  responseType (responseType) {\n    return new Http(Object.assign({}, this.internals(), { responseType }))\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {String} segment - segment key\n   * @param {String} value - segment value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withDynamicSegment (segment, value) {\n    return this.segment(segment, value)\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {String} segment - segment key\n   * @param {String} value - segment value\n   * @returns {Object} Http object\n   */\n  segment (segment, value) {\n    const dynamicSegments\n      = this.internals().dynamicSegments.concat([[segment, value]])\n    return new Http(Object.assign({}, this.internals(), { dynamicSegments }))\n  }\n\n  /**\n   * Adds query string param\n   * @param {String} name - param key\n   * @param {String} value - param value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withParam (name, value) {\n    return this.query(name, value)\n  }\n\n  /**\n   * Adds query string param\n   * @param {String} name - param key\n   * @param {String} value - param value\n   * @returns {Object} Http object\n   */\n  query (name, value) {\n    const queryParams = this.internals().queryParams.concat([[name, value]])\n    return new Http(Object.assign({}, this.internals(), { queryParams }))\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withBodyProccessor (bodyProcessor) {\n    return this.bodyProcessor(bodyProcessor)\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   */\n  bodyProcessor (bodyProcessor) {\n    return new Http(Object.assign({}, this.internals(), { bodyProcessor }))\n  }\n\n  /**\n   * Sets the function which gets the response and produces another value\n   * Useful for default HTTP error handling\n   *\n   * @example\n   * response => {\n   *  switch(response.code) {\n   *    case \"404\":\n   *      return { message: 'Resource not found' }\n   *  }\n   *}\n   *\n   * @param {func} responseProcessor - f(x) => y\n   * @returns {Object} Http object\n   */\n  responseProcessor (responseProcessor) {\n    return new Http(Object.assign({}, this.internals(), { responseProcessor }))\n  }\n\n  /**\n   * Sets response type to 'json'\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withJsonResponse () {\n    return this.withResponseType('json')\n  }\n\n  /**\n   * Predifine body sringification and Content-Type attribute.\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withJsonBody () {\n    return this.withHeader('Content-Type', 'application/json')\n    .withBodyProccessor(JSON.stringify)\n  }\n\n  /**\n   * Executes HTTP request\n   * @returns {Object} - Promise\n   */\n  exec () {\n    const {\n      url, method, headers, responseType, dynamicSegments, queryParams, body,\n      bodyProcessor, responseProcessor, executor\n    } = this.internals()\n    if (!executor) {\n      throw new Error('executor was not set')\n    }\n    const errors = validate(url, method, headers, responseType)\n    if (errors.length !== 0)\n      throw new Error(errors.join('\\n'))\n    const urlWithDynamicSegments\n      = mixinDynamicSegmentsValues(url, dynamicSegments)\n    const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)\n    return executor(\n      fullUrl, method, headers, responseType, bodyProcessor(body)\n    ).then(responseProcessor)\n  }\n}\n"
+    "content": "import { deprecate } from 'core-decorators'\nimport validate from './validate'\nimport { addQueryParams, mixinDynamicSegmentsValues } from './utils/url'\n\nconst identity = x => x\n\nconst defaultParams = {\n  executor: null,\n  url: null,\n  method: null,\n  headers: [],\n  body: null,\n  responseType: null,\n  dynamicSegments: [],\n  queryParams: [],\n  bodyProcessor: identity,\n  responseProcessor: identity\n}\n\nclass Internals {\n  constructor (params) {\n    Object.entries(params)\n      .map(([key, value]) =>\n        Object.defineProperty(this, key, {\n          get: () => value,\n          enumerable: true,\n          configurable: true\n        }))\n  }\n}\n\n/**\n * @typedef {[key: string, value: string]} Tuple\n */\n\n /**\n  * @typedef {Object} HttpRequestParams\n  * @property {string} url resource url\n  * @property {string} method HTTP method,\n  * @property {Tuple[]} headers array of HTTP headers key-value pairs\n  * @property {Object} body request payload\n  * @property {string} responseType response type\n  * @property {Tuple[]} dynamicSegments key-value array of replacements for the provided url\n  * @property {Tuple[]} queryParams key-value array of url params\n  * @property {function(x: Object): Object} bodyProcessor map body function\n  * @property {function(x: Object): Object} responseProcessor map response function\n  * @property {function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise} executor performs HTTP request and returns Promise,\n  */\n\n//executor: function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise,\n//bodyProcessor: function(x: Object): Object, responseProcessor: function(x: Object): Object\n\n/**\n * Http request object.\n * Expose chainable API\n */\nexport default class Http {\n\n  /**\n   * @param {HttpRequestParams} params - HTTP request params\n   */\n  constructor (params = defaultParams) {\n    const internals = new Internals(params)\n    /**\n     * @ignore\n     */\n    this.internals = () => internals\n  }\n\n  /**\n   * Set the middleware that will perform the request\n   * @param {function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise} executor -\n   * function which performs the request asynchroniously and returns Promise back\n   * @returns {Object} Http object\n   */\n  executor (executor) {\n    return new Http(Object.assign({}, this.internals(), { executor }))\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withUrl (url) {\n    return this.url(url)\n  }\n\n  /**\n   * Adds URL information to HTTP request model\n   * @param {string} url - URL\n   * @returns {Object} Http object\n   */\n  url (url) {\n    return new Http(Object.assign({}, this.internals(), { url }))\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withMethod (method) {\n    return this.method(method)\n  }\n\n  /**\n   * Adds HTTP method information to request model\n   * @param {string} method - HTTP method\n   * @returns {Object} Http object\n   */\n  method (method) {\n    return new Http(Object.assign({}, this.internals(), { method }))\n  }\n\n  /**\n   * Adds header to request model\n   * @param {string} header - valid header key\n   * @param {string} value - valid header value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withHeader (header, value) {\n    return this.header(header, value)\n  }\n\n  /**\n   * Adds header to request model\n   * @param {string} header - valid header key\n   * @param {string} value - valid header value\n   * @returns {Object} Http object\n   */\n  header (header, value) {\n    const headers = this.internals().headers.concat([[header, value]])\n    return new Http(Object.assign({}, this.internals(), { headers }))\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withBody (body) {\n    return this.body(body)\n  }\n\n  /**\n   * Adds body to request model\n   * @param {Object} body - request payload\n   * @returns {Object} Http object\n   */\n  body (body) {\n    return new Http(Object.assign({}, this.internals(), { body }))\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {string} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withResponseType (responseType) {\n    return this.responseType(responseType)\n  }\n\n  /**\n   * Sets response content type\n   * Proper values could be obtained form XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @param {string} responseType - Proper values could be obtained form\n   * XmlHttpRequest specification\n   * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties\n   * @returns {Object} Http object\n   */\n  responseType (responseType) {\n    return new Http(Object.assign({}, this.internals(), { responseType }))\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {string} segment - segment key\n   * @param {string} value - segment value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withDynamicSegment (segment, value) {\n    return this.segment(segment, value)\n  }\n\n  /**\n   * Adds dynamic segment value\n   * @param {string} segment - segment key\n   * @param {string} value - segment value\n   * @returns {Object} Http object\n   */\n  segment (segment, value) {\n    const dynamicSegments\n      = this.internals().dynamicSegments.concat([[segment, value]])\n    return new Http(Object.assign({}, this.internals(), { dynamicSegments }))\n  }\n\n  /**\n   * Adds query string param\n   * @param {string} name - param key\n   * @param {string} value - param value\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withParam (name, value) {\n    return this.query(name, value)\n  }\n\n  /**\n   * Adds query string param\n   * @param {string} name - param key\n   * @param {string} value - param value\n   * @returns {Object} Http object\n   */\n  query (name, value) {\n    const queryParams = this.internals().queryParams.concat([[name, value]])\n    return new Http(Object.assign({}, this.internals(), { queryParams }))\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {function(x: Object): Object } bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withBodyProccessor (bodyProcessor) {\n    return this.bodyProcessor(bodyProcessor)\n  }\n\n  /**\n   * Sets the function which gets the body object as a parameter\n   * which result would be used as a request body\n   * @param {func} bodyProcessor - f(x) => valid_http_body\n   * @returns {Object} Http object\n   */\n  bodyProcessor (bodyProcessor) {\n    return new Http(Object.assign({}, this.internals(), { bodyProcessor }))\n  }\n\n  /**\n   * Sets the function which gets the response and produces another value\n   * Useful for default HTTP error handling\n   *\n   * @example\n   * response => {\n   *  switch(response.code) {\n   *    case \"404\":\n   *      return { message: 'Resource not found' }\n   *  }\n   *}\n   *\n   * @param {func} responseProcessor - f(x) => y\n   * @returns {Object} Http object\n   */\n  responseProcessor (responseProcessor) {\n    return new Http(Object.assign({}, this.internals(), { responseProcessor }))\n  }\n\n  /**\n   * Sets response type to 'json'\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withJsonResponse () {\n    return this.withResponseType('json')\n  }\n\n  /**\n   * Predifine body sringification and Content-Type attribute.\n   * @returns {Object} Http object\n   * @deprecated since version 0.2.0\n   */\n  @deprecate\n  withJsonBody () {\n    return this.withHeader('Content-Type', 'application/json')\n    .withBodyProccessor(JSON.stringify)\n  }\n\n  /**\n   * Executes HTTP request\n   * @returns {Object} - Promise\n   */\n  exec () {\n    const {\n      url, method, headers, responseType, dynamicSegments, queryParams, body,\n      bodyProcessor, responseProcessor, executor\n    } = this.internals()\n    if (!executor) {\n      throw new Error('executor was not set')\n    }\n    const errors = validate(url, method, headers, responseType)\n    if (errors.length !== 0)\n      throw new Error(errors.join('\\n'))\n    const urlWithDynamicSegments\n      = mixinDynamicSegmentsValues(url, dynamicSegments)\n    const fullUrl = addQueryParams(urlWithDynamicSegments, queryParams)\n    return executor(\n      fullUrl, method, headers, responseType, bodyProcessor(body)\n    ).then(responseProcessor)\n  }\n}\n"
   },
   {
     "__docId__": 1,
@@ -95,6 +95,144 @@
   },
   {
     "__docId__": 5,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Tuple",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~Tuple",
+    "access": null,
+    "description": null,
+    "type": {
+      "types": [
+        "[key: string, value: string]"
+      ],
+      "optional": false,
+      "name": "Tuple"
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "HttpRequestParams",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~HttpRequestParams",
+    "access": null,
+    "description": null,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "resource url"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "method",
+        "description": "HTTP method,"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Tuple[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "headers",
+        "description": "array of HTTP headers key-value pairs"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "body",
+        "description": "request payload"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "response type"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Tuple[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "dynamicSegments",
+        "description": "key-value array of replacements for the provided url"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Tuple[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "queryParams",
+        "description": "key-value array of url params"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(x: Object): Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "bodyProcessor",
+        "description": "map body function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(x: Object): Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseProcessor",
+        "description": "map response function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "executor",
+        "description": "performs HTTP request and returns Promise,"
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "HttpRequestParams"
+    }
+  },
+  {
+    "__docId__": 7,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -106,11 +244,11 @@
     "importPath": "immutable-http/src/index.js",
     "importStyle": "Http",
     "description": "Http request object.\nExpose chainable API",
-    "lineNumber": 36,
+    "lineNumber": 57,
     "interface": false
   },
   {
-    "__docId__": 6,
+    "__docId__": 8,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -119,23 +257,23 @@
     "longname": "src/index.js~Http#constructor",
     "access": null,
     "description": null,
-    "lineNumber": 37,
-    "undocument": true,
+    "lineNumber": 62,
     "params": [
       {
-        "name": "params",
-        "optional": true,
+        "nullable": null,
         "types": [
-          "*"
+          "HttpRequestParams"
         ],
-        "defaultRaw": "defaultParams",
-        "defaultValue": "defaultParams"
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "HTTP request params"
       }
     ],
     "generator": false
   },
   {
-    "__docId__": 7,
+    "__docId__": 9,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -144,8 +282,8 @@
     "longname": "src/index.js~Http#internals",
     "access": null,
     "description": null,
-    "lineNumber": 39,
-    "undocument": true,
+    "lineNumber": 67,
+    "ignore": true,
     "type": {
       "types": [
         "*"
@@ -153,7 +291,7 @@
     }
   },
   {
-    "__docId__": 8,
+    "__docId__": 10,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -162,7 +300,7 @@
     "longname": "src/index.js~Http#executor",
     "access": null,
     "description": "Set the middleware that will perform the request",
-    "lineNumber": 48,
+    "lineNumber": 76,
     "unknown": [
       {
         "tagName": "@returns",
@@ -173,91 +311,12 @@
       {
         "nullable": null,
         "types": [
-          "Function"
+          "function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise"
         ],
         "spread": false,
         "optional": false,
         "name": "executor",
-        "description": "f(url, method, headers, responseType, body):Promise"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": "Http object"
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 9,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "withUrl",
-    "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withUrl",
-    "access": null,
-    "description": "Adds URL information to HTTP request model",
-    "lineNumber": 59,
-    "deprecated": "since version 0.2.0",
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Object} Http object"
-      }
-    ],
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "url",
-        "description": "URL"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": "Http object"
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 10,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "url",
-    "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#url",
-    "access": null,
-    "description": "Adds URL information to HTTP request model",
-    "lineNumber": 68,
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Object} Http object"
-      }
-    ],
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "url",
-        "description": "URL"
+        "description": "function which performs the request asynchroniously and returns Promise back"
       }
     ],
     "return": {
@@ -275,12 +334,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "withMethod",
+    "name": "withUrl",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withMethod",
+    "longname": "src/index.js~Http#withUrl",
     "access": null,
-    "description": "Adds HTTP method information to request model",
-    "lineNumber": 79,
+    "description": "Adds URL information to HTTP request model",
+    "lineNumber": 87,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -296,8 +355,8 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "method",
-        "description": "HTTP method"
+        "name": "url",
+        "description": "URL"
       }
     ],
     "return": {
@@ -315,12 +374,52 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "method",
+    "name": "url",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#method",
+    "longname": "src/index.js~Http#url",
+    "access": null,
+    "description": "Adds URL information to HTTP request model",
+    "lineNumber": 96,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "URL"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withMethod",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withMethod",
     "access": null,
     "description": "Adds HTTP method information to request model",
-    "lineNumber": 88,
+    "lineNumber": 107,
+    "deprecated": "since version 0.2.0",
     "unknown": [
       {
         "tagName": "@returns",
@@ -350,66 +449,16 @@
     "generator": false
   },
   {
-    "__docId__": 13,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "withHeader",
-    "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withHeader",
-    "access": null,
-    "description": "Adds header to request model",
-    "lineNumber": 100,
-    "deprecated": "since version 0.2.0",
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Object} Http object"
-      }
-    ],
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "header",
-        "description": "valid header key"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "valid header value"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": "Http object"
-    },
-    "generator": false
-  },
-  {
     "__docId__": 14,
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "header",
+    "name": "method",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#header",
+    "longname": "src/index.js~Http#method",
     "access": null,
-    "description": "Adds header to request model",
-    "lineNumber": 110,
+    "description": "Adds HTTP method information to request model",
+    "lineNumber": 116,
     "unknown": [
       {
         "tagName": "@returns",
@@ -420,22 +469,12 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
         ],
         "spread": false,
         "optional": false,
-        "name": "header",
-        "description": "valid header key"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "valid header value"
+        "name": "method",
+        "description": "HTTP method"
       }
     ],
     "return": {
@@ -453,12 +492,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "withBody",
+    "name": "withHeader",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withBody",
+    "longname": "src/index.js~Http#withHeader",
     "access": null,
-    "description": "Adds body to request model",
-    "lineNumber": 122,
+    "description": "Adds header to request model",
+    "lineNumber": 128,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -470,12 +509,22 @@
       {
         "nullable": null,
         "types": [
-          "Object"
+          "string"
         ],
         "spread": false,
         "optional": false,
-        "name": "body",
-        "description": "request payload"
+        "name": "header",
+        "description": "valid header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "valid header value"
       }
     ],
     "return": {
@@ -493,12 +542,62 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "body",
+    "name": "header",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#body",
+    "longname": "src/index.js~Http#header",
+    "access": null,
+    "description": "Adds header to request model",
+    "lineNumber": 138,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "header",
+        "description": "valid header key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "valid header value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBody",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withBody",
     "access": null,
     "description": "Adds body to request model",
-    "lineNumber": 131,
+    "lineNumber": 150,
+    "deprecated": "since version 0.2.0",
     "unknown": [
       {
         "tagName": "@returns",
@@ -528,55 +627,15 @@
     "generator": false
   },
   {
-    "__docId__": 17,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "withResponseType",
-    "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withResponseType",
-    "access": null,
-    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
-    "lineNumber": 146,
-    "deprecated": "since version 0.2.0",
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Object} Http object"
-      }
-    ],
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "responseType",
-        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": "Http object"
-    },
-    "generator": false
-  },
-  {
     "__docId__": 18,
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "responseType",
+    "name": "body",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#responseType",
+    "longname": "src/index.js~Http#body",
     "access": null,
-    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "description": "Adds body to request model",
     "lineNumber": 159,
     "unknown": [
       {
@@ -588,12 +647,12 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "Object"
         ],
         "spread": false,
         "optional": false,
-        "name": "responseType",
-        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
+        "name": "body",
+        "description": "request payload"
       }
     ],
     "return": {
@@ -611,12 +670,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "withDynamicSegment",
+    "name": "withResponseType",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withDynamicSegment",
+    "longname": "src/index.js~Http#withResponseType",
     "access": null,
-    "description": "Adds dynamic segment value",
-    "lineNumber": 171,
+    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "lineNumber": 174,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -628,22 +687,12 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
         ],
         "spread": false,
         "optional": false,
-        "name": "segment",
-        "description": "segment key"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "segment value"
+        "name": "responseType",
+        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
       }
     ],
     "return": {
@@ -661,12 +710,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "segment",
+    "name": "responseType",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#segment",
+    "longname": "src/index.js~Http#responseType",
     "access": null,
-    "description": "Adds dynamic segment value",
-    "lineNumber": 181,
+    "description": "Sets response content type\nProper values could be obtained form XmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties",
+    "lineNumber": 187,
     "unknown": [
       {
         "tagName": "@returns",
@@ -677,7 +726,47 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseType",
+        "description": "Proper values could be obtained form\nXmlHttpRequest specification\nhttps://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withDynamicSegment",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withDynamicSegment",
+    "access": null,
+    "description": "Adds dynamic segment value",
+    "lineNumber": 199,
+    "deprecated": "since version 0.2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
         ],
         "spread": false,
         "optional": false,
@@ -687,7 +776,7 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
         ],
         "spread": false,
         "optional": false,
@@ -706,66 +795,16 @@
     "generator": false
   },
   {
-    "__docId__": 21,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "withParam",
-    "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withParam",
-    "access": null,
-    "description": "Adds query string param",
-    "lineNumber": 195,
-    "deprecated": "since version 0.2.0",
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Object} Http object"
-      }
-    ],
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "name",
-        "description": "param key"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "param value"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": "Http object"
-    },
-    "generator": false
-  },
-  {
     "__docId__": 22,
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "query",
+    "name": "segment",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#query",
+    "longname": "src/index.js~Http#segment",
     "access": null,
-    "description": "Adds query string param",
-    "lineNumber": 205,
+    "description": "Adds dynamic segment value",
+    "lineNumber": 209,
     "unknown": [
       {
         "tagName": "@returns",
@@ -776,22 +815,22 @@
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
         ],
         "spread": false,
         "optional": false,
-        "name": "name",
-        "description": "param key"
+        "name": "segment",
+        "description": "segment key"
       },
       {
         "nullable": null,
         "types": [
-          "String"
+          "string"
         ],
         "spread": false,
         "optional": false,
         "name": "value",
-        "description": "param value"
+        "description": "segment value"
       }
     ],
     "return": {
@@ -809,12 +848,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "withBodyProccessor",
+    "name": "withParam",
     "memberof": "src/index.js~Http",
-    "longname": "src/index.js~Http#withBodyProccessor",
+    "longname": "src/index.js~Http#withParam",
     "access": null,
-    "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
-    "lineNumber": 218,
+    "description": "Adds query string param",
+    "lineNumber": 223,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -826,12 +865,22 @@
       {
         "nullable": null,
         "types": [
-          "func"
+          "string"
         ],
         "spread": false,
         "optional": false,
-        "name": "bodyProcessor",
-        "description": "f(x) => valid_http_body"
+        "name": "name",
+        "description": "param key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "param value"
       }
     ],
     "return": {
@@ -849,12 +898,101 @@
     "kind": "method",
     "static": false,
     "variation": null,
+    "name": "query",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#query",
+    "access": null,
+    "description": "Adds query string param",
+    "lineNumber": 233,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "param key"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "param value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "withBodyProccessor",
+    "memberof": "src/index.js~Http",
+    "longname": "src/index.js~Http#withBodyProccessor",
+    "access": null,
+    "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
+    "lineNumber": 246,
+    "deprecated": "since version 0.2.0",
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} Http object"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(x: Object): Object "
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "bodyProcessor",
+        "description": "f(x) => valid_http_body"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "Http object"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "static": false,
+    "variation": null,
     "name": "bodyProcessor",
     "memberof": "src/index.js~Http",
     "longname": "src/index.js~Http#bodyProcessor",
     "access": null,
     "description": "Sets the function which gets the body object as a parameter\nwhich result would be used as a request body",
-    "lineNumber": 228,
+    "lineNumber": 256,
     "unknown": [
       {
         "tagName": "@returns",
@@ -884,7 +1022,7 @@
     "generator": false
   },
   {
-    "__docId__": 25,
+    "__docId__": 27,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -896,7 +1034,7 @@
     "examples": [
       "response => {\n switch(response.code) {\n   case \"404\":\n     return { message: 'Resource not found' }\n }\n}"
     ],
-    "lineNumber": 247,
+    "lineNumber": 275,
     "unknown": [
       {
         "tagName": "@returns",
@@ -926,7 +1064,7 @@
     "generator": false
   },
   {
-    "__docId__": 26,
+    "__docId__": 28,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -935,7 +1073,7 @@
     "longname": "src/index.js~Http#withJsonResponse",
     "access": null,
     "description": "Sets response type to 'json'",
-    "lineNumber": 257,
+    "lineNumber": 285,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -955,7 +1093,7 @@
     "generator": false
   },
   {
-    "__docId__": 27,
+    "__docId__": 29,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -964,7 +1102,7 @@
     "longname": "src/index.js~Http#withJsonBody",
     "access": null,
     "description": "Predifine body sringification and Content-Type attribute.",
-    "lineNumber": 267,
+    "lineNumber": 295,
     "deprecated": "since version 0.2.0",
     "unknown": [
       {
@@ -984,7 +1122,7 @@
     "generator": false
   },
   {
-    "__docId__": 28,
+    "__docId__": 30,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -993,7 +1131,7 @@
     "longname": "src/index.js~Http#exec",
     "access": null,
     "description": "Executes HTTP request",
-    "lineNumber": 276,
+    "lineNumber": 304,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1012,7 +1150,7 @@
     "generator": false
   },
   {
-    "__docId__": 29,
+    "__docId__": 31,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1022,10 +1160,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/**\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nexport function mixinDynamicSegmentsValues (url, dynamicSegments) {\n  return dynamicSegments.reduce((aggr, [key, value]) =>\n    aggr.replace(`:${key}`, value), url)\n}\n\n/**\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nexport function addQueryParams (url, queryParams) {\n  const chanks = queryParams.map(([key, value]) => `${key}=${value}`)\n  return url + '?' + chanks.join('&')\n}\n"
+    "content": "/**\n * @ignore\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nexport function mixinDynamicSegmentsValues (url, dynamicSegments) {\n  return dynamicSegments.reduce((aggr, [key, value]) =>\n    aggr.replace(`:${key}`, value), url)\n}\n\n/**\n * @ignore\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nexport function addQueryParams (url, queryParams) {\n  const chanks = queryParams.map(([key, value]) => `${key}=${value}`)\n  return url + '?' + chanks.join('&')\n}\n"
   },
   {
-    "__docId__": 30,
+    "__docId__": 32,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1036,8 +1174,9 @@
     "export": true,
     "importPath": "immutable-http/src/utils/url.js",
     "importStyle": "{mixinDynamicSegmentsValues}",
-    "description": "Mixins dynamic segments replacing the `:segment_name` parts with provide\nvalues",
-    "lineNumber": 8,
+    "description": null,
+    "lineNumber": 9,
+    "ignore": true,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1077,7 +1216,7 @@
     "generator": false
   },
   {
-    "__docId__": 31,
+    "__docId__": 33,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1088,8 +1227,9 @@
     "export": true,
     "importPath": "immutable-http/src/utils/url.js",
     "importStyle": "{addQueryParams}",
-    "description": "Adds query params string to url",
-    "lineNumber": 19,
+    "description": null,
+    "lineNumber": 21,
+    "ignore": true,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1129,7 +1269,7 @@
     "generator": false
   },
   {
-    "__docId__": 32,
+    "__docId__": 34,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1139,10 +1279,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']\nconst validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']\n\n/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n * @return {String} error\n */\nfunction validateMethod (method) {\n  if (!method) {\n    return `HTTP method is not specified`\n  }\n  if (typeof method !== 'string') {\n    return `HTTP method should be type of string`\n  }\n  if (!supportedMethods.includes(method.toUpperCase())) {\n    return `Http method ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n * @return {String} error\n */\nfunction validateUrl (url) {\n  if (!url) {\n    return `Url is not specified`\n  }\n  if (typeof url !== 'string') {\n    return `Url should be type of string`\n  }\n}\n\n/**\n * Validate header to all parts be strings\n * @param {String} key – Header key\n * @param {String} value – Header value\n * @return {String} error\n */\nfunction validateHeader (key, value) {\n  if (typeof key !== 'string' || typeof value !== 'string')\n    return `Parts of header ${key}:${value} must be strings`\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n * @return {Array} error\n */\nfunction validateHeaders (headers) {\n  const aggr = []\n  for (let [key, value] of headers)\n    aggr.push(validateHeader(key, value))\n  return aggr\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n * @return {String} error\n */\nfunction validateResponseType (type) {\n  if (!validTypes.includes(type))\n    return `Response content type ${type} is not supported`\n}\n\n/**\n * Validate HTTP request model\n * @param {String} url – url\n * @param {String} method – HTTP method\n * @param {Map} headers – HTTP headers\n * @param {String} responseType – response type\n * @return {Array} array of errors\n */\nfunction validate (url, method, headers, responseType) {\n  return [validateUrl(url),\n    validateMethod(method),\n    validateResponseType(responseType)]\n    .concat(validateHeaders(headers)).filter(_ => !!_)\n}\n\nexport default validate\n"
+    "content": "const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']\nconst validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']\n\n/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n * @return {String} error\n */\nfunction validateMethod (method) {\n  if (!method) {\n    return `HTTP method is not specified`\n  }\n  if (typeof method !== 'string') {\n    return `HTTP method should be type of string`\n  }\n  if (!supportedMethods.includes(method.toUpperCase())) {\n    return `Http method ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n * @return {String} error\n */\nfunction validateUrl (url) {\n  if (!url) {\n    return `Url is not specified`\n  }\n  if (typeof url !== 'string') {\n    return `Url should be type of string`\n  }\n}\n\n/**\n * Validate header to all parts be strings\n * @param {String} key – Header key\n * @param {String} value – Header value\n * @return {String} error\n */\nfunction validateHeader (key, value) {\n  if (typeof key !== 'string' || typeof value !== 'string')\n    return `Parts of header ${key}:${value} must be strings`\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n * @return {Array} error\n */\nfunction validateHeaders (headers) {\n  const aggr = []\n  for (let [key, value] of headers)\n    aggr.push(validateHeader(key, value))\n  return aggr\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n * @return {String} error\n */\nfunction validateResponseType (type) {\n  if (!validTypes.includes(type))\n    return `Response content type ${type} is not supported`\n}\n\n/**\n * @ignore\n * Validate HTTP request model\n * @param {String} url – url\n * @param {String} method – HTTP method\n * @param {Map} headers – HTTP headers\n * @param {String} responseType – response type\n * @return {Array} array of errors\n */\nfunction validate (url, method, headers, responseType) {\n  return [validateUrl(url),\n    validateMethod(method),\n    validateResponseType(responseType)]\n    .concat(validateHeaders(headers)).filter(_ => !!_)\n}\n\nexport default validate\n"
   },
   {
-    "__docId__": 33,
+    "__docId__": 35,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1163,7 +1303,7 @@
     }
   },
   {
-    "__docId__": 34,
+    "__docId__": 36,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1184,7 +1324,7 @@
     }
   },
   {
-    "__docId__": 35,
+    "__docId__": 37,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1220,7 +1360,7 @@
     "generator": false
   },
   {
-    "__docId__": 36,
+    "__docId__": 38,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1256,7 +1396,7 @@
     "generator": false
   },
   {
-    "__docId__": 37,
+    "__docId__": 39,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1302,7 +1442,7 @@
     "generator": false
   },
   {
-    "__docId__": 38,
+    "__docId__": 40,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1338,7 +1478,7 @@
     "generator": false
   },
   {
-    "__docId__": 39,
+    "__docId__": 41,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1374,7 +1514,7 @@
     "generator": false
   },
   {
-    "__docId__": 40,
+    "__docId__": 42,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1385,8 +1525,9 @@
     "export": true,
     "importPath": "immutable-http/src/validate.js",
     "importStyle": "validate",
-    "description": "Validate HTTP request model",
-    "lineNumber": 76,
+    "description": null,
+    "lineNumber": 77,
+    "ignore": true,
     "params": [
       {
         "nullable": null,
@@ -1440,7 +1581,7 @@
     "generator": false
   },
   {
-    "__docId__": 42,
+    "__docId__": 44,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1453,7 +1594,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 43,
+    "__docId__": 45,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1466,7 +1607,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 44,
+    "__docId__": 46,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1479,7 +1620,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 45,
+    "__docId__": 47,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1492,7 +1633,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 46,
+    "__docId__": 48,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1505,7 +1646,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 49,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1518,7 +1659,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 50,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1531,7 +1672,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 49,
+    "__docId__": 51,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1544,7 +1685,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 52,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1557,7 +1698,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 51,
+    "__docId__": 53,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1570,7 +1711,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 54,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1583,7 +1724,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 55,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1596,7 +1737,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 56,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1609,7 +1750,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 55,
+    "__docId__": 57,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1622,7 +1763,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 58,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1635,7 +1776,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 57,
+    "__docId__": 59,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1648,7 +1789,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 60,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1661,7 +1802,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 59,
+    "__docId__": 61,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1674,7 +1815,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 60,
+    "__docId__": 62,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1687,7 +1828,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 61,
+    "__docId__": 63,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1700,7 +1841,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 62,
+    "__docId__": 64,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1713,7 +1854,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 63,
+    "__docId__": 65,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1726,7 +1867,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 64,
+    "__docId__": 66,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1739,7 +1880,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 65,
+    "__docId__": 67,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1752,7 +1893,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 66,
+    "__docId__": 68,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1765,7 +1906,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 67,
+    "__docId__": 69,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1778,7 +1919,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 68,
+    "__docId__": 70,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1791,7 +1932,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 69,
+    "__docId__": 71,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1804,7 +1945,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 70,
+    "__docId__": 72,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1817,7 +1958,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 71,
+    "__docId__": 73,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1830,7 +1971,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 72,
+    "__docId__": 74,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1843,7 +1984,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 73,
+    "__docId__": 75,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1856,7 +1997,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 74,
+    "__docId__": 76,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1869,7 +2010,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 75,
+    "__docId__": 77,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1882,7 +2023,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 76,
+    "__docId__": 78,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1895,7 +2036,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 77,
+    "__docId__": 79,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1908,7 +2049,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 78,
+    "__docId__": 80,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1921,7 +2062,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 79,
+    "__docId__": 81,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1934,7 +2075,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 80,
+    "__docId__": 82,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1947,7 +2088,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 81,
+    "__docId__": 83,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1960,7 +2101,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 82,
+    "__docId__": 84,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1973,7 +2114,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 83,
+    "__docId__": 85,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1986,7 +2127,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 84,
+    "__docId__": 86,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1999,7 +2140,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 85,
+    "__docId__": 87,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2012,7 +2153,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 86,
+    "__docId__": 88,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2025,7 +2166,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 87,
+    "__docId__": 89,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2038,7 +2179,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 88,
+    "__docId__": 90,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2051,7 +2192,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 90,
+    "__docId__": 92,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2064,7 +2205,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 91,
+    "__docId__": 93,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2077,7 +2218,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 92,
+    "__docId__": 94,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2090,7 +2231,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 93,
+    "__docId__": 95,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2103,7 +2244,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 94,
+    "__docId__": 96,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2116,7 +2257,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 95,
+    "__docId__": 97,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2129,7 +2270,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 96,
+    "__docId__": 98,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2142,7 +2283,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 97,
+    "__docId__": 99,
     "kind": "external",
     "static": true,
     "variation": null,
