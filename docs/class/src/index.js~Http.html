@@ -33,21 +33,20 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~Http.html">Http</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addQueryParams">addQueryParams</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixinDynamicSegmentsValues">mixinDynamicSegmentsValues</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-HttpRequestParams">HttpRequestParams</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Tuple">Tuple</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber36">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Http from &apos;<span><a href="file/src/index.js.html#lineNumber57">immutable-http/src/index.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber36">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/index.js.html#lineNumber57">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -97,7 +96,7 @@ Expose chainable API</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(params: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(params: <span><a href="typedef/index.html#static-typedef-HttpRequestParams">HttpRequestParams</a></span>)</span>
         </p>
       </div>
       <div>
@@ -114,38 +113,7 @@ Expose chainable API</p>
 </tbody>
 </table>
 </div>
-<div data-ice="memberSummary"><h2>Member Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Public Members</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-member-internals">internals</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+
 <div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
   <tbody>
@@ -240,7 +208,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-executor">executor</a></span></span><span data-ice="signature">(executor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-executor">executor</a></span></span><span data-ice="signature">(executor: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(url: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, method: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, headers: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span>, responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -266,7 +234,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-header">header</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-header">header</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -318,7 +286,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-query">query</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-query">query</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -371,7 +339,7 @@ Useful for default HTTP error handling</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-responseType">responseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-responseType">responseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -399,7 +367,7 @@ Proper values could be obtained form XmlHttpRequest specification
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-segment">segment</a></span></span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-segment">segment</a></span></span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -477,7 +445,7 @@ Proper values could be obtained form XmlHttpRequest specification
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBodyProccessor">withBodyProccessor</a></span></span><span data-ice="signature">(bodyProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withBodyProccessor">withBodyProccessor</a></span></span><span data-ice="signature">(bodyProcessor: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -504,7 +472,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withDynamicSegment">withDynamicSegment</a></span></span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withDynamicSegment">withDynamicSegment</a></span></span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -530,7 +498,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withHeader">withHeader</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withHeader">withHeader</a></span></span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -634,7 +602,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withParam">withParam</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withParam">withParam</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -660,7 +628,7 @@ which result would be used as a request body</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withResponseType">withResponseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="class/src/index.js~Http.html#instance-method-withResponseType">withResponseType</a></span></span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -720,11 +688,11 @@ Proper values could be obtained form XmlHttpRequest specification
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(params: <span>*</span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(params: <span><a href="typedef/index.html#static-typedef-HttpRequestParams">HttpRequestParams</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -745,10 +713,10 @@ Proper values could be obtained form XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">params</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: defaultParams</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-HttpRequestParams">HttpRequestParams</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>HTTP request params</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -771,49 +739,7 @@ Proper values could be obtained form XmlHttpRequest specification
   
 </div>
 </div>
-<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-internals">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">internals</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber39">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-</div>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
@@ -827,7 +753,7 @@ Proper values could be obtained form XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber131">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
@@ -896,7 +822,7 @@ Proper values could be obtained form XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber228">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber256">source</a></span></span>
     </span>
   </h3>
 
@@ -966,7 +892,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber276">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber304">source</a></span></span>
     </span>
   </h3>
 
@@ -1014,11 +940,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">executor</span><span data-ice="signature">(executor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">executor</span><span data-ice="signature">(executor: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(url: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, method: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, headers: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span>, responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
@@ -1040,9 +966,9 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">executor</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(url: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, method: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, headers: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span>, responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>f(url, method, headers, responseType, body):Promise</p>
+      <td data-ice="description"><p>function which performs the request asynchroniously and returns Promise back</p>
 </td>
     </tr>
 </tbody>
@@ -1083,11 +1009,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">header</span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">header</span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber110">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber138">source</a></span></span>
     </span>
   </h3>
 
@@ -1109,14 +1035,14 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">header</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>valid header key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>valid header value</p>
 </td>
@@ -1163,7 +1089,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber116">source</a></span></span>
     </span>
   </h3>
 
@@ -1228,11 +1154,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">query</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">query</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber205">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber233">source</a></span></span>
     </span>
   </h3>
 
@@ -1254,14 +1180,14 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">name</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>param key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>param value</p>
 </td>
@@ -1308,7 +1234,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber247">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber275">source</a></span></span>
     </span>
   </h3>
 
@@ -1386,11 +1312,11 @@ Useful for default HTTP error handling</p>
     
     
     
-    <span data-ice="name">responseType</span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">responseType</span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber187">source</a></span></span>
     </span>
   </h3>
 
@@ -1414,7 +1340,7 @@ Proper values could be obtained form XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">responseType</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Proper values could be obtained form
 XmlHttpRequest specification
@@ -1459,11 +1385,11 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">segment</span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">segment</span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber181">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber209">source</a></span></span>
     </span>
   </h3>
 
@@ -1485,14 +1411,14 @@ XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">segment</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>segment key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>segment value</p>
 </td>
@@ -1539,7 +1465,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -1608,7 +1534,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber122">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber150">source</a></span></span>
     </span>
   </h3>
 
@@ -1673,11 +1599,11 @@ XmlHttpRequest specification
     
     
     
-    <span data-ice="name">withBodyProccessor</span><span data-ice="signature">(bodyProcessor: <span>func</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">withBodyProccessor</span><span data-ice="signature">(bodyProcessor: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber218">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber246">source</a></span></span>
     </span>
   </h3>
 
@@ -1700,7 +1626,7 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">bodyProcessor</td>
-      <td data-ice="type"><span>func</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>f(x) =&gt; valid_http_body</p>
 </td>
@@ -1743,11 +1669,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">withDynamicSegment</span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">withDynamicSegment</span><span data-ice="signature">(segment: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber199">source</a></span></span>
     </span>
   </h3>
 
@@ -1769,14 +1695,14 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">segment</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>segment key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>segment value</p>
 </td>
@@ -1819,11 +1745,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">withHeader</span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">withHeader</span><span data-ice="signature">(header: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber100">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber128">source</a></span></span>
     </span>
   </h3>
 
@@ -1845,14 +1771,14 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">header</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>valid header key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>valid header value</p>
 </td>
@@ -1899,7 +1825,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber267">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber295">source</a></span></span>
     </span>
   </h3>
 
@@ -1951,7 +1877,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber257">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber285">source</a></span></span>
     </span>
   </h3>
 
@@ -2003,7 +1929,7 @@ which result would be used as a request body</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber79">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber107">source</a></span></span>
     </span>
   </h3>
 
@@ -2068,11 +1994,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">withParam</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">withParam</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber195">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber223">source</a></span></span>
     </span>
   </h3>
 
@@ -2094,14 +2020,14 @@ which result would be used as a request body</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">name</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>param key</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">value</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>param value</p>
 </td>
@@ -2144,11 +2070,11 @@ which result would be used as a request body</p>
     
     
     
-    <span data-ice="name">withResponseType</span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span data-ice="name">withResponseType</span><span data-ice="signature">(responseType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber146">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber174">source</a></span></span>
     </span>
   </h3>
 
@@ -2172,7 +2098,7 @@ Proper values could be obtained form XmlHttpRequest specification
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">responseType</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Proper values could be obtained form
 XmlHttpRequest specification
@@ -2221,7 +2147,7 @@ XmlHttpRequest specification
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber59">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/index.js.html#lineNumber87">source</a></span></span>
     </span>
   </h3>
 

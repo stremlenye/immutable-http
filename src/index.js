@@ -30,19 +30,47 @@ class Internals {
 }
 
 /**
+ * @typedef {[key: string, value: string]} Tuple
+ */
+
+ /**
+  * @typedef {Object} HttpRequestParams
+  * @property {string} url resource url
+  * @property {string} method HTTP method,
+  * @property {Tuple[]} headers array of HTTP headers key-value pairs
+  * @property {Object} body request payload
+  * @property {string} responseType response type
+  * @property {Tuple[]} dynamicSegments key-value array of replacements for the provided url
+  * @property {Tuple[]} queryParams key-value array of url params
+  * @property {function(x: Object): Object} bodyProcessor map body function
+  * @property {function(x: Object): Object} responseProcessor map response function
+  * @property {function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise} executor performs HTTP request and returns Promise,
+  */
+
+//executor: function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise,
+//bodyProcessor: function(x: Object): Object, responseProcessor: function(x: Object): Object
+
+/**
  * Http request object.
  * Expose chainable API
  */
 export default class Http {
+
+  /**
+   * @param {HttpRequestParams} params - HTTP request params
+   */
   constructor (params = defaultParams) {
     const internals = new Internals(params)
+    /**
+     * @ignore
+     */
     this.internals = () => internals
   }
 
   /**
    * Set the middleware that will perform the request
-   * @param {Function} executor -
-   * f(url, method, headers, responseType, body):Promise
+   * @param {function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise} executor -
+   * function which performs the request asynchroniously and returns Promise back
    * @returns {Object} Http object
    */
   executor (executor) {
@@ -91,8 +119,8 @@ export default class Http {
 
   /**
    * Adds header to request model
-   * @param {String} header - valid header key
-   * @param {String} value - valid header value
+   * @param {string} header - valid header key
+   * @param {string} value - valid header value
    * @returns {Object} Http object
    * @deprecated since version 0.2.0
    */
@@ -103,8 +131,8 @@ export default class Http {
 
   /**
    * Adds header to request model
-   * @param {String} header - valid header key
-   * @param {String} value - valid header value
+   * @param {string} header - valid header key
+   * @param {string} value - valid header value
    * @returns {Object} Http object
    */
   header (header, value) {
@@ -136,7 +164,7 @@ export default class Http {
    * Sets response content type
    * Proper values could be obtained form XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
-   * @param {String} responseType - Proper values could be obtained form
+   * @param {string} responseType - Proper values could be obtained form
    * XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
@@ -151,7 +179,7 @@ export default class Http {
    * Sets response content type
    * Proper values could be obtained form XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
-   * @param {String} responseType - Proper values could be obtained form
+   * @param {string} responseType - Proper values could be obtained form
    * XmlHttpRequest specification
    * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
    * @returns {Object} Http object
@@ -162,8 +190,8 @@ export default class Http {
 
   /**
    * Adds dynamic segment value
-   * @param {String} segment - segment key
-   * @param {String} value - segment value
+   * @param {string} segment - segment key
+   * @param {string} value - segment value
    * @returns {Object} Http object
    * @deprecated since version 0.2.0
    */
@@ -174,8 +202,8 @@ export default class Http {
 
   /**
    * Adds dynamic segment value
-   * @param {String} segment - segment key
-   * @param {String} value - segment value
+   * @param {string} segment - segment key
+   * @param {string} value - segment value
    * @returns {Object} Http object
    */
   segment (segment, value) {
@@ -186,8 +214,8 @@ export default class Http {
 
   /**
    * Adds query string param
-   * @param {String} name - param key
-   * @param {String} value - param value
+   * @param {string} name - param key
+   * @param {string} value - param value
    * @returns {Object} Http object
    * @deprecated since version 0.2.0
    */
@@ -198,8 +226,8 @@ export default class Http {
 
   /**
    * Adds query string param
-   * @param {String} name - param key
-   * @param {String} value - param value
+   * @param {string} name - param key
+   * @param {string} value - param value
    * @returns {Object} Http object
    */
   query (name, value) {
@@ -210,7 +238,7 @@ export default class Http {
   /**
    * Sets the function which gets the body object as a parameter
    * which result would be used as a request body
-   * @param {func} bodyProcessor - f(x) => valid_http_body
+   * @param {function(x: Object): Object } bodyProcessor - f(x) => valid_http_body
    * @returns {Object} Http object
    * @deprecated since version 0.2.0
    */

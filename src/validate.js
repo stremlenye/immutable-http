@@ -66,6 +66,7 @@ function validateResponseType (type) {
 }
 
 /**
+ * @ignore
  * Validate HTTP request model
  * @param {String} url – url
  * @param {String} method – HTTP method
