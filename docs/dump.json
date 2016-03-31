@@ -102,7 +102,7 @@
     "memberof": "src/index.js",
     "longname": "src/index.js~Tuple",
     "access": null,
-    "description": null,
+    "description": "",
     "type": {
       "types": [
         "[key: string, value: string]"
@@ -120,7 +120,7 @@
     "memberof": "src/index.js",
     "longname": "src/index.js~HttpRequestParams",
     "access": null,
-    "description": null,
+    "description": "",
     "properties": [
       {
         "nullable": null,
@@ -256,7 +256,7 @@
     "memberof": "src/index.js~Http",
     "longname": "src/index.js~Http#constructor",
     "access": null,
-    "description": null,
+    "description": "",
     "lineNumber": 62,
     "params": [
       {
@@ -281,7 +281,7 @@
     "memberof": "src/index.js~Http",
     "longname": "src/index.js~Http#internals",
     "access": null,
-    "description": null,
+    "description": "",
     "lineNumber": 67,
     "ignore": true,
     "type": {
@@ -1160,7 +1160,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "/**\n * @ignore\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nexport function mixinDynamicSegmentsValues (url, dynamicSegments) {\n  return dynamicSegments.reduce((aggr, [key, value]) =>\n    aggr.replace(`:${key}`, value), url)\n}\n\n/**\n * @ignore\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nexport function addQueryParams (url, queryParams) {\n  const chanks = queryParams.map(([key, value]) => `${key}=${value}`)\n  return url + '?' + chanks.join('&')\n}\n"
+    "content": "/**\n * @ignore\n * Mixins dynamic segments replacing the `:segment_name` parts with provide\n * values\n * @param {String} url – URL\n * @param {Object} dynamicSegments – dynamic segments\n * @returns {String} – URL\n */\nexport function mixinDynamicSegmentsValues (url, dynamicSegments) {\n  return dynamicSegments.reduce((aggr, [key, value]) =>\n    aggr.replace(`:${key}`, value), url)\n}\n\n/**\n * @ignore\n * Adds query params string to url\n * @param {string} url – URL\n * @param {Array} queryParams – query params\n * @returns {String} – URL\n */\nexport function addQueryParams (url, queryParams) {\n  const chanks = queryParams.map(([key, value]) => `${key}=${value}`)\n  return url + (chanks.length != 0 ? '?' + chanks.join('&') : \"\")\n}\n"
   },
   {
     "__docId__": 32,
@@ -1174,7 +1174,7 @@
     "export": true,
     "importPath": "immutable-http/src/utils/url.js",
     "importStyle": "{mixinDynamicSegmentsValues}",
-    "description": null,
+    "description": "",
     "lineNumber": 9,
     "ignore": true,
     "unknown": [
@@ -1227,7 +1227,7 @@
     "export": true,
     "importPath": "immutable-http/src/utils/url.js",
     "importStyle": "{addQueryParams}",
-    "description": null,
+    "description": "",
     "lineNumber": 21,
     "ignore": true,
     "unknown": [
@@ -1279,7 +1279,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']\nconst validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']\n\n/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n * @return {String} error\n */\nfunction validateMethod (method) {\n  if (!method) {\n    return `HTTP method is not specified`\n  }\n  if (typeof method !== 'string') {\n    return `HTTP method should be type of string`\n  }\n  if (!supportedMethods.includes(method.toUpperCase())) {\n    return `Http method ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n * @return {String} error\n */\nfunction validateUrl (url) {\n  if (!url) {\n    return `Url is not specified`\n  }\n  if (typeof url !== 'string') {\n    return `Url should be type of string`\n  }\n}\n\n/**\n * Validate header to all parts be strings\n * @param {String} key – Header key\n * @param {String} value – Header value\n * @return {String} error\n */\nfunction validateHeader (key, value) {\n  if (typeof key !== 'string' || typeof value !== 'string')\n    return `Parts of header ${key}:${value} must be strings`\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n * @return {Array} error\n */\nfunction validateHeaders (headers) {\n  const aggr = []\n  for (let [key, value] of headers)\n    aggr.push(validateHeader(key, value))\n  return aggr\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n * @return {String} error\n */\nfunction validateResponseType (type) {\n  if (!validTypes.includes(type))\n    return `Response content type ${type} is not supported`\n}\n\n/**\n * @ignore\n * Validate HTTP request model\n * @param {String} url – url\n * @param {String} method – HTTP method\n * @param {Map} headers – HTTP headers\n * @param {String} responseType – response type\n * @return {Array} array of errors\n */\nfunction validate (url, method, headers, responseType) {\n  return [validateUrl(url),\n    validateMethod(method),\n    validateResponseType(responseType)]\n    .concat(validateHeaders(headers)).filter(_ => !!_)\n}\n\nexport default validate\n"
+    "content": "const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']\nconst validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']\n\n/**\n * Validate HTTP method\n * @param {String} method – HTTP method\n * @return {String} error\n */\nfunction validateMethod (method) {\n  if (!method) {\n    return `HTTP method is not specified`\n  }\n  if (typeof method !== 'string') {\n    return `HTTP method should be type of string`\n  }\n  if (supportedMethods.indexOf(method.toUpperCase()) < 0) {\n    return `Http method ${method} is not supported`\n  }\n}\n\n/**\n * Basicly validate url\n * @param {String} url – URL\n * @return {String} error\n */\nfunction validateUrl (url) {\n  if (!url) {\n    return `Url is not specified`\n  }\n  if (typeof url !== 'string') {\n    return `Url should be type of string`\n  }\n}\n\n/**\n * Validate header to all parts be strings\n * @param {String} key – Header key\n * @param {String} value – Header value\n * @return {String} error\n */\nfunction validateHeader (key, value) {\n  if (typeof key !== 'string' || typeof value !== 'string')\n    return `Parts of header ${key}:${value} must be strings`\n}\n\n/**\n * Validate headers\n * @param {Object} headers – headers\n * @return {Array} error\n */\nfunction validateHeaders (headers) {\n  const aggr = []\n  for (let [key, value] of headers)\n    aggr.push(validateHeader(key, value))\n  return aggr\n}\n\n/**\n * Validates response type\n * @param {string} type - response type\n * @return {String} error\n */\nfunction validateResponseType (type) {\n  if (validTypes.indexOf(type) < 0)\n    return `Response content type ${type} is not supported`\n}\n\n/**\n * @ignore\n * Validate HTTP request model\n * @param {String} url – url\n * @param {String} method – HTTP method\n * @param {Map} headers – HTTP headers\n * @param {String} responseType – response type\n * @return {Array} array of errors\n */\nfunction validate (url, method, headers, responseType) {\n  return [validateUrl(url),\n    validateMethod(method),\n    validateResponseType(responseType)]\n    .concat(validateHeaders(headers)).filter(_ => !!_)\n}\n\nexport default validate\n"
   },
   {
     "__docId__": 35,
@@ -1525,7 +1525,7 @@
     "export": true,
     "importPath": "immutable-http/src/validate.js",
     "importStyle": "validate",
-    "description": null,
+    "description": "",
     "lineNumber": 77,
     "ignore": true,
     "params": [
@@ -1590,7 +1590,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1603,7 +1603,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1616,7 +1616,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1629,7 +1629,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1642,7 +1642,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1655,7 +1655,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1668,7 +1668,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1681,7 +1681,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1694,7 +1694,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1707,7 +1707,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1720,7 +1720,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1733,7 +1733,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1746,7 +1746,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1759,7 +1759,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1772,7 +1772,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1785,7 +1785,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1798,7 +1798,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1811,7 +1811,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1824,7 +1824,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1837,7 +1837,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1850,7 +1850,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1863,7 +1863,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1876,7 +1876,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1889,7 +1889,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1902,7 +1902,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1915,7 +1915,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1928,7 +1928,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1941,7 +1941,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1954,7 +1954,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1967,7 +1967,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1980,7 +1980,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -1993,7 +1993,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2006,7 +2006,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2019,7 +2019,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2032,7 +2032,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2045,7 +2045,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2058,7 +2058,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2071,7 +2071,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2084,7 +2084,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2097,7 +2097,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2110,7 +2110,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2123,7 +2123,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2136,7 +2136,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2149,7 +2149,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2162,7 +2162,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2175,7 +2175,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2188,7 +2188,7 @@
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
     "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2201,7 +2201,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2214,7 +2214,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2227,7 +2227,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~Element",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2240,7 +2240,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~Event",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2253,7 +2253,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~Node",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2266,7 +2266,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2279,7 +2279,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   },
   {
@@ -2292,7 +2292,7 @@
     "memberof": "BuiltinExternal/WebAPIExternal.js",
     "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
     "access": null,
-    "description": null,
+    "description": "",
     "builtinExternal": true
   }
 ]

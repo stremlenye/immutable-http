@@ -1,7 +1,7 @@
 {
   "type": "Program",
   "start": 0,
-  "end": 700,
+  "end": 728,
   "loc": {
     "start": {
       "line": 1,
@@ -547,7 +547,7 @@
     {
       "type": "ExportNamedDeclaration",
       "start": 538,
-      "end": 699,
+      "end": 727,
       "loc": {
         "start": {
           "line": 21,
@@ -561,7 +561,7 @@
       "declaration": {
         "type": "FunctionDeclaration",
         "start": 545,
-        "end": 699,
+        "end": 727,
         "loc": {
           "start": {
             "line": 21,
@@ -629,7 +629,7 @@
         "body": {
           "type": "BlockStatement",
           "start": 588,
-          "end": 699,
+          "end": 727,
           "loc": {
             "start": {
               "line": 21,
@@ -939,7 +939,7 @@
             {
               "type": "ReturnStatement",
               "start": 662,
-              "end": 697,
+              "end": 725,
               "loc": {
                 "start": {
                   "line": 23,
@@ -947,13 +947,13 @@
                 },
                 "end": {
                   "line": 23,
-                  "column": 37
+                  "column": 65
                 }
               },
               "argument": {
                 "type": "BinaryExpression",
                 "start": 669,
-                "end": 697,
+                "end": 725,
                 "loc": {
                   "start": {
                     "line": 23,
@@ -961,13 +961,13 @@
                   },
                   "end": {
                     "line": 23,
-                    "column": 37
+                    "column": 65
                   }
                 },
                 "left": {
-                  "type": "BinaryExpression",
+                  "type": "Identifier",
                   "start": 669,
-                  "end": 678,
+                  "end": 672,
                   "loc": {
                     "start": {
                       "line": 23,
@@ -975,113 +975,93 @@
                     },
                     "end": {
                       "line": 23,
-                      "column": 18
+                      "column": 12
                     }
                   },
-                  "left": {
-                    "type": "Identifier",
-                    "start": 669,
-                    "end": 672,
-                    "loc": {
-                      "start": {
-                        "line": 23,
-                        "column": 9
-                      },
-                      "end": {
-                        "line": 23,
-                        "column": 12
-                      }
-                    },
-                    "name": "url"
-                  },
-                  "operator": "+",
-                  "right": {
-                    "type": "Literal",
-                    "start": 675,
-                    "end": 678,
-                    "loc": {
-                      "start": {
-                        "line": 23,
-                        "column": 15
-                      },
-                      "end": {
-                        "line": 23,
-                        "column": 18
-                      }
-                    },
-                    "value": "?",
-                    "rawValue": "?",
-                    "raw": "'?'"
-                  }
+                  "name": "url"
                 },
                 "operator": "+",
                 "right": {
-                  "type": "CallExpression",
-                  "start": 681,
-                  "end": 697,
+                  "type": "ConditionalExpression",
+                  "start": 676,
+                  "end": 724,
                   "loc": {
                     "start": {
                       "line": 23,
-                      "column": 21
+                      "column": 16
                     },
                     "end": {
                       "line": 23,
-                      "column": 37
+                      "column": 64
                     }
                   },
-                  "callee": {
-                    "type": "MemberExpression",
-                    "start": 681,
-                    "end": 692,
+                  "test": {
+                    "type": "BinaryExpression",
+                    "start": 676,
+                    "end": 694,
                     "loc": {
                       "start": {
                         "line": 23,
-                        "column": 21
+                        "column": 16
                       },
                       "end": {
                         "line": 23,
-                        "column": 32
+                        "column": 34
                       }
                     },
-                    "object": {
-                      "type": "Identifier",
-                      "start": 681,
-                      "end": 687,
+                    "left": {
+                      "type": "MemberExpression",
+                      "start": 676,
+                      "end": 689,
                       "loc": {
                         "start": {
                           "line": 23,
-                          "column": 21
+                          "column": 16
                         },
                         "end": {
                           "line": 23,
-                          "column": 27
+                          "column": 29
                         }
                       },
-                      "name": "chanks"
-                    },
-                    "property": {
-                      "type": "Identifier",
-                      "start": 688,
-                      "end": 692,
-                      "loc": {
-                        "start": {
-                          "line": 23,
-                          "column": 28
+                      "object": {
+                        "type": "Identifier",
+                        "start": 676,
+                        "end": 682,
+                        "loc": {
+                          "start": {
+                            "line": 23,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 23,
+                            "column": 22
+                          }
                         },
-                        "end": {
-                          "line": 23,
-                          "column": 32
-                        }
+                        "name": "chanks"
                       },
-                      "name": "join"
+                      "property": {
+                        "type": "Identifier",
+                        "start": 683,
+                        "end": 689,
+                        "loc": {
+                          "start": {
+                            "line": 23,
+                            "column": 23
+                          },
+                          "end": {
+                            "line": 23,
+                            "column": 29
+                          }
+                        },
+                        "name": "length"
+                      },
+                      "computed": false
                     },
-                    "computed": false
-                  },
-                  "arguments": [
-                    {
+                    "operator": "!=",
+                    "right": {
                       "type": "Literal",
                       "start": 693,
-                      "end": 696,
+                      "end": 694,
                       "loc": {
                         "start": {
                           "line": 23,
@@ -1089,14 +1069,150 @@
                         },
                         "end": {
                           "line": 23,
-                          "column": 36
+                          "column": 34
                         }
                       },
-                      "value": "&",
-                      "rawValue": "&",
-                      "raw": "'&'"
+                      "value": 0,
+                      "rawValue": 0,
+                      "raw": "0"
                     }
-                  ]
+                  },
+                  "consequent": {
+                    "type": "BinaryExpression",
+                    "start": 697,
+                    "end": 719,
+                    "loc": {
+                      "start": {
+                        "line": 23,
+                        "column": 37
+                      },
+                      "end": {
+                        "line": 23,
+                        "column": 59
+                      }
+                    },
+                    "left": {
+                      "type": "Literal",
+                      "start": 697,
+                      "end": 700,
+                      "loc": {
+                        "start": {
+                          "line": 23,
+                          "column": 37
+                        },
+                        "end": {
+                          "line": 23,
+                          "column": 40
+                        }
+                      },
+                      "value": "?",
+                      "rawValue": "?",
+                      "raw": "'?'"
+                    },
+                    "operator": "+",
+                    "right": {
+                      "type": "CallExpression",
+                      "start": 703,
+                      "end": 719,
+                      "loc": {
+                        "start": {
+                          "line": 23,
+                          "column": 43
+                        },
+                        "end": {
+                          "line": 23,
+                          "column": 59
+                        }
+                      },
+                      "callee": {
+                        "type": "MemberExpression",
+                        "start": 703,
+                        "end": 714,
+                        "loc": {
+                          "start": {
+                            "line": 23,
+                            "column": 43
+                          },
+                          "end": {
+                            "line": 23,
+                            "column": 54
+                          }
+                        },
+                        "object": {
+                          "type": "Identifier",
+                          "start": 703,
+                          "end": 709,
+                          "loc": {
+                            "start": {
+                              "line": 23,
+                              "column": 43
+                            },
+                            "end": {
+                              "line": 23,
+                              "column": 49
+                            }
+                          },
+                          "name": "chanks"
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "start": 710,
+                          "end": 714,
+                          "loc": {
+                            "start": {
+                              "line": 23,
+                              "column": 50
+                            },
+                            "end": {
+                              "line": 23,
+                              "column": 54
+                            }
+                          },
+                          "name": "join"
+                        },
+                        "computed": false
+                      },
+                      "arguments": [
+                        {
+                          "type": "Literal",
+                          "start": 715,
+                          "end": 718,
+                          "loc": {
+                            "start": {
+                              "line": 23,
+                              "column": 55
+                            },
+                            "end": {
+                              "line": 23,
+                              "column": 58
+                            }
+                          },
+                          "value": "&",
+                          "rawValue": "&",
+                          "raw": "'&'"
+                        }
+                      ]
+                    }
+                  },
+                  "alternate": {
+                    "type": "Literal",
+                    "start": 722,
+                    "end": 724,
+                    "loc": {
+                      "start": {
+                        "line": 23,
+                        "column": 62
+                      },
+                      "end": {
+                        "line": 23,
+                        "column": 64
+                      }
+                    },
+                    "value": "",
+                    "rawValue": "",
+                    "raw": "\"\""
+                  },
+                  "parenthesizedExpression": true
                 }
               }
             }
