@@ -51,7 +51,6 @@ describe('Http GET', () => {
             ['Accept', 'application/json']
           ])
           expect(responseType).to.be.equal('json')
-          expect(body).to.be.equal(JSON.stringify(obj))
         } catch(e) {
           done(e)
         } finally {
