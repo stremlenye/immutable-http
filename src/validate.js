@@ -13,7 +13,7 @@ function validateMethod (method) {
   if (typeof method !== 'string') {
     return `HTTP method should be type of string`
   }
-  if (supportedMethods.indexOf(method.toUpperCase()) >= 0) {
+  if (supportedMethods.indexOf(method.toUpperCase()) < 0) {
     return `Http method ${method} is not supported`
   }
 }
@@ -61,7 +61,7 @@ function validateHeaders (headers) {
  * @return {String} error
  */
 function validateResponseType (type) {
-  if (validTypes.indexOf(type) >= 0)
+  if (validTypes.indexOf(type) < 0)
     return `Response content type ${type} is not supported`
 }
 
