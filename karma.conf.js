@@ -40,7 +40,7 @@ module.exports = function(config) {
             loader: 'babel',
             exclude: /node_modules/,
             query: {
-              stage: 0
+              presets: ["es2015"]
             }
           }
         ]
