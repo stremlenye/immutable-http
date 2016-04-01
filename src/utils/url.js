@@ -20,5 +20,5 @@ export function mixinDynamicSegmentsValues (url, dynamicSegments) {
  */
 export function addQueryParams (url, queryParams) {
   const chanks = queryParams.map(([key, value]) => `${key}=${value}`)
-  return url + (chanks.length != 0 ? '?' + chanks.join('&') : "")
+  return url + (chanks.length !== 0 ? '?' + chanks.join('&') : '')
 }

@@ -8,7 +8,7 @@ describe('Http GET', () => {
       const url = 'http://localhost:3000/:some_segment'
       const method = 'POST'
       const obj = {some: 'body'}
-      const executor = (u, m, headers, responseType, body) => new Promise(_ => {
+      const executor = (u, m, headers, responseType, body) => new Promise(() => {
         try {
           expect(u).to.equal('http://localhost:3000/test?ping=pong')
           expect(m).to.equal(method)
@@ -18,7 +18,7 @@ describe('Http GET', () => {
           ])
           expect(responseType).to.be.equal('json')
           expect(body).to.be.equal(JSON.stringify(obj))
-        } catch(e) {
+        } catch (e) {
           done(e)
         } finally {
           done()
@@ -42,7 +42,7 @@ describe('Http GET', () => {
     it('execute simple get request without query', (done) => {
       const url = 'http://localhost:3000/:some_segment'
       const method = 'GET'
-      const executor = (u, m, headers, responseType, body) => new Promise(_ => {
+      const executor = (u, m, headers, responseType) => new Promise(() => {
         try {
           expect(u).to.equal('http://localhost:3000/test')
           expect(m).to.equal(method)
@@ -51,7 +51,7 @@ describe('Http GET', () => {
             ['Accept', 'application/json']
           ])
           expect(responseType).to.be.equal('json')
-        } catch(e) {
+        } catch (e) {
           done(e)
         } finally {
           done()
@@ -66,7 +66,7 @@ describe('Http GET', () => {
         .responseType('json')
         .responseProcessor(response => {
           switch (response.code) {
-            case "404":
+            case '404':
               return { message: 'Resource not found' }
             default:
               return response
@@ -79,7 +79,7 @@ describe('Http GET', () => {
       const url = 'http://localhost:3000/:some_segment'
       const method = 'POST'
       const obj = {some: 'body'}
-      const executor = (u, m, headers, responseType, body) => new Promise(_ =>{
+      const executor = (u, m, headers, responseType, body) => new Promise(() => {
         try {
           expect(u).to.equal('http://localhost:3000/test?ping=pong')
           expect(m).to.equal(method)
@@ -89,7 +89,7 @@ describe('Http GET', () => {
           ])
           expect(responseType).to.be.equal('json')
           expect(body).to.be.equal(JSON.stringify(obj))
-        } catch(e) {
+        } catch (e) {
           done(e)
         } finally {
           done()
@@ -106,7 +106,7 @@ describe('Http GET', () => {
         .bodyProcessor(JSON.stringify)
         .responseProcessor(response => {
           switch (response.code) {
-            case "404":
+            case '404':
               return { message: 'Resource not found' }
             default:
               return response

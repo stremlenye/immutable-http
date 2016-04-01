@@ -1,3 +1,5 @@
+import option from 'option'
+
 const supportedMethods = ['GET', 'POST', 'PUT', 'DELETE']
 const validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']
 
@@ -8,14 +10,15 @@ const validTypes = [null, '', 'arraybuffer', 'blob', 'document', 'text', 'json']
  */
 function validateMethod (method) {
   if (!method) {
-    return `HTTP method is not specified`
+    return option.some('HTTP method is not specified')
   }
   if (typeof method !== 'string') {
-    return `HTTP method should be type of string`
+    return option.some('HTTP method should be type of string')
   }
   if (supportedMethods.indexOf(method.toUpperCase()) < 0) {
-    return `Http method ${method} is not supported`
+    return option.some(`Http method ${method} is not supported`)
   }
+  return option.none
 }
 
 /**
@@ -25,11 +28,12 @@ function validateMethod (method) {
  */
 function validateUrl (url) {
   if (!url) {
-    return `Url is not specified`
+    return option.some('Url is not specified')
   }
   if (typeof url !== 'string') {
-    return `Url should be type of string`
+    return option.some('Url should be type of string')
   }
+  return option.none
 }
 
 /**
@@ -40,7 +44,8 @@ function validateUrl (url) {
  */
 function validateHeader (key, value) {
   if (typeof key !== 'string' || typeof value !== 'string')
-    return `Parts of header ${key}:${value} must be strings`
+    return option.some(`Parts of header ${key}:${value} must be strings`)
+  return option.none
 }
 
 /**
@@ -62,7 +67,8 @@ function validateHeaders (headers) {
  */
 function validateResponseType (type) {
   if (validTypes.indexOf(type) < 0)
-    return `Response content type ${type} is not supported`
+    return option.some(`Response content type ${type} is not supported`)
+  return option.none
 }
 
 /**
@@ -78,7 +84,7 @@ function validate (url, method, headers, responseType) {
   return [validateUrl(url),
     validateMethod(method),
     validateResponseType(responseType)]
-    .concat(validateHeaders(headers)).filter(_ => !!_)
+    .concat(validateHeaders(headers)).filter(_ => _.isSome()).map(_ => _.value())
 }
 
 export default validate

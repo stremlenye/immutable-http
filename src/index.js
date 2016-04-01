@@ -47,8 +47,8 @@ class Internals {
   * @property {function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise} executor performs HTTP request and returns Promise,
   */
 
-//executor: function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise,
-//bodyProcessor: function(x: Object): Object, responseProcessor: function(x: Object): Object
+// executor: function(url: string, method: string, headers: string[], responseType: string, body: Object): Promise,
+// bodyProcessor: function(x: Object): Object, responseProcessor: function(x: Object): Object
 
 /**
  * Http request object.
@@ -61,9 +61,6 @@ export default class Http {
    */
   constructor (params = defaultParams) {
     const internals = new Internals(params)
-    /**
-     * @ignore
-     */
     this.internals = () => internals
   }
 
