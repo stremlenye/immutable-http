@@ -1,7 +1,7 @@
 /* global describe:true it:true */
 /* eslint-disable no-unused-expressions  */
 
-import 'babel/polyfill'
+import 'babel-polyfill'
 import { expect } from 'chai'
 import Http from '../src'
 

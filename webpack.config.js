@@ -14,16 +14,6 @@ module.exports = {
   },
   target: 'web',
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          optional: ['runtime'],
-          stage: 0
-        }
-      }
-    ]
+    loaders: [{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}]
   }
 };

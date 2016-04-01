@@ -67,12 +67,11 @@ describe('validate function', () => {
       .to.eql(['Parts of header 1:2 must be strings'])
   })
 
-  it('should return "Response content type ${type} is not currently '
-    + 'supported" if ', () => {
-      const url = 'http://my.com/blah?query=string&another=string'
-      const headers = new Map().set('Authentication', 'Token blah==')
-      const [method] = supportedMethods
-      expect(validate(url, method, headers, 'BOOM!'))
-        .to.eql(['Response content type BOOM! is not supported'])
-    })
+  it('should return "Response content type ${type} is not currently supported" if ', () => {
+    const url = 'http://my.com/blah?query=string&another=string'
+    const headers = new Map().set('Authentication', 'Token blah==')
+    const [method] = supportedMethods
+    expect(validate(url, method, headers, 'BOOM!'))
+      .to.eql(['Response content type BOOM! is not supported'])
+  })
 })
