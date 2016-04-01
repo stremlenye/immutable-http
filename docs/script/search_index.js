@@ -378,6 +378,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/index.js~http#internals",
+    "class/src/index.js~Http.html#instance-member-internals",
+    "src/index.js~Http#internals",
+    "member"
+  ],
+  [
     "src/index.js~http#method",
     "class/src/index.js~Http.html#instance-method-method",
     "src/index.js~Http#method",
@@ -411,66 +417,6 @@ window.esdocSearchIndex = [
     "src/index.js~http#url",
     "class/src/index.js~Http.html#instance-method-url",
     "src/index.js~Http#url",
-    "method"
-  ],
-  [
-    "src/index.js~http#withbody",
-    "class/src/index.js~Http.html#instance-method-withBody",
-    "src/index.js~Http#withBody",
-    "method"
-  ],
-  [
-    "src/index.js~http#withbodyproccessor",
-    "class/src/index.js~Http.html#instance-method-withBodyProccessor",
-    "src/index.js~Http#withBodyProccessor",
-    "method"
-  ],
-  [
-    "src/index.js~http#withdynamicsegment",
-    "class/src/index.js~Http.html#instance-method-withDynamicSegment",
-    "src/index.js~Http#withDynamicSegment",
-    "method"
-  ],
-  [
-    "src/index.js~http#withheader",
-    "class/src/index.js~Http.html#instance-method-withHeader",
-    "src/index.js~Http#withHeader",
-    "method"
-  ],
-  [
-    "src/index.js~http#withjsonbody",
-    "class/src/index.js~Http.html#instance-method-withJsonBody",
-    "src/index.js~Http#withJsonBody",
-    "method"
-  ],
-  [
-    "src/index.js~http#withjsonresponse",
-    "class/src/index.js~Http.html#instance-method-withJsonResponse",
-    "src/index.js~Http#withJsonResponse",
-    "method"
-  ],
-  [
-    "src/index.js~http#withmethod",
-    "class/src/index.js~Http.html#instance-method-withMethod",
-    "src/index.js~Http#withMethod",
-    "method"
-  ],
-  [
-    "src/index.js~http#withparam",
-    "class/src/index.js~Http.html#instance-method-withParam",
-    "src/index.js~Http#withParam",
-    "method"
-  ],
-  [
-    "src/index.js~http#withresponsetype",
-    "class/src/index.js~Http.html#instance-method-withResponseType",
-    "src/index.js~Http#withResponseType",
-    "method"
-  ],
-  [
-    "src/index.js~http#withurl",
-    "class/src/index.js~Http.html#instance-method-withUrl",
-    "src/index.js~Http#withUrl",
     "method"
   ],
   [
