@@ -40,7 +40,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/validate.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const supportedMethods = [&apos;GET&apos;, &apos;POST&apos;, &apos;PUT&apos;, &apos;DELETE&apos;]
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import option from &apos;option&apos;
+
+const supportedMethods = [&apos;GET&apos;, &apos;POST&apos;, &apos;PUT&apos;, &apos;DELETE&apos;]
 const validTypes = [null, &apos;&apos;, &apos;arraybuffer&apos;, &apos;blob&apos;, &apos;document&apos;, &apos;text&apos;, &apos;json&apos;]
 
 /**
@@ -50,14 +52,15 @@ const validTypes = [null, &apos;&apos;, &apos;arraybuffer&apos;, &apos;blob&apos
  */
 function validateMethod (method) {
   if (!method) {
-    return `HTTP method is not specified`
+    return option.some(&apos;HTTP method is not specified&apos;)
   }
   if (typeof method !== &apos;string&apos;) {
-    return `HTTP method should be type of string`
+    return option.some(&apos;HTTP method should be type of string&apos;)
   }
   if (supportedMethods.indexOf(method.toUpperCase()) &lt; 0) {
-    return `Http method ${method} is not supported`
+    return option.some(`Http method ${method} is not supported`)
   }
+  return option.none
 }
 
 /**
@@ -67,11 +70,12 @@ function validateMethod (method) {
  */
 function validateUrl (url) {
   if (!url) {
-    return `Url is not specified`
+    return option.some(&apos;Url is not specified&apos;)
   }
   if (typeof url !== &apos;string&apos;) {
-    return `Url should be type of string`
+    return option.some(&apos;Url should be type of string&apos;)
   }
+  return option.none
 }
 
 /**
@@ -82,7 +86,8 @@ function validateUrl (url) {
  */
 function validateHeader (key, value) {
   if (typeof key !== &apos;string&apos; || typeof value !== &apos;string&apos;)
-    return `Parts of header ${key}:${value} must be strings`
+    return option.some(`Parts of header ${key}:${value} must be strings`)
+  return option.none
 }
 
 /**
@@ -104,7 +109,8 @@ function validateHeaders (headers) {
  */
 function validateResponseType (type) {
   if (validTypes.indexOf(type) &lt; 0)
-    return `Response content type ${type} is not supported`
+    return option.some(`Response content type ${type} is not supported`)
+  return option.none
 }
 
 /**
@@ -120,7 +126,7 @@ function validate (url, method, headers, responseType) {
   return [validateUrl(url),
     validateMethod(method),
     validateResponseType(responseType)]
-    .concat(validateHeaders(headers)).filter(_ =&gt; !!_)
+    .concat(validateHeaders(headers)).filter(_ =&gt; _.isSome()).map(_ =&gt; _.value())
 }
 
 export default validate
